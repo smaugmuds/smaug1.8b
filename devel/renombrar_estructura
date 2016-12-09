@@ -1,0 +1,203 @@
+#!/bin/sh
+
+#########################################################################
+#
+# Convierte la estructura de SMAUG a Phantasien
+#
+# Al finalizar la conversion de la estructura:
+# - REVISAR src/mud.h para aplicar los cambios realizados por este fichero
+# - REVISAR src/*.h 
+#
+#########################################################################
+
+#
+# Traducir directorios estructura
+#
+
+// mv area 	reinos_de_desesperacion
+mv player 	jugador
+mv new 		nuevo
+mv deleted 	eliminado
+mv councils 	feudo
+mv corpses 	cadaver
+mv clans 	clanes
+mv building 	edificios
+mv boards 	tableros_de_anuncios
+mv vault 	baul
+mv houses 	casas
+mv classes 	clases
+mv races 	razas
+mv gods 	dioses
+mv system 	sistema
+mv deity 	deidad
+
+#
+# Cambios en los directorios estructura
+# Aplicar las nuevas definiciones en "src/mud.h"
+#
+
+#define PLAYER_DIR      "../player/"    /* Player files                 */
+#define BACKUP_DIR      "../player/backup/" /* Backup Player files      */
+#define GOD_DIR         "../gods/"      /* God Info Dir                 */
+#define BOARD_DIR       "../boards/"    /* Board data dir               */
+#define CLAN_DIR        "../clans/"     /* Clan data dir                */
+#define COUNCIL_DIR     "../councils/"  /* Council data dir             */
+#define DEITY_DIR       "../deity/"     /* Deity data dir               */
+#define BUILD_DIR       "../building/"  /* Online building save dir     */
+#define SYSTEM_DIR      "../system/"    /* Main system files            */
+#define PROG_DIR        "../mudprogs/"  /* MUDProg files                */
+#define CORPSE_DIR      "../corpses/"   /* Corpses                      */
+#define RACE_DIR        "../races/"     /* Races                        */
+#define CLASS_DIR       "../classes/"   /* Classes                      */
+#define VAULT_DIR       "../vault/"     /* storage vaults               */
+#define HOUSE_DIR       "../houses/"    /* Houses                       */
+
+###############################
+# Traducir listados estrcutura
+###############################
+
+#
+# - Traduce estructura tableros de anuncios -
+#
+
+mv boards/boards.txt 	tableros_de_anuncios/tableros_de_anuncios.lista
+mv boards/highgod.brd 	tableros_de_anuncios/altodios.anuncios
+mv boards/immortal.brd 	tableros_de_anuncios/inmortal.anuncios
+
+# Regenera listado de tableros
+
+cd tableros_de_anuncios
+cat tableros_de_anuncios.lista | sed 's/.brd/.anuncios/g' \
+	| sed 's/immortal/inmortal/g' | sed 's/highgod/altodios/g' > tableros_de_anuncios.lista.tmp
+cd ..
+
+#
+# Traduce estructura de los clanes
+#
+
+mv clans/clan.lst clanes/clanes.lista
+mv clans/augurer.gui clanes/adivinos.clan
+mv clans/cleric.gui clanes/clerigos.clan
+mv clans/druid.gui clanes/druidas.clan
+mv clans/mage.gui clanes/magos.clan
+mv clans/ranger.gui clanes/cazadores.clan
+mv clans/thief.gui clanes/ladrones.clan
+mv clans/vampire.gui clanes/_vampiros_.clan
+mv clans/warrior.gui clanes/guerreros.clan
+
+# Regenera listado de clanes
+
+cd clanes
+ls *.clan > clanes.lista
+echo "\$" >> clanes.lista
+cd ..
+
+#
+# Traduce estructura de las clases
+#
+
+mv classes/Augurer.class clases/Adivino.clase
+mv classes/Cleric.class clases/Clerigo.clase
+mv classes/Mage.class clases/Mago.clase
+mv classes/Nephandi.class clases/Nephandi.clase
+mv classes/Pirate.class clases/Pirata.clase
+mv classes/Savage.class clases/Salvaje.clase
+mv classes/Vampire.class clases/_Vampiro_.clase
+mv classes/Druid.class clases/Druida.clase
+mv classes/Monger.class clases/Monje.clase
+mv classes/Paladin.class clases/Paladin.clase
+mv classes/Ranger.class clases/Cazador.clase
+mv classes/Thief.class clases/Ladron.clase
+mv classes/Warrior.class clases/Guerrero.clase
+mv classes/class.lst clases/clases.lista
+
+# Regenera listado de clanes
+
+cd clases
+ls *.clase > clases.lista
+echo "\$" >> clases.lista
+cd ..
+
+
+#
+# Cambios estructura en LISTAS
+# Aplicar las nuevas definiciones en "src/mud.h"
+#
+
+
+#define AREA_LIST       "area.lst"      /* List of areas                */
+#define WATCH_LIST      "watch.lst"     /* List of watches              */
+#define BAN_LIST        "ban.lst"       /* List of bans                 */
+#define RESERVED_LIST   "reserved.lst"  /* List of reserved names       */
+#define NOAUCTION_LIST  "noauction.lst" /* list of vnums not to allow auction to */
+#define CLAN_LIST       "clan.lst"      /* List of clans                */
+#define COUNCIL_LIST    "council.lst"   /* List of councils             */
+#define GUILD_LIST      "guild.lst"     /* List of guilds               */
+#define GOD_LIST        "gods.lst"      /* List of gods                 */
+#define DEITY_LIST      "deity.lst"     /* List of deities              */
+#define CLASS_LIST      "class.lst"     /* List of classes              */
+#define RACE_LIST       "race.lst"      /* List of races                */
+#define VAULT_LIST      "vault.lst"     /* list of storage vaults */
+#define HOUSE_LIST      "house.lst"
+
+#define BOARD_FILE      BOARD_DIR       "boards.lst"    /* For bulletin boards   */
+
+#
+# Cambios estructura en ficheros de LOG
+# Aplicar las nuevas definiciones en "src/mud.h"
+#
+
+#define LOG_FILE        LOG_DIR         "roomtalk.log"    /* For talking in logged rooms */
+#define SHUTDOWN_FILE   LOG_DIR         "shutdown.log"          /* For 'shutdown'        */
+#define MOBLOG_FILE     LOG_DIR         "moblog.log"   /* For mplog messages  */
+#define BOOTLOG_FILE    LOG_DIR         "boot.log"        /* Boot up error file  */
+#define USAGE_FILE      LOG_DIR         "usage.log"    /* How many people are on every half hour - trying to determine best reboot time */
+#define BUG_FILE        LOG_DIR 	"bugs.log"     /* For bug( )          */
+#define PBUG_FILE       LOG_DIR 	"pbugs.log"    /* For 'bug' command   */
+#define FIXED_FILE      LOG_DIR 	"fixed.log"    /* For 'fixed' command */
+#define CHARCOUNT_FILE  LOG_DIR      	"ccount.log"   /* Counting, temp */
+#define OINVOKE_FILE    LOG_DIR      	"oinvoke.log"  /* Obvious */
+#define CUTLINK_FILE    LOG_DIR      	"cutlink.log"  /* Info on cut/dropped links while in combat */
+#define ECONOMY_FILE    LOG_DIR      	"economy.log"  /* Gold looted, value of used potions/pills  */
+#define NOHELP_FILE     LOG_DIR      	"nohelpfile.log"   /* For tracking help files that don't exist */
+#define REQUEST_PIPE    LOG_DIR 	"request.log"     /* Request FIFO        */
+
+#
+# Cambios estructura en ficheros de DATOS
+# Aplicar las nuevas definiciones en "src/mud.h"
+#
+
+#define IMM_HOST_FILE   SYSTEM_DIR "immortal.host"       /* For stoping hackers */
+#define RIPSCREEN_FILE  SYSTEM_DIR "mudrip.rip"
+#define RIPTITLE_FILE   SYSTEM_DIR "mudtitle.rip"
+#define ANSITITLE_FILE  SYSTEM_DIR "mudtitle.ans"
+#define ASCTITLE_FILE   SYSTEM_DIR "mudtitle.asc"
+#define IDEA_FILE       SYSTEM_DIR "ideas.dat"    /* For 'idea'          */
+#define TYPO_FILE       SYSTEM_DIR "typos.dat"    /* For 'typo'          */
+#define HINTSUB_FILE    SYSTEM_DIR "hintsub.dat"  /* For hint suggestions */
+#define HINT_FILE       SYSTEM_DIR "hints.dat"    /* For Hints */
+#define CHANGE_FILE     SYSTEM_DIR "changes.dat"  /* For add_change      */
+#define IMMNEWS_FILE    SYSTEM_DIR "immnews.dat"  /* For add_imm_news    */
+#define PLEVEL_FILE     SYSTEM_DIR "plevel.dat"   /* Char level info */
+#define RETIREDLIST_FILE SYSTEM_DIR "retired.dat" /* Retiredlist         */
+#define WIZLIST_FILE    SYSTEM_DIR "wizlist.dat"          /* Wizlist             */
+#define WHO_FILE        SYSTEM_DIR "who.dat"      /* Who output file     */
+#define WEBWHO_FILE     SYSTEM_DIR "webwho.dat"   /* WWW Who output file */
+#define SKILL_FILE      SYSTEM_DIR "skills.dat"   /* Skill table         */
+#define LOGIN_MSG       SYSTEM_DIR "login.msg"    /* List of login msgs */
+#define HERB_FILE       SYSTEM_DIR "herbs.dat"    /* Herb table          */
+#define TONGUE_FILE     SYSTEM_DIR "tongues.dat"  /* Tongue tables       */
+#define SOCIAL_FILE     SYSTEM_DIR "socials.dat"  /* Socials             */
+#define COMMAND_FILE    SYSTEM_DIR "commands.dat" /* Commands            */
+#define ECONOMY_FILE    SYSTEM_DIR "economy.dat"  /* Gold looted, value of used potions/pills  */
+#define PROJECTS_FILE   SYSTEM_DIR "projects.dat" /* For projects        */
+#define PLANE_FILE      SYSTEM_DIR "planes.dat"   /* For planes          */
+#define COLOR_FILE      SYSTEM_DIR "colors.dat"   /* User-definable color*/
+#define TEMP_FILE       PLAYER_DIR "charsave.tmp" /* More char save protect */
+#define MEMBERS_FILE    SYSTEM_DIR "members.dat"  /* Store the members lists */
+#define STANCE_FILE     SYSTEM_DIR "stances.dat"
+#define MORPH_FILE      SYSTEM_DIR "morph.dat"     /* For morph data */
+#define HOMEBUY_FILE          HOUSE_DIR "homebuy.dat"
+#define ACCESSORIES_FILE      HOUSE_DIR "homeaccessories.dat"
+
+

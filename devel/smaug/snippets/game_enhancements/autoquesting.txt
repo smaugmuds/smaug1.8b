@@ -1,0 +1,225 @@
+/*
+	mob_prog Autoquesting Snippet v1.0
+	for Smaug 1.4a
+	Author: Mike Counts aka GenmaC (frag16@yahoo.com)
+
+	You can give me credit for this if you like, but it's such an obvious and
+	simple snippet that I don't require it.  I would be very interested, should
+	you use it, in the way you implemented it, so drop me a note and I'll come
+	play your MUD ;p
+
+	I wrote this snippet, because, even the "fixed" versions of the old autoquesting
+	system sucked, to be honest, and are buggy as hell, and aren't very flexible at all.
+
+	This system sets up a quest file for each player, so you can do all the checking
+	and setting yourself, thru the mud_progs.
+
+	Thanks to Koryon for pointing out my glaring mistakes on topmudsites.com.
+
+	Thanks to the SMAUG coding team, the Merc coding team, and Diku coding team.
+
+	This bit of code is not released under any sort of license - the code is a port
+	from my original game code, so this is not public domain, nor under the GPL.
+	However, use it freely, and if you host this snippet on your site, let me know.
+*/
+
+First, in smaug/, create a new directory called quests, then make the following changes to
+the smaug source (btw, the "new quest" comments are there so you can easily locate the
+code with grep or Find in Files).
+
+- mud.h -
+
+on or around line 4241, add:
+DECLARE_DO_FUN( do_mpquestcomplete ); // new quest shit
+
+- mud_prog.c -
+
+on or around line 123, add:
+
+/*
+	new quest shizat
+*/
+
+#define DT_QUEST_DIR "../quests/"
+
+void MarkQuestComplete(char *quest, CHAR_DATA *player);
+bool CheckQuestComplete(char *quest, CHAR_DATA *player);
+
+/*
+	MarkQuestComplete
+	Appends the line passed to it to the player's quest file.
+	Note that it could duplicate quests if marked more than once,
+	so use if questcomplete before calling this.
+*/
+void MarkQuestComplete(char *quest, CHAR_DATA *player)
+{
+	char quest_file[100];
+	FILE * fw;
+
+	strcpy(quest_file, DT_QUEST_DIR);
+	strcat(quest_file, player->name);
+	strcat(quest_file, ".qdt");
+	
+	fw = NULL;
+	fw = fopen(quest_file,"a");
+
+	fprintf(fw, "%s\n",quest);
+	printf("stuck %s in %s - correct?\n",quest,quest_file);
+	fclose(fw);
+}
+
+/*
+	CheckQuestComplete
+
+	finds the quest entry in /quests/player_name.qdt, and returns 1 if
+	found.
+*/
+bool CheckQuestComplete(char *quest, CHAR_DATA *player)
+{
+	char quest_file[100];
+	char read_string[100];
+	bool bFound;
+	FILE * read;
+
+	strcpy(quest_file, DT_QUEST_DIR);
+	strcat(quest_file, player->name);
+	strcat(quest_file, ".qdt");
+
+	read = fopen(quest_file, "r");
+
+	bFound = 0;
+
+	if(read==NULL)
+	{
+	return FALSE;
+	}
+	while(fgets(read_string,99,read) != NULL)
+	{
+		if(read_string[strlen(read_string)-1] == '\n')
+		{
+			read_string[strlen(read_string)-1]='\0';
+		}
+
+		if( !str_cmp(quest,read_string) )
+		{
+			bFound = 1;
+			break;
+		}
+	}
+	return bFound;
+}
+
+
+on or around line 853, add with the other ifcheck statements:
+	if( !str_cmp(chck, "questcomplete" ) /* new quest shizat */
+	{ /* usage: if questcomplete($n) == QuestName */
+		return(CheckQuestComplete(rval,chkchar));
+	}
+
+At the end of mob_prog.c, add:
+
+// new quest shizat
+
+void do_mpquestcomplete( CHAR_DATA *ch, char *argument )
+{
+    char       arg[ MAX_INPUT_LENGTH ];
+    CHAR_DATA *victim;
+ 
+    if ( !IS_NPC( ch ) || IS_AFFECTED( ch, AFF_CHARM ))
+    {
+          send_to_char( "Huh?\n\r", ch );
+          return;
+    }
+ 
+    argument = one_argument( argument, arg );
+ 
+    if ( arg[0] == '\0' )
+    {
+	progbug( "Mpquestcomplete - No argument", ch );
+	return;
+    }
+ 
+    if ( !( victim = get_char_room( ch, arg ) ) )
+    {
+	progbug( "Mpquestcomplete - victim does not exist", ch );
+	return;
+    }
+
+	if( IS_NPC(victim) )
+	{
+		send_to_char("Mobs can't have quests!\n\r",ch);
+		return;
+	}
+
+    if ( argument[0] == '\0' )
+	{
+		progbug( "Mpquestcomplete - no quest to complete",ch);
+		return;
+	}
+
+	if(argument[strlen(argument)-1] == '\0')
+	{
+		argument[strlen(argument)-1] = '\0';
+	}
+
+	MarkQuestComplete(argument, victim);
+
+}
+
+tables.c
+
+on or around line 461, add:
+	if(  !str_cmp( name, "do_mpquestcomplete" )) return do_mpquestcomplete; // new quest shit
+on or around line 1115, add:
+	if ( skill == do_mpquestcomplete ) return "do_mpquestcomplete"; // new quest shit
+
+commands.dat:
+
+Add mpquestcomplete to the commands.dat file, just copy do_mpforce, and change it to
+name: mpquestcomplete, and code: do_mpquestcomplete.
+
+Here's an example prog:
+
+if questcomplete($n) == TestQuest
+say You've completed TestQuest!
+else
+say You haven't completed TestQuest yet!
+mpquestcomplete $n TestQuest
+say And now you have!
+endif
+
+The questcomplete if check is a little wierd.  The operator doesn't matter, so you could
+use if questcomplete(whoever) >, <, or ==, and it would always return the same result:
+TRUE if the right value (the quest name, on the right of the operator) has been completed, 
+or FALSE if whoever has not completed the quest. (even if you use !=, the return is the same -
+this does not take into account the operator at all!)
+
+Note also that this is a semi-efficient way to do global variables, with an on or off setting,
+the only problem being that there's not yet a way to turn the variables off (I'll code that up
+for revision 1.5 of this snippet).
+
+What do I mean by this...say you have a thief guild of NPCs, and you want them to hate
+anyone who's ever killed on of their members...you could add this to their death_prog:
+
+if questcomplete($n) == HasKilledAThief  	<-- they have killed a thief
+shout Thieve's Guild, to my aid!		<-- so scream for help
+else						<-- they haven't killed a thief
+mpquestcomplete $n HasKilledAThief		<-- so mark them as a killer
+say You shall pay!
+endif
+
+Then, add an entry prog/greet prog something like this:
+
+if questcomplete($n) == HasKilledAThief		<-- they have killed a thief
+say Kill the offender!
+mpkill $n					<-- so attack them
+else						<-- otherwise
+say Well, hello, $n.				<-- a friendly greeting
+endif
+
+Have fun.
+-Mike Counts aka GenmaC
+
+
+
+

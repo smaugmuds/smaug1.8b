@@ -1,0 +1,505 @@
+diff -wc src_orig/db.c src/db.c
+*** src_orig/db.c	Wed Oct 27 16:26:49 1999
+--- src/db.c	Wed Jan 26 19:16:49 2000
+***************
+*** 341,346 ****
+--- 341,347 ----
+      unlink( BOOTLOG_FILE );
+      boot_log( "---------------------[ Boot Log ]--------------------" );
+  
++     cards_drawn = 100;
+      log_string( "Loading commands" );
+      load_commands();
+  
+diff -wc src_orig/mud.h src/mud.h
+*** src_orig/mud.h	Wed Oct 27 16:26:59 1999
+--- src/mud.h	Wed Oct 27 19:33:47 1999
+***************
+*** 216,221 ****
+--- 216,240 ----
+  
+  #define MAX_KILLTRACK		25	/* track mob vnums killed */
+  
++ #define MAX_CARDS		52
++ #define MAX_HELD_CARDS		10
++ int cards_drawn;
++ int deck[52];
++ 
++ struct card_data {
++ 	int hand[10];
++ 	CHAR_DATA *playing;
++         int finished;
++         int num_cards;
++ };
++ 
++ struct mycards {
++ 	int total;
++ 	char *name;
++ };
++ 
++ extern const struct mycards allcards[52];
++ 
+  /*
+   * Game parameters.
+   * Increase the max'es if you add more of something.
+***************
+*** 2375,2380 ****
+--- 2394,2400 ----
+      COUNCIL_DATA * 	council;
+      AREA_DATA *		area;
+      DEITY_DATA *	deity;
++     struct card_data    cards;
+      char *		homepage;
+      char *		clan_name;
+      char * 		council_name;
+***************
+*** 3766,3771 ****
+--- 3786,3792 ----
+  DECLARE_DO_FUN( do_counciltalk	);
+  DECLARE_DO_FUN( do_credits	);
+  DECLARE_DO_FUN(	do_cset		);
++ DECLARE_DO_FUN( do_deal		);
+  DECLARE_DO_FUN( do_deities	);
+  DECLARE_DO_FUN( do_delay	);
+  DECLARE_DO_FUN(	do_deny		);
+***************
+*** 3786,3791 ****
+--- 3807,3813 ----
+  DECLARE_DO_FUN(	do_drink	);
+  DECLARE_DO_FUN(	do_drop		);
+  DECLARE_DO_FUN(	do_diagnose	);
++ DECLARE_DO_FUN( do_draw		);
+  DECLARE_DO_FUN(	do_east		);
+  DECLARE_DO_FUN(	do_eat		);
+  DECLARE_DO_FUN( do_ech		);
+***************
+*** 3943,3948 ****
+--- 3965,3971 ----
+  DECLARE_DO_FUN( do_pcrename	);
+  DECLARE_DO_FUN(	do_peace	);
+  DECLARE_DO_FUN(	do_pick		);
++ DECLARE_DO_FUN( do_play		);
+  DECLARE_DO_FUN( do_plist	);
+  DECLARE_DO_FUN( do_poison_weapon);
+  DECLARE_DO_FUN(	do_pose		);
+***************
+*** 4061,4068 ****
+--- 4084,4093 ----
+  DECLARE_DO_FUN(	do_statreport	);
+  DECLARE_DO_FUN( do_statshield	);
+  DECLARE_DO_FUN( do_starttourney );
++ DECLARE_DO_FUN( do_stay         );
+  DECLARE_DO_FUN(	do_steal	);
+  DECLARE_DO_FUN(	do_sting	);
++ DECLARE_DO_FUN( do_stopplay     );
+  DECLARE_DO_FUN( do_strew	);
+  DECLARE_DO_FUN( do_strip	);
+  DECLARE_DO_FUN(	do_stun		);
+diff -wc src_orig/player.c src/player.c
+*** src_orig/player.c	Wed Oct 27 16:26:57 1999
+--- src/player.c	Sat Mar 25 15:10:24 2000
+***************
+*** 23,32 ****
+--- 23,89 ----
+  #include "mud.h"
+  
+  
++ const struct mycards allcards[52]={
++         {2, "2 of clubs"},
++         {2, "2 of hearts"},
++         {2, "2 of diamonds"},
++         {2, "2 of spades"},
++         {3, "3 of clubs"},
++         {3, "3 of hearts"},
++         {3, "3 of diamonds"},
++         {3, "3 of spades"},
++         {4, "4 of clubs"},
++         {4, "4 of hearts"},
++         {4, "4 of diamonds"},
++         {4, "4 of spades"},
++         {5, "5 of clubs"},
++         {5, "5 of hearts"},
++         {5, "5 of diamonds"},
++         {5, "5 of spades"},
++         {6, "6 of clubs"},
++         {6, "6 of hearts"},
++         {6, "6 of diamonds"},
++         {6, "6 of spades"},
++         {7, "7 of clubs"},
++         {7, "7 of hearts"},
++         {7, "7 of diamonds"},
++         {7, "7 of spades"},
++         {8, "8 of clubs"},
++         {8, "8 of hearts"},
++         {8, "8 of diamonds"},
++         {8, "8 of spades"},
++         {9, "9 of clubs"},
++         {9, "9 of hearts"},
++         {9, "9 of diamonds"},
++         {9, "9 of spades"},
++         {10, "10 of clubs"},
++         {10, "10 of hearts"},
++         {10, "10 of diamonds"},
++         {10, "10 of spades"},
++         {10, "Jack of clubs"},
++         {10, "Jack of hearts"},
++         {10, "Jack of diamonds"},
++         {10, "Jack of spades"},
++         {10, "Queen of clubs"},
++         {10, "Queen of hearts"},
++         {10, "Queen of diamonds"},
++         {10, "Queen of spades"},
++         {10, "King of clubs"},
++         {10, "King of hearts"},
++         {10, "King of diamonds"},
++         {10, "King of spades"},
++         {11, "Ace of clubs"},
++         {11, "Ace of hearts"},
++         {11, "Ace of diamonds"},
++         {11, "Ace of spades"}
++ };
++ 
+  /*
+   *  Locals
+   */
+  char *tiny_affect_loc_name(int location);
++ void shuffle_cards( void );
++ int total_cards( CHAR_DATA *ch );
+  
+  void do_gold(CHAR_DATA * ch, char *argument)
+  {
+***************
+*** 1872,1875 ****
+--- 1929,2175 ----
+    }
+    return;
+  */
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ void do_play ( CHAR_DATA *ch, char *argument ) {
++    CHAR_DATA *victim;
++    char name[MAX_STRING_LENGTH];
++ 
++    if ( IS_NPC(ch) ) return;
++    if ( ch->pcdata->cards.playing ) {
++ 	send_to_char("You are already playing someone.\n", ch );
++ 	return;
++    }
++    one_argument( argument, name );
++    if ( (victim=get_char_room(ch, name))==NULL ) {
++ 	send_to_char("They aren't here\n", ch );
++         return;
++    }
++    if ( IS_NPC(victim) ) {
++ 	send_to_char("You can't play a mob\n\r", ch );
++ 	return;
++    }
++    if ( victim->pcdata->cards.playing )  {
++ 	send_to_char("They are already playing someone else\n", ch );
++ 	return;
++    }
++    ch->pcdata->cards.playing = victim;
++    victim->pcdata->cards.playing = ch;
++    ch->pcdata->cards.finished = TRUE;
++    victim->pcdata->cards.finished = TRUE;
++ 
++    ch_printf(ch, "You are now playing blackjack with %s.\n", victim->name );
++    ch_printf(victim, "%s is now playing you in blackjack.\n", ch->name );
++    return; 
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ void do_deal ( CHAR_DATA *ch, char *argument ) {
++    if ( IS_NPC(ch) ) return;
++    if ( !ch->pcdata->cards.playing ||
++         !ch->pcdata->cards.playing->pcdata->cards.playing )
++    {
++       send_to_char("You aren't playing anyone.\n\r", ch );
++       return;
++    }
++    if ( !ch->pcdata->cards.finished || 
++ 	!ch->pcdata->cards.playing->pcdata->cards.finished){
++ 	send_to_char("You are still in the middle of a game\n", ch );
++ 	return;
++    }
++    if ( cards_drawn > 40 ) {
++ 	shuffle_cards();
++ 	act( AT_MAGIC, "$n shuffles the cards.\n\r", ch, NULL, NULL, TO_ROOM );
++ 	act( AT_MAGIC, "You shuffle the cards.\n\r", ch, NULL, NULL, TO_CHAR );
++    }
++    act( AT_MAGIC, "$n starts dealing out the cards.\n\r",ch, NULL, NULL, TO_ROOM ); 
++    act( AT_MAGIC, "You start dealing out the cards.\n\r",ch, NULL, NULL, TO_CHAR ); 
++    ch->pcdata->cards.hand[0] = deck[cards_drawn];
++    cards_drawn++;
++    ch->pcdata->cards.hand[1] = deck[cards_drawn];
++    cards_drawn++;
++    ch->pcdata->cards.playing->pcdata->cards.hand[0] = deck[cards_drawn];
++    cards_drawn++;
++    ch->pcdata->cards.playing->pcdata->cards.hand[1] = deck[cards_drawn];
++    cards_drawn++;
++    ch_printf(ch, "You deal out a %s to %s.\n\r", allcards[ch->pcdata->cards.playing->pcdata->cards.hand[0]].name, ch->pcdata->cards.playing->name );
++    ch_printf(ch, "You deal yourself a %s.\n\r", allcards[ch->pcdata->cards.hand[0]].name);
++    ch_printf(ch, "You deal yourself a %s.\n\r", allcards[ch->pcdata->cards.hand[1]].name);
++    ch_printf(ch->pcdata->cards.playing, "You recieve a %s from %s.\n\r", allcards[ch->pcdata->cards.playing->pcdata->cards.hand[0]].name, ch->name );
++    ch_printf(ch->pcdata->cards.playing, "%s recieves a %s.\n\r", ch->name, allcards[ch->pcdata->cards.hand[0]].name);
++    ch_printf(ch->pcdata->cards.playing, "You recieve a %s from %s.\n\r", allcards[ch->pcdata->cards.playing->pcdata->cards.hand[1]].name, ch->name );
++    ch->pcdata->cards.num_cards = 2;
++    ch->pcdata->cards.playing->pcdata->cards.num_cards = 2;
++    ch->pcdata->cards.finished = FALSE;
++    ch->pcdata->cards.playing->pcdata->cards.finished = FALSE;
++    ch_printf( ch, "Your hand total is %d.\n\r", total_cards(ch));
++    ch_printf( ch->pcdata->cards.playing, "Your hand total is %d.\n\r", total_cards(ch->pcdata->cards.playing));
++    return;
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ void do_draw ( CHAR_DATA *ch, char *argument ) {
++    if ( !ch->pcdata->cards.playing || ch->pcdata->cards.finished ) {
++ 	send_to_char("You can't draw a card right now!\n\r", ch );
++ 	return;
++    }
++    if ( cards_drawn > 50 ) {
++ 	shuffle_cards();
++ 	act( AT_MAGIC, "$n shuffles the cards.\n\r", ch, NULL, NULL, TO_ROOM );
++ 	act( AT_MAGIC, "You shuffle the cards.\n\r", ch, NULL, NULL, TO_CHAR );
++    }
++    ch_printf(ch, "You draw a %s.\n\r", allcards[deck[cards_drawn]].name );
++    ch->pcdata->cards.hand[ch->pcdata->cards.num_cards] = deck[cards_drawn];
++    ch->pcdata->cards.num_cards++;
++    cards_drawn++;
++    ch_printf(ch->pcdata->cards.playing, "%s draws a card.\n\r", ch->name ); 
++    if ( total_cards( ch ) > 21 ) {
++ 	ch_printf(ch, "You busted, %s is the winner\n\r", ch->pcdata->cards.playing->name);
++ 	ch_printf(ch->pcdata->cards.playing, "%s BUSTED you WIN!\n\r",ch->name);
++ 	ch->pcdata->cards.finished = TRUE;
++         ch->pcdata->cards.playing->pcdata->cards.finished = TRUE;
++    	return;
++    }
++    ch_printf( ch, "Your hand total is now %d.\n\r", total_cards(ch));
++    return;
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ void do_stay ( CHAR_DATA *ch, char *argument ) {
++   int ch_tot=0, vic_tot=0;
++   CHAR_DATA *victim;
++   if ( IS_NPC(ch) ) return;
++   if ( !ch->pcdata->cards.playing || ch->pcdata->cards.finished ) {
++ 	send_to_char("You can't do that now\n\r", ch );
++ 	return;
++   }
++   ch_tot = total_cards(ch);
++   if ( !ch->pcdata->cards.playing->pcdata->cards.finished ){
++ 	ch_printf(ch,"You stay with %d points\n\r", ch_tot);
++ 	ch_printf(ch->pcdata->cards.playing, "%s stays.\n\r", ch->name );
++ 	ch->pcdata->cards.finished = TRUE;
++   }
++   else {
++ 	vic_tot = total_cards(ch->pcdata->cards.playing);
++ 	victim = ch->pcdata->cards.playing;
++ 	if ( vic_tot > 21 && ch_tot > 21 ) {
++ 		send_to_char("You both busted, the game ends in a draw.\n\r", ch );
++ 		send_to_char("You both busted, the game ends in a draw.\n\r", victim );
++ 	}
++ 	else if ( vic_tot > 21 ) {
++ 		ch_printf(ch, "%s busted so you WIN!\n\r", victim->name );
++ 		ch_printf(victim, "You busted so %s wins the game.\n\r", ch->name);
++ 	}
++ 	else if ( ch_tot > 21 ) {
++ 		ch_printf(victim, "%s busted so you WIN!\n\r", ch->name );
++ 		ch_printf(ch, "You busted so %s wins the game.\n\r", victim->name);
++ 	}
++ 	else if ( ch_tot > vic_tot ) {
++ 		ch_printf(ch, "You win with %d points, %s had %d.\n\r",
++ 			ch_tot, victim->name, vic_tot );
++ 		ch_printf(victim, "%s wins with %d points to your %d.\n\r",
++ 			ch->name, ch_tot, vic_tot );
++ 	}
++ 	else if ( vic_tot > ch_tot ) {
++ 		ch_printf(victim, "You win with %d points, %s had %d.\n\r",
++ 			vic_tot, ch->name, ch_tot );
++ 		ch_printf(ch, "%s wins with %d points to your %d.\n\r",
++ 			victim->name, vic_tot, ch_tot );
++ 	}
++ 	else {
++ 		ch_printf(ch, "The game is a draw with %d points apiece.\n\r",
++ 			ch_tot);
++ 		ch_printf(victim, "The game is a draw with %d points apiece.\n\r",
++ 			ch_tot);
++ 	}
++ 	ch->pcdata->cards.finished = TRUE;
++ 	victim->pcdata->cards.finished = TRUE;
++   }
++   return;
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ void do_stopplay ( CHAR_DATA *ch, char *argument ) {
++    if ( IS_NPC(ch) ) return;
++    ch->pcdata->cards.playing->pcdata->cards.playing = NULL;
++    ch->pcdata->cards.playing = NULL;
++    return;
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ int total_cards( CHAR_DATA *ch ) {
++    int i;
++    int aces=0, total=0;
++    for ( i = 0; i < ch->pcdata->cards.num_cards;i++ ){
++ 	total += allcards[ch->pcdata->cards.hand[i]].total;
++ 	if ( allcards[ch->pcdata->cards.hand[i]].total == 11 )
++ 		aces++;
++    }
++    if ( total > 21 && aces ){
++ 	total -= 10;
++ 	aces--;
++    }
++    if ( total > 21 && aces ){
++ 	total -= 10;
++ 	aces--;
++    }
++    if ( total > 21 && aces ){
++ 	total -= 10;
++ 	aces--;
++    }
++    if ( total > 21 && aces ){
++ 	total -= 10;
++ 	aces--;
++    }
++    return total;
++ }
++ 
++ /*
++  * Blackjack snippet written by Nivek (london@cs.utk.edu 
++  * This snippet was a quick attempt and blackjack and needs
++  * lots of work.
++  */
++ void shuffle_cards ( void ) {
++     int i,j;
++     int count=0;
++     bool found = FALSE;
++     cards_drawn = 0;
++     for ( i = 0; i < 52;i++) {
++ 	deck[i] = -1;
++     }
++     while ( count<52 ) {
++ 	i = number_range( 0, 51 );
++ 	for ( j = 0; j <= i;j++ ) {
++ 	   if ( deck[j] == i ) {
++ 		found = TRUE;
++ 		break;
++ 	   }
++ 	   else if ( deck[j] == -1 )
++ 		break;
++   	}
++ 	if ( !found ) {
++ 	     deck[count] = i;
++ 	     count++;
++ 	}
++ 	found = FALSE;
++     }
++     return;
+  }
+diff -wc src_orig/tables.c src/tables.c
+*** src_orig/tables.c	Wed Oct 27 16:27:01 1999
+--- src/tables.c	Wed Oct 27 19:14:29 1999
+***************
+*** 257,265 ****
+--- 257,267 ----
+  	if ( !str_cmp( name, "do_dismiss" ))		return do_dismiss;
+  	if ( !str_cmp( name, "do_dismount" ))		return do_dismount;
+  	if ( !str_cmp( name, "do_dmesg" ))		return do_dmesg;
++ 	if ( !str_cmp( name, "do_deal" ))		return do_deal;
+  	if ( !str_cmp( name, "do_dnd" ))		return do_dnd;
+  	if ( !str_cmp( name, "do_down" ))		return do_down;
+  	if ( !str_cmp( name, "do_drag" ))		return do_drag;
++ 	if ( !str_cmp( name, "do_draw" ))		return do_draw;
+  	if ( !str_cmp( name, "do_drink" ))		return do_drink;
+  	if ( !str_cmp( name, "do_drop" ))		return do_drop;
+  	if ( !str_cmp( name, "do_diagnose" ))		return do_diagnose;
+***************
+*** 518,523 ****
+--- 520,526 ----
+  	if ( !str_cmp( name, "do_pcrename" ) )		return do_pcrename;
+  	if ( !str_cmp( name, "do_peace" ))		return do_peace;
+  	if ( !str_cmp( name, "do_pick" ))		return do_pick;
++ 	if ( !str_cmp( name, "do_play" ))		return do_play;
+  	if ( !str_cmp( name, "do_plist" ))		return do_plist;
+  	if ( !str_cmp( name, "do_poison_weapon" ))	return do_poison_weapon;
+  	if ( !str_cmp( name, "do_practice" ))		return do_practice;
+***************
+*** 673,679 ****
+--- 676,684 ----
+  	if ( !str_cmp( name, "do_stat" ) )		return do_stat;
+  	if ( !str_cmp( name, "do_statreport" ) )	return do_statreport;
+  	if ( !str_cmp( name, "do_statshield" ) )	return do_statshield;
++         if ( !str_cmp( name, "do_stay"))		return do_stay;
+  	if ( !str_cmp( name, "do_steal" ))		return do_steal;
++ 	if ( !str_cmp( name, "do_stopplay" ) )		return do_stopplay;
+  	if ( !str_cmp( name, "do_strew" ))		return do_strew;
+  	if ( !str_cmp( name, "do_strip" ))		return do_strip;
+  	if ( !str_cmp( name, "do_stun" ))		return do_stun;
+***************
+*** 929,937 ****
+--- 934,944 ----
+      if ( skill == do_dismiss )		return "do_dismiss";
+      if ( skill == do_dismount )		return "do_dismount";
+      if ( skill == do_dmesg )		return "do_dmesg";
++     if ( skill == do_deal )		return "do_deal";
+      if ( skill == do_dnd )		return "do_dnd";
+      if ( skill == do_down )		return "do_down";
+      if ( skill == do_drag )		return "do_drag";
++     if ( skill == do_draw )		return "do_draw";
+      if ( skill == do_drink )		return "do_drink";
+      if ( skill == do_drop )		return "do_drop";
+      if ( skill == do_diagnose )		return "do_diagnose";
+***************
+*** 1162,1167 ****
+--- 1169,1175 ----
+      if ( skill == do_pcrename )		return "do_pcrename";
+      if ( skill == do_peace )		return "do_peace";
+      if ( skill == do_pick )		return "do_pick";
++     if ( skill == do_play )		return "do_play";
+      if ( skill == do_plist )		return "do_plist";
+      if ( skill == do_poison_weapon )	return "do_poison_weapon";
+      if ( skill == do_practice )		return "do_practice";
+***************
+*** 1308,1314 ****
+--- 1316,1324 ----
+      if ( skill == do_stat )		return "do_stat";
+      if ( skill == do_statreport )	return "do_statreport";
+      if ( skill == do_statshield )	return "do_statshield";
++     if ( skill == do_stay )		return "do_stay";
+      if ( skill == do_steal )		return "do_steal";
++     if ( skill == do_stopplay )		return "do_stopplay";
+      if ( skill == do_strew )		return "do_strew";
+      if ( skill == do_strip )		return "do_strip";
+      if ( skill == do_stun )		return "do_stun";
+Only in src: try.c
+Common subdirectories: src_orig/utils and src/utils
+

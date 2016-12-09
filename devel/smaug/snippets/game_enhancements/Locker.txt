@@ -1,0 +1,213 @@
+/* 
+ * All you really need to do is to add this to mud.h
+ * And change around the vnums to match the locker room vnum, and
+ * object vnum of the locker itself. It should be setup as a container.
+ * Make SURE that neither locker or the locker room has the prototype
+ * flag on it. Make a directory called lockers in your /dist directory.
+ *
+ * #define ROOM_LOCKER                 229
+ * #define OBJ_VNUM_LOCKER              39
+ * #define OS_LOCKER       		 2
+ *
+ * and add to save.c   
+ *  in the fread_obj() function
+ *  under ...
+ *   if ( room->vnum == ROOM_VNUM_HALLOFFALLEN
+ *           && obj->first_content )
+ *      obj->timer = -1;
+ *   obj = obj_to_room( obj, room );
+ * }
+ *  <<<<<< add ... >>>>>>>
+ *   else if ( os_type == OS_LOCKER )
+ *   {
+ *      room->vnum = ROOM_LOCKER;
+ *      if (obj->name == ch->name)
+ *      obj = obj_to_room( obj, room );
+ *      else
+ *      {
+ *        OBJ_DATA *locker;
+ *        for( locker = ch->in_room->first_content; locker ; locker = locker->next_content )
+ *        {
+ *           if( locker->name == ch->name )
+ *               break;
+ *        }
+ *        if (!locker)
+ *        {
+ *           bug("Unknown locker");
+ *           return;
+ *        }
+ *                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+ *        obj = obj_to_obj( obj, locker );
+ *      }
+ *   }
+ *                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+ *
+ *  in the fread_obj()
+ *  change    if ( obj->prev_content && (os_type != OS_CORPSE ) )
+ *  to        if ( obj->prev_content && (os_type != OS_CORPSE && os_type != OS_LOCKER ) )
+ *
+ *  in the fwrite_obj() function
+ *  change    if (( os_type == OS_CORPSE ) && obj->in_room )
+ *  to        if (( os_type == OS_CORPSE || os_type == OS_LOCKER ) && obj->in_room )                                                                                                            
+ */
+   
+#include <sys/types.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include "mud.h"
+
+#define LOCKER_DIR      "../lockers/"
+
+void fwrite_locker( CHAR_DATA *ch, OBJ_DATA *locker )
+{
+    /* Variables */
+    FILE *fp = NULL;
+    char strsave[MAX_INPUT_LENGTH];
+
+    if( !locker )
+    {
+	bug( "Fwrite_locker: NULL object.", 0 );
+	bug( ch->name, 0 );
+        return;
+    }
+
+    sprintf( strsave, "%s%s", LOCKER_DIR, capitalize( ch->name ) );
+    
+    if ( ( fp = fopen( strsave, "w" ) ) != NULL )
+    {
+        fwrite_obj( ch, locker, fp, 0, OS_LOCKER );
+        fprintf( fp, "#END \n\r" ); 
+        fclose( fp );
+    }
+    return;
+}
+
+void do_locker( CHAR_DATA *ch, char *argument )
+{ 
+    /* Variables */   
+    FILE *fp = NULL;
+    char strsave[MAX_INPUT_LENGTH];
+    char buf [MAX_INPUT_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+    OBJ_DATA *locker;
+          
+    if ( IS_NPC(ch) )
+        return;
+        
+    argument = one_argument(argument, arg);
+    if ( arg[0] == '\0' )
+    {
+        send_to_char( "Syntax: locker <open | close>\r\n", ch );
+    }
+    
+    if( ! str_cmp( arg, "open" ) )
+    {
+        if (ch->in_room->vnum != ROOM_LOCKER)
+        {
+            send_to_char( "Does this smell like a locker room to you?\r\n", ch );
+            return;
+        } 
+
+        for( locker = ch->in_room->first_content; locker ; locker = locker->next_content)
+        {
+           if( locker->name == ch->name )
+               break;
+        }
+                                                
+        if (locker)
+        {
+            send_to_char("Your locker is already open.\n\r",ch);
+            return;
+        }
+           
+        sprintf( strsave, "%s%s", LOCKER_DIR, capitalize( ch->name ) );
+    
+        if ( ( fp = fopen( strsave, "r" ) ) != NULL )
+        {
+          if (ch->gold < 10000)
+          {
+            send_to_char("You do not have enough gold.\n\r",ch);
+            fclose( fp );
+            return;
+          }
+          
+          ch->gold -= 10000;
+          for ( ; ; )
+          {
+            char letter;
+            char *word;
+            
+            letter = fread_letter( fp );
+            if ( letter == '#')
+            {
+              word = fread_word( fp );
+  
+              if (!strcmp(word,"END" ))
+                   break;
+                             
+              if (!strcmp(word,"OBJECT"))
+              {
+                fread_obj( ch, fp, OS_LOCKER );
+              }
+            }
+          }    
+          fclose( fp );
+        }
+        else
+        {                                                
+          if (ch->gold < 100000)
+          {
+            send_to_char("You do not have enough gold to create a locker.\n\r",ch);
+            return;
+          }
+          
+          ch->gold -= 100000;
+          locker = create_object(get_obj_index(OBJ_VNUM_LOCKER),0);
+          sprintf(buf, locker->name, ch->name);
+          STRFREE( locker->name);
+          locker->name = STRALLOC(buf);
+          sprintf(buf, locker->short_descr, ch->name);
+          STRFREE( locker->short_descr);
+          locker->short_descr = STRALLOC(buf);
+          sprintf(buf, locker->description, ch->name);
+          STRFREE( locker->description);
+          locker->description = STRALLOC(buf);
+          obj_to_room( locker, ch->in_room );
+        }
+        act(AT_TELL, "$n opens $s locker.",ch, NULL, NULL, TO_ROOM);
+ 	act(AT_TELL, "You open your locker.",ch, NULL, NULL, TO_CHAR);
+     }
+    else if( ! str_cmp( arg, "close" ) ) 
+    {
+        if(ch->in_room->vnum != ROOM_LOCKER )
+        {
+            send_to_char( "You are not currently in the locker room.\r\n", ch );
+            return;
+        }
+
+	for( locker = ch->in_room->first_content; locker ; locker = locker->next_content )
+	{
+	    if( locker->name == ch->name )
+	    break;
+	}
+	
+	if (!locker)
+	{
+	  send_to_char("Your locker is not open.\n\r",ch);
+	  return;
+	}
+	else
+	{
+	  act(AT_TELL, "$n closes $s locker.",ch, NULL, NULL, TO_ROOM);
+	  act(AT_TELL, "You close your locker.", ch, NULL, NULL, TO_CHAR);
+          fwrite_locker( ch, locker );
+          extract_obj(locker);
+        }
+     }    
+    return;    
+}
+
+

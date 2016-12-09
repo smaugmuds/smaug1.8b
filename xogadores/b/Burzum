@@ -1,0 +1,52 @@
+#PLAYER
+Version      3
+Name         Burzum~
+Sex          1
+Class        5
+Race         0
+Languages    1 1
+Level        2
+Played       16382
+Room         21194
+HpManaMove   33 33 104 104 110 110
+Stance       0
+Stances      0 0 0 0 0 0 0 0 0 0 0 0
+Gold         0
+Exp          1599
+Height          63
+Weight          162
+Act          771753544&1024
+Position     104
+Style     2
+Practice     0
+Alignment    0
+SavingThrows 0 0 0 0 0
+Favor	       0
+Glory        0
+MGlory       0
+Honour       0
+Hitroll      0
+Damroll      0
+Armor        100
+Mentalstate  -100
+Password     d0431084f141d884e6fe83ce8805099165ed35d8fc1630d1452f2ba49c399a86~
+Title         the Attendant~
+Pagerlen     10
+Flags        8519688
+PKills       0
+PDeaths      0
+MKills       2
+MDeaths      0
+IllegalPK    0
+AttrPerm     10 13 15 14 14 13 16
+AttrMod      0 0 0 0 0 0 0
+Condition    0 0 0 10
+Site         192.168.1.66
+Spell        19 'armor'
+Skill        19 'strike'
+Weapon       19 'long blades'
+Tongue       100 'common'
+Killed       10344 2
+End
+
+#END

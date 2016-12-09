@@ -1,0 +1,222 @@
+// This snippet was entirely written by Kalki & If you decide
+// To use this piece of code i would appreciate it if you gave
+// me a little credit for my work.  Thanks
+// Rlist (Lists the Rooms in the area )
+// Mlist (Lists the Mobiles in the area)
+// Olist (Lists the Objects in the area)
+//   - Kalki
+
+
+
+// Add this to INTERP.C under Immortal Commands
+    
+    { "rlist",          do_rlist,       POS_DEAD,    L_APP,  LOG_NORMAL, 1 },
+    { "mlist",          do_mlist,       POS_DEAD,    L_APP,  LOG_NORMAL, 1 },
+    { "olist",          do_olist,       POS_DEAD,    L_APP,  LOG_NORMAL, 1 },
+
+// Add this to OLC_ACT.C
+
+void do_olist( CHAR_DATA *ch, char *argument )
+{
+    OBJ_INDEX_DATA  *pObjIndex;
+    AREA_DATA       *pArea;
+    char        buf  [ MAX_STRING_LENGTH   ];
+    char        buf1 [ MAX_STRING_LENGTH*2 ];
+    char        buf2 [ MAX_INPUT_LENGTH    ];
+    char        arg  [ MAX_INPUT_LENGTH    ];
+    bool        fAll, found;
+    int         type;
+    int vnum;
+    int  col = 0;
+
+    argument = one_argument( argument, arg );
+    if ( arg[0] == '\0' )
+    {
+       send_to_char( "Syntax:  olist <name>|all\n\r", ch );
+       return;
+    }
+    pArea = ch->in_room->area;
+    if ( !is_builder( ch, pArea ) )
+    {
+       send_to_char( "You are not a builder here.", ch );
+       return;
+    }
+
+    buf1[0] = '\0';
+    fAll    = !str_cmp( arg, "all" );
+    found   = FALSE;
+    type    = NO_FLAG;
+
+    if ( !str_cmp( arg, "type" ) )
+    {
+       argument = one_argument( argument, arg );
+       if ( ( type = flag_value( flag_value, arg ) ) == NO_FLAG )
+       {
+          send_to_char( "Invalid item type.\n\r", ch );
+          return;
+       }
+       argument = one_argument( argument, arg );
+       if ( arg[0] == '\0' )
+          fAll = TRUE;
+    }
+    for ( vnum = pArea->lvnum; vnum <= pArea->uvnum; vnum++ )
+    {
+       if ( ( pObjIndex = get_obj_index( vnum ) ) )
+       {
+          if ( type != NO_FLAG )
+             if ( pObjIndex->item_type != type )
+                continue;
+
+          if ( fAll || is_name( arg, pObjIndex->name ) )
+          {
+             found = TRUE;
+             strncpy_colour( buf2, pObjIndex->short_descr, 40, ' ' );
+             sprintf( buf, "[%5d] %s  ",
+                      pObjIndex->vnum, buf2 );
+             strcat( buf1, buf );
+             if ( ++col % 1 == 0 )
+                strcat( buf1, "\n\r" );
+          }
+       }
+    }
+
+    if ( !found )
+    {
+       send_to_char( "Obj(s) not found in this area.\n\r", ch);
+       return;
+    }
+
+    if ( col % 1 != 0 )
+       strcat( buf1, "\n\r" );
+
+    send_to_char( buf1, ch );
+    return;
+}
+
+
+void do_mlist( CHAR_DATA *ch, char *argument )
+{
+    MOB_INDEX_DATA  *pMobIndex;
+    AREA_DATA       *pArea;
+    char        buf  [ MAX_STRING_LENGTH   ];
+    char        buf1 [ MAX_STRING_LENGTH*2 ];
+    char        buf2 [ MAX_INPUT_LENGTH    ];
+    char        arg  [ MAX_INPUT_LENGTH    ];
+    bool fAll, found;
+    int vnum;
+    int  col = 0;   
+     
+    one_argument( argument, arg );
+    if ( arg[0] == '\0' )
+    {
+       send_to_char( "Syntax:  mlist <name>|all\n\r", ch );
+       return;
+    }
+ 
+    pArea = ch->in_room->area;
+    if ( !is_builder( ch, pArea ) )
+    {
+       send_to_char( "You are not a builder here.", ch );
+       return;
+    }
+
+    buf1[0] = '\0';
+    fAll    = !str_cmp( arg, "all" );
+    found   = FALSE;
+
+    for ( vnum = pArea->lvnum; vnum <= pArea->uvnum; vnum++ )
+    {
+       if ( ( pMobIndex = get_mob_index( vnum ) ) )
+       {
+          if ( fAll || is_name( arg, pMobIndex->player_name ) )
+          {
+             found = TRUE;
+             strncpy_colour( buf2, pMobIndex->short_descr, 28, ' ' );
+             sprintf( buf, "[%5d] %s  ",
+                      pMobIndex->vnum, buf2 );
+             strcat( buf1, buf );
+             if ( ++col % 2 == 0 )
+                strcat( buf1, "\n\r" );
+          }
+       }
+    }
+
+    if ( !found )
+    {
+       send_to_char( "Mob(s) not found in this area.\n\r", ch);
+       return;
+    }
+
+    if ( col % 2 != 0 )
+       strcat( buf1, "\n\r" );
+     
+    send_to_char( buf1, ch );
+    return;
+}
+
+void do_rlist( CHAR_DATA *ch, char *argument )
+{
+    ROOM_INDEX_DATA *pRoomIndex;
+    AREA_DATA       *pArea;
+    char        buf  [ MAX_STRING_LENGTH   ];
+    char        buf1 [ MAX_STRING_LENGTH*2 ];
+    char        buf2 [ MAX_INPUT_LENGTH    ];
+    char        arg  [ MAX_INPUT_LENGTH    ];
+    bool fAll, found;
+    int vnum;
+    int  col = 0;
+
+    one_argument( argument, arg );
+    if ( arg[0] == '\0' )
+    {
+       send_to_char( "Syntax:  rlist <name>|all\n\r", ch );
+       return;
+    }
+
+    pArea = ch->in_room->area;
+
+    if ( !is_builder( ch, pArea ) )
+    {
+       send_to_char( "You are not a builder here.", ch );
+       return;
+    }
+
+    buf1[0] = '\0';
+    fAll    = !str_cmp( arg, "all" );
+    found   = FALSE;
+
+    for ( vnum = pArea->lvnum; vnum <= pArea->uvnum; vnum++ )
+    {
+       if ( ( pRoomIndex = get_room_index( vnum ) ) )
+       {
+          if ( fAll || is_name( arg, pRoomIndex->name ) )
+          {
+             found = TRUE;
+             strncpy_colour( buf2, pRoomIndex->name, 28, ' ' );
+             sprintf( buf, "[%5d] %s  ",
+                      pRoomIndex->vnum, buf2 );
+             strcat( buf1, buf );
+             if ( ++col % 2 == 0 )
+                strcat( buf1, "\n\r" );
+          }
+       }
+    }
+
+    if ( !found )
+    {
+       send_to_char( "Room(s) not found in this area.\n\r", ch);
+       return;
+    }
+
+    if ( col % 2 != 0 )
+       strcat( buf1, "\n\r" );
+
+    send_to_char( buf1, ch );
+    return;
+}
+
+// Add this to MERC.H affter "Commands Functions Defined in OLC.C
+
+DECLARE_DO_FUN( do_rlist        );
+DECLARE_DO_FUN( do_mlist        );
+DECLARE_DO_FUN( do_olist        );

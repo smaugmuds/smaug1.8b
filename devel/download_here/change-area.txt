@@ -1,0 +1,42 @@
+From: "Erwin S. Andreasen" <erwin@pip.dknet.dk>
+
+On Tue, 24 Mar 1998, Richard Daugherty wrote:
+> I want to change all the vnums i have in an area so i can use it on my
+> mud. I tried to do tr 6641 1701 < area.are 
+
+tr translates one character set into another, e,g. translate each of abcd
+into ABCD, so a -> A, etc.
+
+Use perl:
+
+perl -pi~ -e 's/66(\d\d)/17\1/g' file.are
+
+To substitute all sequences of 66 followed by two digits to 17 followed by
+those two digits.
+
+This will modify file.are but leave a backup in file.are~
+
+-p - print each line in the file
+-i~ - modify in place, leave backup in ~
+
+-e - the whole script follows on command line
+
+s/X/Y/Z substitute X whenever you see it with Y, using options Z
+
+66(\d\d) - substitute 66 followed by two digits (\d\d) - the parens group
+the two digits so perl will remember them
+
+17\1 - substitute with 17 and the first parenthized thing in search
+pattern, i.e. the last two digits
+
+g - substitute globally, i.e. not just once on each line.
+
+
+Go buy a Perl book. Preferrably one written by Larry Wall, so he can the
+money he well deserves for writing Perl :)
+
+
+==============================================================================
+Erwin Andreasen   Herlev, Denmark <erwin@pip.dknet.dk>  UNIX System Programmer
+<URL:http://www.abandoned.org/drylock/>     <*>         (not speaking for) DDE
+==============================================================================

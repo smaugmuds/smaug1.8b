@@ -1,0 +1,51 @@
+#PLAYER
+Version      3
+Name         Ollimi~
+Sex          1
+Class        3
+Race         0
+Languages    1 1
+Level        2
+Played       15399
+Room         21194
+HpManaMove   34 34 100 100 110 110
+Stance       0
+Stances      0 0 0 0 0 0 0 0 0 0 0 0
+Gold         0
+Exp          1572
+Height          61
+Weight          143
+Act          704644680
+Position     104
+Style     2
+Practice     2
+Alignment    0
+SavingThrows 0 0 0 0 0
+Favor	       0
+Glory        0
+MGlory       0
+Honour       0
+Hitroll      6
+Damroll      0
+Armor        100
+Mentalstate  -100
+Password     db7e39e61a5e7252e950e306b90548d2e3630c14bd480ca9bb2cd031169f5050~
+Title         o Recruit~
+Flags        8519688
+PKills       0
+PDeaths      0
+MKills       6
+MDeaths      0
+IllegalPK    0
+AttrPerm     17 15 13 14 13 12 11
+AttrMod      0 0 0 0 0 0 0
+Condition    0 0 0 10
+Site         139.Red-79-146-234.dynamicIP.rima-tde.net
+Tongue       100 'common'
+AffectData   'bless' 158   6  18 0
+AffectData   'bless' 158  -6  24 0
+Killed       10314 4
+Killed       10307 2
+End
+
+#END

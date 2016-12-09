@@ -1,0 +1,245 @@
+************************   LOAD MESSAGES SNIPPET *****************************
+When an area resets, the game reloads the mobs that have been killed, etc, but
+you can't see anything special when it happens. With this snippet you can add
+an extra field to the mobiles section in an area file, so people in the room
+can see a message when this specific mob is reloaded.
+I have splitted the snippet into three different parts, depending your needs or
+your stock version:
+The first (labeled as COMMON) is obligatory and is the only one you need if
+you don't want to build online. The second one (labeled ONLINE) implements the
+necesary changes to imm commands like: mset, mstat and foldarea. And the third
+one (labeled as COLORIZE 1.4a ) is needed if you have Smaug 1.4a and want to 
+apply to this new messages the 'colorize' command.
+
+The last section (USE) is also common and explains who to use your new snippet.
+
+*****************************************************************
+*                         COMMON                                *
+*****************************************************************
+
+In MUD.H:
+
+- Look into the mob_index_data struct for a field like this:
+       char *       description;
+and add after it:
+       char *      load_msg;
+  
+- Into the section dedicated to the function declarations:
+		/* act_wiz.c */
+ add this one:
+ 
+ void    echo_to_room    args( ( sh_int AT_COLOR, ROOM_INDEX_DATA *room,
+				char *argument ) );
+ 
+In DB.C:
+
+- Look into the load_mobiles function for this lines:
+
+	letter = fread_letter( fp );
+	if ( letter == '>' )
+ 
+and add just BEFORE:
+
+       letter = fread_letter( fp );
+	if  (letter == '&')
+	    pMobIndex->load_msg = fread_string (fp);
+	else
+       ungetc( letter, fp);
+ 
+In HANDLER.C:
+- Look into the clean_mob function for:
+   STRFREE(mob->description);
+and add after:
+   STRFREE(mob->load_msg);
+
+In RESET.C:
+
+- Look into the reset_area function for this line:
+       char_to_room(mob, pRoomIndex);
+and add AFTER:
+
+      if (pMobIndex->load_msg && (pArea->nplayer > 0)) 
+    echo_to_room(AT_RESET, pRoomIndex, pMobIndex->load_msg );
+ 
+ 
+- If you're not going to build areas online you can go directly to the last 
+section labeled  USE , or to the COLORIZE 1.4a section if you have the Smaug
+1.4a and want to add the new color features to this snippet.
+
+***************************************************************
+*                         ONLINE                              *
+*************************************************************** 
+
+In BUILD.C                 
+       
+-Look into do_mset function for this line:
+
+ send_to_char( "  name short long description title spec clan\n\r", ch );
+  You must change it to:
+
+send_to_char( "  name short long description title loadmsg spec clan\n\r",ch);
+
+ 
+- Into the same function look for this line:
+     if ( !str_cmp( arg2, "spec" ) )
+ 
+and add just BEFORE:
+
+ if ( !str_cmp( arg2, "loadmsg" ) )
+     {
+        if( !can_mmodify (ch, victim))
+        return;
+
+	if(!IS_NPC(victim))
+	{
+	 send_to_char ("Not on PC's.\n\r", ch)
+	 return;
+	 }
+	if(victim->pIndexData->load_msg)       
+	STRFREE( victim->pIndexData->load_msg );
+	victim->pIndexData->load_msg = STRALLOC( arg3 );
+	return;
+     }
+ 
+- Look into the fold_area function for this line:
+	if ( pMobIndex->mudprogs )
+and add just BEFORE:
+ 
+	if ( pMobIndex->load_msg)
+	 fprintf( fpout, "&%s~\n",       pMobIndex->load_msg     );
+	     
+ 
+In ACT_WIZ.C:               
+-Look for this lines into the do_mstat function:
+
+if ( IS_NPC(victim) && victim->spec_fun )
+	pager_printf_color( ch, "&cMobile has spec fun: &w%s\n\r",
+       
+and add BEFORE:
+      
+      if( IS_NPC(victim) && victim->pIndexData->load_msg )
+      pager_printf_color ( ch, "&cLoadMsg   : &w%s\n\r",
+      victim->pIndexData->load_msg );
+ 
+ 
+- Read the USE section.
+
+
+******************************************************************
+*                       COLORIZE 1.4a                            *
+******************************************************************
+ 
+In MUD.H:
+- Look for AT_TOPCOLOR  
+and add BEFORE:
+		 AT_LOAD,
+- And AFTER:
+
+#define AT_MORPH           AT_GREY
+add:
+#define AT_LOAD            AT_DGREEN
+
+In CONST.C:
+-Look for this line:
+    { "morph",  AT_GREY                 },
+and add just AFTER:
+
+    { "load",   AT_DGREEN               }
+
+In RESET.C:
+-You must change this line included into COMMON section:
+    echo_to_room(AT_RESET, pRoomIndex, pMobIndex->load_msg );
+It must be now:
+    echo_to_room(AT_LOAD, pRoomIndex, pMobIndex->load_msg );
+
+In COLORS.DAT (into../system directory)
+-Look for this line:
+ 1071 morph~ 7
+and add just AFTER:
+1072 load~ 2
+   
+- Read the USE section, please.
+
+*********************************************************************
+*                               USE                                 *
+*********************************************************************
+After adding this changes to your source code, you must do a 'make clean'
+and a 'make'.
+If you are going to build offline your area, you must go to the MOBILES
+section and add in your chosen mob, your new load message. It must be in the 
+LAST line (after all the numerical fields) except if there is a prog, then it
+must be between the last numerical line and the beginning of the prog.
+It must follow the next pattern (begins with a '&' and ends with a '~'):
+&Here comes your new message.~
+Obviously you can't edit areas including load messages with an offline editor
+like ORB or AREA EDITOR, because they cannot read them.
+I give you a mobile example at the end of this file.
+
+If you want to build online your area, you can use mset with the new field
+'loadmsg' ,an example:
+mset lizard loadmsg A big lizard appears suddenly showing its bifid tongue.
+Remember to do a 'foldarea' to save your changes to the area.
+You can see the new message with the mstat command.
+							      
+If added the COLORIZE section, you can set the message color, an example:
+colorize load cyan
+
+
+NOTE: Well, some people ask me how to check my load messages snippet, because with the 'reset area' 
+imm command it doesn´t send the message to the room. The snippet works with the inner 
+resetting function (when an area gets the reset frequence value it reloads the non-existent mobs 
+and send the load messages to the room). The reason you can´t see this messages with the imm 
+command is the same why you cannot see neither the area reset messages: the number of players 
+in an area is restored to 0   --->  into edit_area function: pArea->nplayer = 0  ).
+I make this comparison into reset.c
+if (pMobIndex->load_msg && (pArea->nplayer > 0))
+echo_to_room(AT_RESET, pRoomIndex, pMobIndex->load_msg );
+this is because I don´t want to send these messages when the mud is rebooting or when nobody 
+is in the area.
+If you want the messages also appearing  when you use 'reset area' you must change the first line 
+to:
+if (pMobIndex->load_msg)
+But I think is better the first way.
+
+If you want to check your new messages you can, temporarily, set the resetfreq area to a lower value,
+an example:
+aset dwarven.are resetfreq 1
+
+***************************************************************
+*                       MOBILE EXAMPLE                        *
+***************************************************************
+
+#7040
+fierce red dragon~
+a fierce red dragon~
+A fierce looking red dragon, its slumber disturbed, awakes angrily.
+~
+The red dragon stares at you, angrily, as it wakes when you
+arrives.  It says 'Oh, human YOU woke me up ... Hsss', while
+it moves closer.  'Can one NEVER sleep in peace ... Hsss'.
+~
+39 520 -1000 C
+33 -10 -10 500d2+2500 3d4+30
+5000 450000
+8 8 0
+13 13 13 13 13 13 13
+0 0 0 0 0
+31 3 0 0 67584 2049 3
+0 0 361105 112 3073 2 3 0
+&An impressive dragon appears suddenly spitting fire from its mouth.~
+> all_greet_prog 100~
+if isnpc($n)
+or isimmort($n)
+else
+  c flamestrike $n
+endif
+~
+|
+
+
+/***********************************************************************
+*     I'll thank you if you mail me telling you are using thi code.    *
+*       Any suggestions or problems you have, please mail me to        *
+*                    jose@luisso.net                         *
+*                                                                      *
+**************  Desden, el Chaman Tibetano  -  June 1999 **************/

@@ -1,0 +1,127 @@
+For awhile something had bugged me concerning timers. I often use timers for commands or skills to
+represent an ongoing action the player was doing. Like say casting a spell or doing situps. I always
+wanted a way for players in the room to look and see a player doing those actions even without constant
+echoes et cetera.
+
+Example:
+
+Bob the Button Masher stands here chanting something from his spell book!
+or
+John the Jumping Kick stands here stretching out.
+
+I coded up a simple way to handle this that is pretty simply to install without any major coding knowledge and adds that extra spice I was looking for myself.
+
+(Step 1)
+First off, look for "timer_data" in mud.h. It should look something like this:
+struct timer_data
+{
+    TIMER  *    prev;
+    TIMER  *    next;
+    DO_FUN *    do_fun;
+    int         value;
+    sh_int      type;
+    int         count;
+};
+
+Right below "count" add:
+    char   *    desc;
+
+(Step 2)
+Now search for the function "add_timer" in mud.h and it should look like this:
+void    add_timer       args( ( CHAR_DATA *ch, sh_int type, sh_int count, DO_FUN *fun, int value) );
+
+We want to now change it to look like this:
+void    add_timer       args( ( CHAR_DATA *ch, sh_int type, sh_int count, DO_FUN *fun, int value, char *desc ) );
+
+(Step 3)
+Now we are done with mud.h. I suggest doing make clean and compiling. All references of add_timer need to get a desc value. If you don't want it to display anything special simply make it NULL. 
+Here are examples:
+(With desc message)
+add_timer(ch, TIMER_DO_FUN, 3, do_situp, 1, " doing situps.");
+(Without desc message)
+add_timer(ch, TIMER_DO_FUN, 3, do_situp, 1, NULL);
+
+Make sure to either use NULL or something in quotes and not empty quotes( ie "").
+
+(Step 4)
+Now for the thing that truly makes it magic. Lets go to act_info.c
+In the function " show_char_to_char_0" add the varriables:
+    TIMER *time = NULL;
+    char tdesc[MAX_STRING_LENGTH];
+Then look further down the function for the switch with the victim's position.
+The three cases we are interested in are POS_RESTING, POS_SITTING and POS_STANDING. If you
+want to add more cases it will be apparent how to do so but I felt those three were the only ones needed.
+
+    case POS_RESTING:
+        if (ch->position == POS_RESTING)
+            strcat ( buf, " is sprawled out alongside you" );
+        else
+        if (ch->position == POS_MOUNTED)
+            strcat ( buf, " is sprawled out at the foot of your mount" );
+        else
+            strcat (buf, " is sprawled out here" );
+	// Timers display a special message to players - Gatz (Nick Jaross)
+        time = get_timerptr(victim, TIMER_DO_FUN);
+        if(time && time->desc)
+                sprintf(tdesc, "%s", time->desc);
+        else
+                sprintf(tdesc, ".");
+        strcat(buf, tdesc);
+        break;
+    case POS_SITTING:
+        if (ch->position == POS_SITTING)
+            strcat( buf, " sits here with you" );
+        else
+        if (ch->position == POS_RESTING)
+            strcat( buf, " sits nearby as you lie around" );
+        else
+            strcat( buf, " sits upright here" );
+	// Timers display a special message to players - Gatz (Nick Jaross)
+        time = get_timerptr(victim, TIMER_DO_FUN);
+        if(time && time->desc)
+                sprintf(tdesc, "%s", time->desc);
+        else
+                sprintf(tdesc, ".");
+        strcat(buf, tdesc);
+        break;
+    case POS_STANDING:
+        if ( IS_IMMORTAL(victim) )
+            strcat( buf, " is here before you" );
+        else
+        if ( ( victim->in_room->sector_type == SECT_UNDERWATER )
+        && !IS_AFFECTED(victim, AFF_AQUA_BREATH) && !IS_NPC(victim) )
+            strcat( buf, " is drowning here" );
+        else
+        if ( victim->in_room->sector_type == SECT_UNDERWATER )
+            strcat( buf, " is here in the water" );
+        else
+        if ( ( victim->in_room->sector_type == SECT_OCEANFLOOR )
+        && !IS_AFFECTED(victim, AFF_AQUA_BREATH) && !IS_NPC(victim) )
+            strcat( buf, " is drowning here" );
+        else
+        if ( victim->in_room->sector_type == SECT_OCEANFLOOR )
+            strcat( buf, " is standing here in the water" );
+        else
+        if ( IS_AFFECTED(victim, AFF_FLOATING)
+        || IS_AFFECTED(victim, AFF_FLYING) )
+          strcat( buf, " is hovering here" );
+        else
+          strcat( buf, " is standing here" );
+	// Timers display a special message to players - Gatz (Nick Jaross)
+        time = get_timerptr(victim, TIMER_DO_FUN);
+        if(time && time->desc)
+                sprintf(tdesc, "%s", time->desc);
+        else
+                sprintf(tdesc, ".");
+        strcat(buf, tdesc);
+        break;
+
+Besides the small snippet of coding to strcat tdesc, setting tdesc before, to buf I simply removed the punctuation from the strings before.
+
+Make clean and compile, it should work cleanly. I have this installed in a SMAUG FUSS 1.5 with no errors. You can use or modifiy this code to fit your needs however I simply ask you leave my comment there and give me credit. You can add more comments in if you feel needed.
+(Congratulations, you finished all the steps!)
+
+If this snippet isn't working for you then double check that you didn't skip any of the steps. If you have any questions pertaining to this specific snippet then e-mail me at h_b_k316@hotmail.com and I hope you enjoy this snippet.
+
+
+

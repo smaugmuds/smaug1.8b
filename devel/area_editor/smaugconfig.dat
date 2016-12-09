@@ -1,0 +1,1502 @@
+* --------------------------------------------------------------
+* This configuration file is for use by Area Editor to set program defaults
+*
+* Area Editor was written by Nick Gammon <nick@gammon.com.au>
+*
+* It (and other programs) are available from: http://www.gammon.com.au/
+*
+*
+* Note that descriptions must end with a tilde (~) - they may span multiple lines
+*  if necessary.
+*
+* Flag names must be a single word - flags range from Flag01 to Flag32
+*
+* --------------------------------------------------------------
+
+* --------------------------------------------------------------
+*  Standard settings for SMAUG
+* --------------------------------------------------------------
+
+* --------------------------------------------------------------
+* Area limits
+* --------------------------------------------------------------
+
+#GENERAL
+
+maxlevel 65
+maxvnum  2147483647
+maxresetfreq 60
+maxdescriptionlength 80
+End
+
+* --------------------------------------------------------------
+* Mob default descriptions and limits
+* --------------------------------------------------------------
+
+#MOBILES
+
+defaultname                 new mob~
+defaultshortdescription     A newly created mob~
+defaultlongdescription      A newly created mob is standing here~
+defaultdescription          Someone has abandoned a new mob here
+~
+minac          -300
+maxac          +300
+maxdamnodice    100
+maxdamplus      1000
+maxdamroll      65
+maxdamsizedice  100
+maxhitnodice    32767
+maxhitplus      32767
+maxhitroll      85
+maxhitsizedice  32767
+minstats        0   
+maxstats        25		* max basic stats, eg. str wis dex con  
+minalignment    -1000
+maxalignment    1000
+maxnumattacks   20
+minsavingthrow -30
+maxsavingthrow +65
+End
+
+* --------------------------------------------------------------
+* Object default descriptions
+* --------------------------------------------------------------
+
+#OBJECTS
+
+defaultname                 Object name~
+defaultshortdescription     A newly created object~
+defaultdescription          A newly created object sits here.
+~
+End
+
+* --------------------------------------------------------------
+* Room default descriptions
+* --------------------------------------------------------------
+
+#ROOMS
+
+defaultname                 Room name~
+defaultdescription          You stumble into a newly created room.
+~
+End
+
+* --------------------------------------------------------------
+* Exits default descriptions
+* --------------------------------------------------------------
+
+#EXITS
+
+defaultkeywords             ~
+defaultdescription          Exit description~
+End
+
+* --------------------------------------------------------------
+* Repairs limits
+* --------------------------------------------------------------
+
+#REPAIRS
+
+minprofitfix 1
+maxprofitfix 1000
+End
+
+* --------------------------------------------------------------
+* Shops limits
+* --------------------------------------------------------------
+
+#SHOPS
+
+minprofitbuy  1
+maxprofitbuy  1000
+minprofitsell 1
+maxprofitsell 1000
+End
+
+* --------------------------------------------------------------
+* Flags that affect mobs
+* --------------------------------------------------------------
+
+#ACT
+
+Flag01   Npc
+Flag02   Sentinel
+Flag03   Scavenger
+Flag06   Aggressive
+Flag07   Stayarea
+Flag08   Wimpy
+Flag09   Pet
+Flag10   Train
+Flag11   Practice
+Flag12   Immortal
+Flag13   Deadly
+Flag14   Polyself
+Flag15   Meta_aggr
+Flag16   Guardian
+Flag17   Running
+Flag18   Nowander
+Flag19   Mountable
+Flag20   Mounted
+Flag21   Scholar
+Flag22   Secretive
+Flag23   Polymorphed
+Flag24   Mobinvis
+Flag25   Noassist
+Flag31   Prototype
+End
+
+
+#AFFECT
+
+Flag01   Blind
+Flag02   Invisible
+Flag03   Detect_evil
+Flag04   Detect_invis
+Flag05   Detect_magic
+Flag06   Detect_hidden
+Flag07   Hold
+Flag08   Sanctuary
+Flag09   Faerie_fire
+Flag10   Infrared
+Flag11   Curse
+Flag12   Flaming
+Flag13   Poison
+Flag14   Protect
+Flag15   Paralysis
+Flag16   Sneak
+Flag17   Hide
+Flag18   Sleep
+Flag19   Charm
+Flag20   Flying
+Flag21   Pass_door
+Flag22   Floating
+Flag23   True_sight
+Flag24   Detect_traps
+Flag25   Scrying
+Flag26   Fireshield
+Flag27   Shockshield
+Flag28   Haus1
+Flag29   Iceshield
+Flag30   Possess
+Flag31   Berserk
+Flag32   Aqua_breath
+End
+
+#ATTACK
+
+Flag01   Bite
+Flag02   Claws
+Flag03   Tail
+Flag04   Sting
+Flag05   Punch
+Flag06   Kick
+Flag07   Trip
+Flag08   Bash
+Flag09   Stun
+Flag10   Gouge
+Flag11   Backstab
+Flag12   Feed
+Flag13   Drain
+Flag14   Firebreath
+Flag15   Frostbreath
+Flag16   Acidbreath
+Flag17   Lightnbreath
+Flag18   Gasbreath
+Flag19   Poison
+Flag20   Nastypoison
+Flag21   Gaze
+Flag22   Blindness
+Flag23   Causeserious
+Flag24   Earthquake
+Flag25   Causecritical
+Flag26   Curse
+Flag27   Flamestrike
+Flag28   Harm
+Flag29   Fireball
+Flag30   Colorspray
+Flag31   Weaken
+End
+
+#DEFENSE
+
+Flag01   Parry
+Flag02   Dodge
+Flag03   Heal
+Flag04   Curelight
+Flag05   Cureserious
+Flag06   Curecritical
+Flag07   Dispelmagic
+Flag08   Dispelevil
+Flag09   Sanctuary
+Flag10   Fireshield
+Flag11   Shockshield
+Flag12   Shield
+Flag13   Bless
+Flag14   Stoneskin
+Flag15   Teleport
+Flag16   Monsum1
+Flag17   Monsum2
+Flag18   Monsum3
+Flag19   Monsum4
+Flag20   Disarm
+Flag21   Iceshield
+Flag22   Grip
+End
+
+#PARTS
+
+Flag01   Head
+Flag02   Arms
+Flag03   Legs
+Flag04   Heart
+Flag05   Brains
+Flag06   Guts
+Flag07   Hands
+Flag08   Feet
+Flag09   Fingers
+Flag10   Ear
+Flag11   Eye
+Flag12   Long_tongue
+Flag13   Eyestalks
+Flag14   Tentacles
+Flag15   Fins
+Flag16   Wings
+Flag17   Tail
+Flag18   Scales
+Flag19   Claws
+Flag20   Fangs
+Flag21   Horns
+Flag22   Tusks
+Flag23   Tailattack
+Flag24   Sharpscales
+Flag25   Beak
+Flag26   Haunches
+Flag27   Hooves
+Flag28   Paws
+Flag29   Forelegs
+Flag30   Feathers
+End
+
+#RESIST
+
+Flag01   Fire
+Flag02   Cold
+Flag03   Electricity
+Flag04   Energy
+Flag05   Blunt
+Flag06   Pierce
+Flag07   Slash
+Flag08   Acid
+Flag09   Poison
+Flag10   Drain
+Flag11   Sleep
+Flag12   Charm
+Flag13   Hold
+Flag14   Nonmagic
+Flag15   Plus1
+Flag16   Plus2
+Flag17   Plus3
+Flag18   Plus4
+Flag19   Plus5
+Flag20   Plus6
+Flag21   Magic
+Flag22   Paralysis
+End
+
+#LANGUAGE
+
+Flag01	Common   
+Flag02	Elvish 
+Flag03	Dwarven 
+Flag04	Pixie 
+Flag05	Ogre
+Flag06	Orcish 
+Flag07	Trollese 
+Flag08	Rodent 
+Flag09	Insectoid
+Flag10	Mammal 
+Flag11	Reptile 
+Flag12	Dragon 
+Flag13	Spiritual
+Flag14	Magical 
+Flag15	Goblin 
+Flag16	God 
+Flag17	Ancient
+Flag18	Halfling 
+Flag19	Clan 
+Flag20	Gith
+End
+
+* --------------------------------------------------------------
+* Flags that affect objects
+* --------------------------------------------------------------
+
+#OBJECT
+
+Flag01    Glow
+Flag02    Hum
+Flag03    Dark
+Flag04    Loyal
+Flag05    Evil
+Flag06    Invis
+Flag07    Magic
+Flag08    Nodrop
+Flag09    Bless
+Flag10    Antigood
+Flag11    Antievil
+Flag12    Antineutral
+Flag13    Noremove
+Flag14    Inventory
+Flag15    Antimage
+Flag16    Antithief
+Flag17    Antiwarrior
+Flag18    Anticleric
+Flag19    Organic
+Flag20    Metal
+Flag21    Donation
+Flag22    Clanobject
+Flag23    Clancorpse
+Flag24    Antivampire
+Flag25    Antidruid
+Flag26    Hidden
+Flag27    Poisoned
+Flag28    Covering
+Flag29    Deathrot
+Flag30    Burried
+Flag31    Prototype
+End
+
+
+#WEAR
+
+Flag01    Take
+Flag02    Finger
+Flag03    Neck
+Flag04    Body
+Flag05    Head
+Flag06    Legs
+Flag07    Feet
+Flag08    Hands
+Flag09    Arms
+Flag10    Shield
+Flag11    About
+Flag12    Waist
+Flag13    Wrist
+Flag14    Wield
+Flag15    Hold
+Flag16    Dual
+Flag17    Ears
+Flag18    Eyes
+Flag19    Missile
+End
+
+* --------------------------------------------------------------
+* Flags that affect rooms
+* --------------------------------------------------------------
+
+#ROOM
+
+Flag01    Dark
+Flag02    Death
+Flag03    Nomob
+Flag04    Indoors
+Flag05    Lawful
+Flag06    Neutral
+Flag07    Chaotic
+Flag08    Nomagic
+Flag09    Tunnel
+Flag10    Private
+Flag11    Safe
+Flag12    Solitary
+Flag13    Petshop
+Flag14    Norecall
+Flag15    Donation
+Flag16    Nodropall
+Flag17    Silence
+Flag18    Logspeech
+Flag19    Nodrop
+Flag20    Clanstoreroom
+Flag21    Nosummon
+Flag22    Noastral
+Flag23    Teleport
+Flag24    Teleshowdesc
+Flag25    Nofloor
+Flag31    Prototype
+End
+
+* --------------------------------------------------------------
+* Flags that affect the entire area
+* --------------------------------------------------------------
+
+#AREA
+
+Flag01	  Nopkill
+End
+
+
+* --------------------------------------------------------------
+* List of possible sexes that mobs can have
+* --------------------------------------------------------------
+
+#SEX
+
+Neutral	
+Male	
+Female
+End
+
+
+* --------------------------------------------------------------
+* List of possible program types that MUD programs can execute
+* --------------------------------------------------------------
+
+#PROGRAM
+
+in_file_prog  
+act_prog      
+speech_prog   
+rand_prog     
+fight_prog    
+hitprcnt_prog 
+death_prog    
+entry_prog    
+greet_prog    
+all_greet_prog
+give_prog     
+bribe_prog    
+time_prog     
+hour_prog     
+wear_prog     
+remove_prog   
+sac_prog      
+look_prog     
+exa_prog      
+zap_prog      
+get_prog      
+drop_prog     
+damage_prog   
+repair_prog   
+greet_prog    
+randiw_prog   
+speechiw_prog 
+pull_prog	  
+push_prog	  
+sleep_prog    
+rest_prog	 	
+rfight_prog   
+enter_prog    
+leave_prog    
+rdeath_prog	 
+script_prog	 
+use_prog	 	
+End
+
+#SMAUGSKILL
+
+do_aassign 	
+do_advance 	
+do_affected 
+do_afk 		  
+do_aid 		  
+do_allow 		
+do_ansi 		
+do_answer 	
+do_apply 		
+do_appraise 
+do_areas 		
+do_aset 		
+do_ask 		  
+do_astat 		
+do_at 			
+do_auction 		
+do_authorize 	
+do_avtalk 		
+do_backstab 	
+do_balzhur 		
+do_bamfin 		
+do_bamfout 		
+do_ban 		    
+do_bash 		  
+do_bashdoor 	
+do_berserk 		
+do_bestow 		
+do_bestowarea 
+do_bio 		    
+do_boards 		
+do_bodybag 		
+do_brandish 	
+do_brew 		
+do_bset 		
+do_bstat 		
+do_bug 		  
+do_bury 		
+do_buy 		  
+do_cast 		
+do_cedit 		
+do_channels 
+do_chat 		
+do_check_vnums 	
+do_circle 		  
+do_clans 		    
+do_clantalk 		
+do_clear 		
+do_climb 		
+do_close 		
+do_cmdtable 
+do_cmenu 		
+do_commands 
+do_comment 	
+do_compare 	
+do_config 	
+do_consider 
+do_council_induct 	
+do_council_outcast 	
+do_councils 		
+do_counciltalk 	
+do_credits 		  
+do_cset 		    
+do_deities 		  
+do_deny 		    
+do_description 	
+do_destro 		  
+do_destroy 		  
+do_detrap 		  
+do_devote 		  
+do_dig 		      
+do_disarm 		  
+do_disconnect 	
+do_dismount 		
+do_dmesg 		
+do_down 		
+do_drag 		
+do_drink 		
+do_drop 		
+do_diagnose 
+do_east 		
+do_eat 		  
+do_echo 		
+do_emote 		
+do_empty 		
+do_enter 		
+do_equipment 	
+do_examine 		
+do_exits 		  
+do_feed 	  	
+do_fill 		  
+do_fixchar 		
+do_flee 		  
+do_foldarea 	
+do_follow 		
+do_for 		       
+do_force 	      
+do_forceclose 	
+do_form_password 
+do_fquit 		
+do_freeze 	
+do_get 		  
+do_give 		
+do_glance 	
+do_gold     
+do_goto 		
+do_gouge 		
+do_group 		
+do_grub 		
+do_gtell 		
+do_guilds 	
+do_guildtalk 	
+do_hedit 		
+do_hell 		
+do_help 		
+do_hide 		
+do_hitall 	
+do_hlist 		
+do_holylight 		
+do_homepage 		
+do_hset 	    	
+do_ide 		      
+do_idea 		    
+do_immortalize 	
+do_immtalk 		
+do_induct 		
+do_installarea 	
+do_instaroom 		
+do_instazone 		
+do_inventory 		
+do_invis 		
+do_kick 		
+do_kill 		
+do_languages 		
+do_last 		
+do_leave 		
+do_level 		
+do_light 		
+do_list 		
+do_litterbug 		
+do_loadarea 		
+do_loadup 	    
+do_lock 		    
+do_log 	        
+do_look 		    
+do_lookmap 		  
+do_low_purge 		
+do_mailroom 		
+do_make 		    
+do_makeboard 		
+do_makeclan 		
+do_makecouncil 	
+do_makedeity 		
+do_makerepair 	
+do_makeshop 		
+do_makewizlist 	
+do_mapout 	
+do_massign 	
+do_mcreate 	
+do_mdelete 	
+do_memory 	
+do_mfind 		
+do_minvoke 	
+do_mlist 		
+do_mmenu 		
+do_mount 		
+do_mp_close_passage 
+do_mp_damage 		    
+do_mp_deposit 	    
+do_mp_open_passage 	
+do_mp_practice 	    
+do_mp_restore 	    
+do_mp_slay 		      
+do_mp_withdraw 	    
+do_mpadvance 		    
+do_mpapply 	
+do_mpapplyb 
+do_mpasound 
+do_mpat 		
+do_mpdream 	
+do_mpecho 	
+do_mpechoaround 
+do_mpechoat 		
+do_mpedit 		
+do_mpfavor 		
+do_mpforce 		
+do_mpgoto 		
+do_mpinvis 		
+do_mpjunk 		
+do_mpkill 		
+do_mpmload 		
+do_mpmset 		
+do_mpnothing 	
+do_mpoload 		
+do_mposet 		
+do_mppkset 		
+do_mppurge 		
+do_mpstat 		
+do_mptransfer 
+do_mrange 		
+do_mset 		
+do_mstat 		
+do_murde 		
+do_murder 	
+do_muse 		
+do_music 		
+do_mwhere 	
+do_name 		
+do_newbiechat 
+do_newbieset 	
+do_newzones 	
+do_noemote 		
+do_noresolve 	
+do_north 	    
+do_northeast 	
+do_northwest 	
+do_notell 		
+do_notitle    
+do_noteroom 
+do_oassign 	
+do_ocreate 	
+do_odelete 	
+do_ofind 		
+do_ogrub 		
+do_oinvoke 	
+do_oldscore 
+do_olist 		
+do_omenu 		
+do_opedit 	
+do_open 		
+do_opstat 	
+do_orange 	
+do_order 		
+do_orders 	
+do_ordertalk 		
+do_oset 		
+do_ostat 		
+do_outcast 	
+do_owhere 	
+do_pagelen 	
+do_pager 		
+do_pardon 	
+do_password 
+do_peace 		
+do_pick 		
+do_poison_weapon 
+do_practice 
+do_prompt 	
+do_pull 		
+do_punch 		
+do_purge 		
+do_push 		
+do_put 		
+do_qpset 	
+do_quaff 	
+do_quest 	
+do_qui 		
+do_quit 	
+do_rank 	
+do_rassign 		
+do_rat 		    
+do_rdelete 		
+do_reboo 	  	
+do_reboot 		
+do_recho 		  
+do_recite 		
+do_redit 		  
+do_redraw_page 	
+do_refresh_page 
+do_regoto 		  
+do_remove 		  
+do_rent 	      
+do_repair 	  	
+do_repairset 		
+do_repairshops 	
+do_repairstat 	
+do_reply 		
+do_report 	
+do_rescue 	
+do_reset 		
+do_rest 		
+do_restore 	
+do_restoretime 	
+do_restrict 		
+do_retire 
+do_retran 
+do_return 
+do_revert 
+do_rip 		
+do_rlist 	
+do_rmenu 	
+do_rpedit 
+do_rpstat 
+do_rreset 
+do_rset 	
+do_rstat 	
+do_sacrifice 
+do_save 		 
+do_savearea 
+do_say 		   
+do_scan 		
+do_score 		
+do_scribe 	
+do_search 	
+do_sedit 		
+do_sell 		
+do_set_boot_time 	
+do_setclan 		    
+do_setclass 		  
+do_setcouncil 		
+do_setdeity 		
+do_shops 		    
+do_shopset 		  
+do_shopstat 		
+do_shout 		    
+do_shove 		    
+do_showclan 		
+do_showclass 		
+do_showcouncil 	
+do_showdeity 		
+do_shutdow 		
+do_shutdown 	
+do_silence 		
+do_sit 		
+do_sla 		
+do_slay 	
+do_sleep 	
+do_slice 	
+do_slist 	
+do_slookup 	
+do_smoke 		
+do_snoop 		
+do_sober 		
+do_socials 	
+do_south 		
+do_southeast 		
+do_southwest 		
+do_speak 		
+do_split 		
+do_sset 		
+do_stand 		
+do_steal 		
+do_stun 		
+do_supplicate 
+do_switch 		
+do_tamp 		
+do_tell 		
+do_think 		
+do_time 		
+do_timecmd 	
+do_title 		
+do_track 		
+do_transfer 	
+do_trust 	  	
+do_typo 		  
+do_unfoldarea 
+do_unhell 		
+do_unlock 		
+do_unsilence  
+do_up 			
+do_users 		
+do_value 		
+do_visible 	
+do_vnums 		
+do_vsearch 	
+do_wake 		
+do_wartalk 	
+do_wear 		
+do_weather 	
+do_west 		
+do_where 		
+do_who 		  
+do_whois 		
+do_wimpy 		
+do_wizhelp 	
+do_wizlist 	
+do_wizlock 	
+do_yell 		
+do_zap 		
+do_zones 		
+End
+
+#SPELL
+
+spell_smaug        	  
+spell_acid_blast   	  
+spell_animate_dead     
+spell_astral_walk  	  
+spell_blindness    	  
+spell_burning_hands    
+spell_call_lightning   
+spell_cause_critical   
+spell_cause_light  	  
+spell_cause_serious    
+spell_change_sex 	    
+spell_charm_person     
+spell_chill_touch 	    
+spell_colour_spray     
+spell_control_weather  
+spell_create_food 	    
+spell_create_water     
+spell_cure_blindness   
+spell_cure_poison 	    
+spell_curse 	          
+spell_detect_poison    
+spell_dispel_evil 	    
+spell_dispel_magic     
+spell_dream 	          
+spell_earthquake 	    
+spell_enchant_weapon   
+spell_energy_drain     
+spell_faerie_fire 	    
+spell_faerie_fog 	    
+spell_farsight 	     
+spell_fireball 	     
+spell_flamestrike 	   
+spell_gate 	         
+spell_knock 	         
+spell_harm 	         
+spell_identify 	     
+spell_invis 	         
+spell_know_alignment  
+spell_lightning_bolt  
+spell_locate_object   
+spell_magic_missile   
+spell_mist_walk 	     
+spell_pass_door 	     
+spell_plant_pass 	   
+spell_poison 	       
+spell_polymorph 	     
+spell_possess 	       
+spell_recharge 	     
+spell_remove_curse    
+spell_remove_invis    
+spell_remove_trap 	    
+spell_shocking_grasp   
+spell_sleep 	          
+spell_solar_flight     
+spell_summon 	        
+spell_teleport 	      
+spell_ventriloquate    
+spell_weaken 	        
+spell_word_of_recall   
+spell_acid_breath 	    
+spell_fire_breath 	    
+spell_frost_breath     
+spell_gas_breath 	    
+spell_lightning_breath 
+spell_spiral_blast     
+spell_scorching_surge  
+spell_helical_flow     
+spell_transport 	      
+spell_portal 	        
+spell_ethereal_fist    
+spell_spectral_furor   
+spell_hand_of_chaos    
+spell_disruption 	    
+spell_sonic_resonance  
+spell_mind_wrack 	    
+spell_mind_wrench 	    
+spell_revive 	        
+spell_sulfurous_spray  
+spell_caustic_fount    
+spell_acetum_primus    
+spell_galvanic_whip    
+spell_magnetic_thrust  
+spell_quantum_spike    
+spell_black_hand 	    
+spell_black_fist 	    
+spell_black_lightning  
+spell_midas_touch      
+reserved 		          
+spell_null 	          
+End
+
+#AFFECTS
+
+none
+strength
+dexterity
+intelligence
+wisdom
+constitution
+sex
+class
+level
+age
+height
+weight
+mana
+hit
+move
+gold
+experience
+armor class
+hit roll
+damage roll
+save vs. poison
+save vs. rod
+save vs. paralysis
+save vs. breath
+save vs. spell
+charisma
+affected_by
+resistant
+immune
+susceptible
+weaponspell
+luck
+backstab
+pick
+track
+steal
+sneak
+hide
+palm
+detrap
+dodge
+peek
+scan
+gouge
+search
+mount
+disarm
+kick
+parry
+bash
+stun
+punch
+climb
+grip
+scribe
+brew
+wear spell
+remove spell
+emotion
+mental state
+dispel
+remove
+dig
+full
+thirst
+drunk
+blood
+cook
+recurring spell
+contagious
+ext_affect
+odor
+roomflag
+sectortype
+roomlight
+teleport vnum
+teleport delay
+End
+
+
+
+
+
+#ITEM
+
+(none)
+Light
+Scroll
+Wand
+Staff
+Weapon
+Fireweapon
+Missile
+Treasure
+Armor
+Potion
+Worn
+Furniture
+Trash
+Oldtrap
+Container
+Note
+Drinkcon
+Key
+Food
+Money
+Pen
+Boat
+Corpse
+Corpse_pc
+Fountain
+Pill
+Blood
+Bloodstain
+Scraps
+Pipe
+Herbcon
+Herb
+Incense
+Fire
+Book
+Switch
+Lever
+Pullchain
+Button
+Dial
+Rune
+Runepouch
+Match
+Trap
+Map
+Portal
+Paper
+Tinder
+Lockpick
+Spike
+Disease
+Oil
+Fuel
+Shortbow
+Longbow
+Crossbow
+Projectile
+Quiver
+Shovel
+Salve
+End
+
+
+#POSITION
+
+dead			
+mort	
+incap
+stun	
+sleep	
+rest	
+sit
+fight
+stand
+mounted 
+being shoved 
+being dragged
+
+End
+
+ 
+#SPECIAL
+
+(none) 
+Spec_breath_any	  
+Spec_breath_acid
+Spec_breath_fire	
+Spec_breath_frost	
+Spec_breath_gas
+Spec_breath_lightning
+Spec_cast_adept	  
+Spec_cast_cleric	
+Spec_cast_mage	  
+Spec_cast_undead	
+Spec_executioner	
+Spec_fido		 
+Spec_guard	
+Spec_janitor
+Spec_mayor	
+Spec_poison	
+Spec_thief	
+End
+
+
+#RACE
+Human
+Elf
+Dwarf
+Halfling
+Pixie
+Vampire
+Half-ogre
+Half-orc
+Half-troll
+Half-elf
+Gith
+R1
+R2
+R3
+R4
+R5
+R6
+R7
+R8
+R9
+Ant
+Ape
+Baboon
+Bat
+Bear
+Bee
+Beetle
+Boar
+Bugbear
+Cat
+Dog
+Dragon
+Ferret
+Fly
+Gargoyle
+Gelatin
+Ghoul
+Gnoll
+Gnome
+Goblin
+Golem
+Gorgon
+Harpy
+Hobgoblin
+Kobold
+Lizardman
+Locust
+Lycanthrope
+Minotaur
+Mold
+Mule
+Neanderthal
+Ooze
+Orc
+Rat
+Rustmonster
+Shadow
+Shapeshifter
+Shrew
+Shrieker
+Skeleton
+Slime
+Snake
+Spider
+Stirge
+Thoul
+Troglodyte
+Undead
+Wight
+Wolf
+Worm
+Zombie
+Bovine
+Canine
+Feline
+Porcine
+Mammal
+Rodent
+Avis
+Reptile
+Amphibian
+Fish
+Crustacean
+Insect
+Spirit
+Magical
+Horse
+Animal
+Humanoid
+Monster
+God
+End
+
+#WEAPON
+
+Exotic
+Sword
+Mace	
+Dagger
+Axe	
+Staff	
+Flail	
+Whip	
+Polearm
+End
+
+#LIQUID     
+
+Water			
+Beer			
+Wine			
+Ale			
+Dark ale		
+Whisky		
+Lemonade		
+Firebreather	
+Local specialty
+Slime mold juice
+Milk			
+Tea			
+Coffee		
+Blood			
+Salt water	
+Cola			
+Mead			
+Grog			
+End
+
+#ATTACKLIST
+
+Hit
+Slice
+Stab
+Slash
+Whip
+Claw
+Blast
+Pound
+Crush
+Grep
+Bite
+Pierce
+Suction
+Bolt
+Arrow
+Dart
+Stone
+Pea
+End
+
+
+#WEARLIST
+
+(none)=-1
+Light
+Finger-L
+Finger-R
+Neck-1
+Neck-2
+Body
+Head
+Legs
+Feet
+Hands
+Arms
+Shield
+About
+Waist
+Wrist-L
+Wrist-R
+Wield
+Hold
+Dual Wield
+Ears
+Eyes
+Missile Wield
+Back
+Face  
+Ankle-L 
+Ankle-R
+End
+
+#WEAPONCONDITION 
+
+In superb condition
+In excellent condition
+In very good condition
+In good shape
+Showing a bit of wear
+A little run down
+In need of repair
+In great need of repair
+In dire need of repair
+Very badly worn
+Practically worthless
+Almost broken
+Broken
+End
+
+
+#ARMOURCONDITION  
+
+In superb condition
+In very good condition
+In good shape
+Showing a bit of wear
+A little run down
+In need of repair
+In great need of repair
+In dire need of repair
+Very badly worn
+Practically worthless
+Broken
+End
+
+#FOODCONDITION    
+
+Is fresh
+Is nearly fresh
+Is perfectly fine
+Looks good
+Looks ok
+Is a little stale
+Is a bit stale
+Smells slightly off
+Smells quite rank
+Smells revolting
+Is crawling with maggots
+End
+
+#SECTOR    
+
+In a room		
+In a city	
+In a field		
+In a forest	
+Hills		    
+On a mountain	
+In the water		
+In rough water	
+Underwater 	
+In the air	
+In a desert	
+Somewhere
+Ocean floor 	
+Underground	
+End
+
+#DIRECTION
+
+North
+East
+South
+West
+Up
+Down
+Northeast
+Northwest
+Southeast
+Southwest
+Somewhere
+End
+
+#SKILLTYPE   
+
+Unknown 
+Spell 
+Skill 
+Weapon 
+Tongue 
+Herb 
+Racial 
+Disease
+End
+
+#CLASS
+
+Mage
+Cleric
+Thief
+Warrior
+Vampire
+Druid
+Ranger
+Augurer
+Pc8
+Pc9
+Pc10
+Pc11
+Pc12
+Pc13
+Pc14
+Pc15
+Pc16
+Pc17
+Pc18
+Pc19
+Baker
+Butcher
+Blacksmith
+Mayor
+King
+Queen
+End
+
+#EXIT
+
+Flag01 Isdoor		
+Flag02 Closed		
+Flag03 Locked		
+Flag04 Secret		
+Flag05 Swim		
+Flag06 Pickproof	
+Flag07 Fly			
+Flag08 Climb		
+Flag09 Dig			
+Flag10 Eatkey		
+Flag11 Nopassdoor	
+Flag12 Hidden		
+Flag13 Passage		
+Flag14 Portal 		
+Flag15 Res1		
+Flag16 Res2		
+Flag17 xclimb		
+Flag18 xenter		
+Flag19 xleave		
+Flag20 xauto		
+Flag21 Noflee	  	
+Flag22 xsearchable	
+Flag23 Bashed      
+Flag24 Bashproof   
+Flag25 Nomob		
+Flag26 Window		
+Flag27 xlook		
+End
+
+#END
+
+

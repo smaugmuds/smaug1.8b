@@ -1,0 +1,95 @@
+Please note!!
+This snippet depends on you having the info snippet (I ferget which one I
+put in, but it's got togglable information settings). If you dont have it,
+remove the announce(blah blah) statement in hiscore.c
+
+in comm.c 
+
+under global variables add
+sh_int              MemLogCount;       
+sh_int              MemLogMax;         
+
+before get the port number add
+
+log_string("Initiating Memlog");
+rename( MEMLOG_FILE, "../data/memlog.lastboot" );
+unlink(MEMLOG_FILE);
+MemLogCount = 0; 
+MemLogMax = 100; 
+
+in db.c 
+in boot_db (somewhere) add
+
+load_hiscores();
+search for load_notes, area_update, and add the above line in there
+somewhere.
+
+in merc.h, add 
+#include "hiscore.h"  
+just before struct note_data
+
+in act_info.c (do_look)
+at the beginning add 
+char *kwd
+then after
+ for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
+    {
+        if ( can_see_obj( ch, obj ) )
+        {  /* player can see object */
+
+add
+            kwd = is_hiscore_obj( obj );
+          if( kwd )
+          {
+              show_hiscore( kwd, ch );
+              return;
+           }
+then go down to
+    for ( obj = ch->in_room->contents; obj != NULL; obj =
+obj->next_content )
+    {
+
+        if ( can_see_obj( ch, obj ) )
+        {
+and add  
+            kwd = is_hiscore_obj( obj );
+          if( kwd )
+          {
+              show_hiscore( kwd, ch );
+              return;
+           }
+
+Add hiscore.c to your makefile
+
+Make clean (rm -r -f *.o) and recompile.
+
+
+Don't forget to define hiscores and hiscoset in interp.c and interp.h. I
+don't have the commands set up in there, so I can't be much help for you.
+
+Another thing: In show_hiscore, you'll see a {? . This is a random color
+choice for my mud. You'll have to change that for your own liking.
+
+Now, how to add lists:
+From within the mud , type 
+hiscoset create <listname>
+hiscoset set <listname> desc <description>
+
+for example, my pkiller scoresheet was done as
+hiscoset create pkill
+hiscoset set pkill desc Top 5 pkillers
+hiscoset set pkill maxlength 5 (for only 5 entries)
+
+NOW, in the code, add this:
+
+in comm.c (probably in con_read_motd), add the followin bit of code
+(again, assuming this is a pkill list.)
+        adjust_hiscore( "pkill", ch, ch->pcdata->kills_pc );
+        adjust_hiscore( "quest", ch, ch->questpoints );
+        adjust_hiscore( "age", ch, get_age(ch) );
+
+Hell, there's a few examples for you.
+Make SURE you change the other areas where this code is refferenced
+too. For example, a questpoint check would be called in quest.c after the
+points are actually assigned, and a pkillers check in fight.c after the
+player kills are adjusted.

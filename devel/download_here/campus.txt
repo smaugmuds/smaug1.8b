@@ -1,0 +1,342 @@
+
+   
+     _________________________________________________________________
+   
+                        CONSTRUCTING THE VIRTUAL CAMPUS
+                                       
+   
+   
+  [Text of a paper delivered by John Unsworth at the 1994 Modern Language
+  Association meeting in Toronto]
+  
+   
+     _________________________________________________________________
+   
+   
+   
+   This paper is about my experience in constructing three text-based
+   virtual worlds; it is also, to some extent, about the mapping of those
+   worlds as expressive, pedagogical, and disciplinary "spaces"--or, one
+   might better say, texts.. The first of these text-spaces was the
+   virtual campus at North Carolina State University, on which I taught
+   two courses; the second is PMC-MOO, sponsored by the electronic
+   journal Postmodern Culture as a conference facility/slash/theme-park
+   on the topic of postmodernism, formerly hosted at NC State, now moved
+   with me to the University of Virginia; the third is a conference
+   facility-cum-reading room for the University of Virginia's Institute
+   for Advanced Technology in the Humanities.
+   
+   In a panel of papers on postmodern maps, I feel a bit like the odd one
+   out, since the terrain I'm discussing is still peppered with primitive
+   "here be dragons" markers. Because this sort of relatively unmapped
+   terrain inspires some predictable but misguided hopes and fears, let
+   me begin by listing a few of the claims I am not going to make:
+     * I am not going to claim that contact with other people in the
+       virtual world can, will, or should substitute for face-to-face
+       contact.
+       
+     * I am not going to claim that virtual reality is inherently more
+       democratic, inherently more empowering of the marginalized, or
+       inherently more open than non-computer-mediated modes of being.
+       
+     * I am not going to claim that everyone ought to run right out and
+       invest their time and energy homesteading in cyberspace.
+       
+   
+   
+   That's more than enough negative generalization to start with: now we
+   move on to definitions and examples. The virtual campus, PMC-MOO and
+   the Institute's conference center are all MUDs, an acronymn for
+   Multi-User Dungeon. Actually, MUDs are only the earliest of a class of
+   programs developed for playing dungeons and dragons over the
+   networks--real-time, text adventure games (not unlike those old
+   BASIC-language computer games, with the difference that you can meet
+   other players in the game-space). All three of my ventures into this
+   kind of text-based virtual reality have involved a cousin of MUDs
+   called a MOO, which stands for MUD, Object-Oriented. MOO-code was
+   developed by researchers at Xerox's Palo-Alto Research Center,
+   principally by Pavel Curtis. These programs run on Unix machines, and
+   although one can make a direct telnet connection to these virtual
+   worlds, just as one might telnet into a library catalogue system or
+   other networked resources, it is often best to operate a MOO (or MUD,
+   for that matter) through a client program (programs such as these are
+   freely available on the network, for all three major hardware
+   platforms).
+   
+   To the extent that one can generalize about these environments, MOOs
+   tend to be less goal-oriented, less violent, less sexual, and more
+   academic than MUDs, and they also tend (by virtue of their
+   object-oriented nature) to be more easily editable and programmable
+   from within. MOOs share with MUDs and other kinds of multi-user
+   environments (MUSHes, LPMuds, MUSEs, etc.) the general quality of
+   being extremely absorbing--surprisingly so, given the low bandwidth of
+   their text-only user interface. In fantasy adventure MUDs, it is not
+   uncommon for players to spend forty hours a week logged in and
+   playing; some spend twice that, sometimes at a stretch. Even in more
+   academic MOOs, one finds people who spend many hours a day logged in,
+   and people who will invest hundreds of hours in acquiring self-taught
+   expertise in the MOO programming language, in order to create
+   interesting, useful, or entertaining objects for themselves and the
+   others. At LambdaMOO, the originary MOO still running at Xerox PARC,
+   over 2,000 "citizens" vote on issues of comunity interest, participate
+   in architecture review boards and mediation panels, and generally
+   maintain what would qualify as a very active civic life in any "real
+   town." The players on these MU*s come from anywhere on the internet,
+   which is to say almost anywhere in the world; in a few cases, they
+   constitute a tightly knit and well-defined interest group of some
+   sort, but more often than not they are simply net-travelers attracted
+   by the name or the theme of the MU*, and increasingly, as the size and
+   nature of the internet's user population changes, the players are
+   people who, while joyriding around the net, stumble in on these
+   roadside attractions and decide to stay.
+   
+   My first experience with a MOO was very much of this type: I read
+   about MUDs on the TechnoCulture Listserv discussion group, and
+   LambdaMOO was mentioned as a good place to visit for a taste of
+   MUDding. I telnetted into Lambda as a (nameless but colorful) guest,
+   and within a few minutes I was already considering the possibillity of
+   using this sort of interactive, multi- user program as a teaching
+   tool. I'll admit, this associative leap was made, in part, because I
+   was faced in my 'real life' with teaching a composition class for
+   Engineers, and I don't really like teaching composition, so I was half
+   looking for something to make the task more interesting. During that
+   first visit, I found myself talking to a female player who turned out
+   to be a male astrophysicist and wizard of the MOO (wizard being a
+   cross between a janitor and an omnipotent deity). This was David van
+   Buren from Cal Tech, and it turned out that he was at that time (a
+   year ago now) setting up AstroVR, a MOO for astronomy conferencing.
+   This MOO, which still exists, incorporates sound and graphics via some
+   very fancy implementation of network technology and some very simple
+   client programs. Dave was quite interested in seeing MOOs used for
+   teaching, and he helped me get up to speed in the week or two I had to
+   prepare.
+   
+   With more help from Engineering Computer Operations (initially rather
+   suspicious of the whole idea, since MUDs were banned at NCSU as they
+   are at many campuses), I got the virtual campus set up in time for the
+   Spring Semester's class, and spent about a hundred hours learning the
+   programming language well enough to operate the basic elements. I also
+   had invaluable help from several students, one paid as an assistant
+   and two more who came in, under aliases and via some fairly
+   underground network pathways, from Washington University and somewhere
+   in Cambridge. It soon became clear that there was an inverse relation
+   between age and expertise: the 35-year-old knew the least (and
+   ostensibly controlled the most), the 21-year old was more
+   knowledgeable, the 18-year-old more so, and the 16-year-old could run
+   circles around all of us put together. During these initial days, it
+   was my firm belief that somewhere out there, there was an
+   eight-year-old who knew absolutely everything--and I'm sure there is.
+   
+   During the semester that followed, I taught two sections of freshman
+   composition to Benjamin Franklin Scholars--Engineers double-majoring
+   in the humanities. All of these students already had internet accounts
+   and had been through a very rudimentary short-course on Engineering
+   Computing operations; contrary to what I expected, not all of the
+   students were computer literate, and some were even rather
+   computer-phobic. After two weeks of introductory reading, training,
+   and discussion, we met half of the time in a physical classroom and
+   half the time on the virtual campus. Because all definitions of space
+   are textual, as are all communications within or across spaces, and
+   because the MOO relays eac remark made by anyone in a MOO room to all
+   others in that room, so that no one can be interrupted, many of my
+   students (and all of our guests, found the MOO very demanding and
+   sometimes chaotic and confusing. In short, those students who had
+   grown up doing their homework with the TV and the stereo going, seemed
+   right at home; those who could deal with only one channel at a time,
+   were disoriented and found the MOO much too noisy for their taste. On
+   theother hand, each class left behind a complete textual record of
+   everything said in the meeting, available for each to review as he or
+   she chose.
+   
+   The course itself had a narrative and a role-playing element, intended
+   to capitalize on the role-playing heritage of the MOO. At the
+   beginning of the course, each section was told that they were a panel
+   of advisors to Al Gore (played woodenly, by me); their job was to come
+   up with a twenty-page position paper to guide government policy on
+   each of four issues--privacy rights, public access, intellectual
+   property, and computer crime. Each member of the class was required to
+   declare an area of expertise (lawyer, economist, sociologist,
+   ethicist, whatever they chose) that would account for his or her
+   presence on this panel, and furthermore each student was required to
+   choose a committee assignment as an editor, a network resource person,
+   or a traditional library resource person. Students then outlined the
+   issues they wanted to address, took the part of the outline that fit
+   their expertise, researched and wrote that one-to-two-page section,
+   swapped drafts with the other class, and then on the basis of further
+   research, the coments of the other class, and my comments on their
+   drafts, they collectively revised the separate sections into a single
+   document. Once during each topic round, the class met with real
+   experts who joined the class on the virtual campus--these were
+   lawyers, librarians, lobbyists, and others who would read the
+   students' drafts and then spend an hour or so with each section in
+   discussion. At the end of the revision process, one position paper
+   would be selected for the final white paper, to be mailed to the real
+   Al Gore.
+   
+   It was not accidental that the networks were the subject of the class:
+   I wanted the students to explore networked resources for at least half
+   of their research, and at that point (it's still true to a lesser
+   extent) there was more information on the net about the net than about
+   any other single topic. The content and fate of this particular class
+   is off the map of my topic, so to speak, but I do think it is worth
+   mentioning that this was, without a doubt, the best composition class
+   I have ever taught, the student writing was the best I have ever
+   incited, and the students themselves were extremely diligent, self-
+   organizing, and enthusiastic about the class, often running class
+   sessions on their own and often meeting after hours to do small group
+   work.
+   
+   Given the unusually self-disciplined and self-disciplining quality of
+   the subects in this experiment, it will perhaps not come as a surprise
+   to learn that the layout of the virtual campus was modelled (at least,
+   above-ground) on Foucault's (or actually, Bentham's) panopticon, which
+   we chose as the most effective representation we could think of for
+   any institutional structure. The (description, remember, of the)
+   layout referred to a circular building of several levels, with a
+   central observation point. In fact, that point existed and you could
+   quite literally stand in that room and tune into the conversations
+   going on in any other room in the panopticon. The only difference
+   between this panopticon and the original was the rather significant
+   one that the student/prisoners were free to occupy that central point.
+   And, when it came to discussing privacy rights, the panopticon
+   provided us with some practical examples.
+   
+   The second plane of the campus, though, was below-ground, where we had
+   the rhizomic steam tunnels. These tunnels were actually areas where
+   the students were free to build anything they wanted, create their own
+   rooms, and connect those rooms in any manner they desired to any other
+   room in the steam tunnels. As you can imagine, the cells assigned to
+   each student in the Panopticon very quickly developed trap doors with
+   laundry chutes or waterslides down into the steam tunnels. Students
+   did spend all hours of the night and day logged into the campus,
+   talking with one another, sometimes working on class materials
+   sometimes not, sometimes programming useful objects for extra credit,
+   but they spent most of that time below-ground.
+   
+   My second experiment with a MOO was to set up PMC-MOO, a conference
+   center plus theme-park of postmodernism. The purpose of PMC- MOO was
+   to provide a real-time channel for interaction among readers and
+   authors of Postmodern Culture, and also to provide an opportnity to
+   program object lessons in postmodern theory. Once again, the terrain
+   of the place was early on divided into two realms, one ordered (or
+   disciplinary) and one disordered (or post-disciplinary). In the
+   ordered realm, we had (still have) a library, a conference center,
+   some offices, and a lobby. In the disordered (and much larger)
+   section, there are rooms upon rooms upon rooms, some interesting (such
+   as David Sewell's Borges rooms, where you can talk with Funes the
+   Memorius, visit the library of Babel, or write Menard's Quixote) and
+   many more simply banal elfin bowers, or worse.
+   
+   In an early attempt (inspired, in spirit, by Jim English) to make this
+   environment suitably hostile and arbitrary, we created all rooms in
+   the terrain of postmodernism (that is, in the major, post-disciplinary
+   area of PMC-MOO) as children of the genderfuck room, the effect of
+   which was that, each time one entered the terrain of postmodernism,
+   one's self-designed description and gender would be stripped off, and
+   one would be randomly assigned a race, class, gender, and sexual
+   orientation immediately visible to all other players. The effect of
+   this very crude device, like the content of the class on the virtual
+   campus, is not really part of any talk about maps and space (though it
+   has something to do with road signs in the social field). In any case,
+   it is worth noting. Weeks upon weeks of vociferous argument and
+   extended discussion ensued, with many participants claiming (quite
+   rightly) that this additive and label-oriented approach to identity
+   was the worst sort of hackwork: but the interesting thing was that,
+   this critique notwithstanding, the crude device did produce its
+   intended effect, though in an unanticipated way. It made people
+   (including our non-academic, teen-weenie joyriders) focus on questions
+   of identity politics in a way that they otherwise might not have done.
+   
+   
+   PMC-MOO has recently undergone a change of location, from an aging
+   DECstation in North Carolina to a much newer and faster DEC Alpha in
+   Virginia: we took this opportunity to stage an apocalypnic, during
+   which people logged into the MOO in North Carolina while it
+   self-destructed; all the time, a second copy was already running in
+   Virginia, where it continues today. We also took the opportunity, with
+   the death and rebirth of the MOO, to institute some changes in the
+   ground rules, including email registration (formerly, one could be
+   completely anonymous; now, a wizard can match up a real-life identity
+   with a MOO player. We did this because, after PMC-MOO was mentioned in
+   WIRED magazine, we began to have a lot of trouble with disruptive
+   aggression--MOO terrorism, if you will--by the joyriders of
+   cyberspace--whereupon a sort of Gresham's law kicked in, and the bad
+   started to drive out the good. Inasmuch as there are many, many MUDs
+   intended for aggressive play and very few MOOs for more cerebral
+   pursuits, I'll admit that I didn't feel especially guilty about
+   repressing the more disruptive players just a bit.
+   
+   The third MOO, the Institute's Conference Center, has just been set up
+   in the last month or so, and has really received no use yet. It will
+   be a real- names-only MOO with email registration, though it will have
+   some guest logins available, since one of its purposes is to serve as
+   a sort of reading room to run alongside the World-Wide Web
+   publications of the Institute--a place where you can meet other
+   readers of the same material, a way to bump into someone on the net
+   who shares an interest with you.
+   
+   In all three MOOs, space is a more or less arbitrary construct: one
+   may arrange the network of spaces that constitutes the MOO according
+   to the compass of three-dimensional space (with north, south, east,
+   west, up, down), but one may as easily arrange spaces according to
+   topics, themes, or any other scheme one desires. Spaces can be locked
+   or open, or locked only to certain people and open to others; they can
+   be public or private, colorful or drab, they can float through other
+   spaces or remain anchored in one place. The same room can contain one
+   person or one hundred; spaces can act on the people within them,
+   arbitrarily or according to qualities of the player or its possessions
+   or actions. In one sense, the space occupied by a MOO is a space in
+   memory, since the MOO loads and runs in random access memory, plus
+   some long-term storage and short term swap space on disk. The space of
+   the MOO, then, is a chip--the microscopic passageways etched into a
+   fingernail-sized chunk of silicon. Or rather, the space of the MOO is
+   the chip plus the telephone lines that make up the network, since the
+   MOO is mapped on top of the internet, and its space includes the
+   pathways by which the player connects to the MOO, perhaps extending as
+   far as the screen on which the MOO appears to its individual player.
+   
+   In practice, the space of the MOO is metaphorical and symbolic all the
+   way down: as such, it simply reflects the richness or the poverty of
+   our imagination, and the shapes it takes echo our disciplinary
+   structures and practices. This brings me all the way around, from
+   claims that I would not make, to claims that I will make. The first of
+   those claims is that virtual reality, whether text-based, graphical,
+   or immersive, is largely about literalizing familiar pre-cybernetic
+   metaphors and only opens new vistas (whup, there's an old metaphor
+   now) by accident. That is to say, contra Baudrillard, that these
+   artificial models do not precede the ordering of space or practice in
+   any planned way, though it could be argued that our linguistic,
+   social, and institutional habit--the world, as we know it--models this
+   model world. More than anything else, it is a simple fact that the
+   defense establishment and the entertainment industry own the past and
+   future (respectively) of the networks in general and of virtual
+   reality in almost all its particulars.
+   
+   Second, I will claim that virtual reality, in academic settings,
+   allows you to experiment with the way authority and order are imposed
+   and distributed-- though more of ten than not, you will find the
+   boundaries to be only slightly different from those of "real life" (a
+   spurious distinction, in any case). Nonetheless, even very slight
+   differences in one's practice can make quite significant differences
+   in the end result though (as I said before), those differences are
+   usually not very predictable.
+   
+   And finally, I would argue--as Andrew Ross does in TechnoCulture, that
+   we would do better to engage positively and proactively with this
+   technology than to spend our time recriminating it for its
+   military-industrial origins or making grim predictions about its
+   socio-economic teleology.
+     _________________________________________________________________
+   
+   Last Modified: Thursday, 18-May-95 21:43:40 EDT
+
+
+
+
+------------------------------------------------------------------------------
+ftp://ftp.game.org/pub/mud      FTP.GAME.ORG      http://www.game.org/ftpsite/
+------------------------------------------------------------------------------
+
+ This document came from FTP.GAME.ORG, the ultimate source for MUD resources.
+
+------------------------------------------------------------------------------

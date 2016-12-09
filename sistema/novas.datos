@@ -1,0 +1,16 @@
+#TIPONOVA
+Nome          novas~
+Nome_comando  novas~
+Cabeceira     &WNovas de Kallaika ...
+~
+Vnum          0
+Nivel	       0
+FIN
+#NOVA
+Titulo    Comando 'Equipado' engadido.~
+Nome      Reino~
+Data      15/03/14~
+Tipo      0
+Publicada O comando 'equipado' mostra as vestiduras equipadas.
+~
+FIN

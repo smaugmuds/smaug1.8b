@@ -1,0 +1,55 @@
+#PLAYER
+Version      3
+Name         Xermonproba~
+Sex          2
+Class        11
+Race         10
+Languages    1 1
+Level        2
+Played       1791
+Room         10300
+HpManaMove   31 31 122 122 110 110
+Stance       0
+Stances      0 0 0 0 0 0 0 0 0 0 0 0
+Gold         0
+Exp          2000
+Height          77
+Weight          137
+Act          704644680
+AffectedBy   8
+Position     112
+Style     2
+Practice     5
+Alignment    0
+SavingThrows 0 0 0 0 0
+Favor	       0
+Glory        0
+MGlory       0
+Honour       0
+Hitroll      0
+Damroll      0
+Armor        100
+Mentalstate  0
+Password     be7a53d598b934c4c60907b63d1576c1c77305b923486b7be8ec02270839742f~
+Title         o Attendant~
+Flags        8519688
+PKills       0
+PDeaths      0
+MKills       0
+MDeaths      0
+IllegalPK    0
+AttrPerm     14 14 18 14 12 9 14
+AttrMod      0 0 0 0 0 0 0
+Condition    0 23 23 10
+Site         192.168.1.66
+Tongue       100 'common'
+Tongue       100 'gith'
+End
+
+#OBJECT
+Vnum         10333
+WearLoc      17
+Values       5 5 0 0 0 0
+End
+
+#END

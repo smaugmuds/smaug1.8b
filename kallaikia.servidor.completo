@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Cargar ficheiro de configuracion
+source kallaikia.servidor.configuracion
+
+echo
+echo "          -- [[ $programa $version ]] --" 
+echo 
+echo "              \"$reino\""
+echo
+echo " [ INICIO ] Iniciando servicio ..."
+
+sleep 1;
+
+# Borrar o log de apagado
+if [ -f "$logapagado" ]; then rm -f $logapagado; fi 
+
+# Rutina principal
+# Volve a reiniciar o servicio en caso de fallo.
+
+while [[ 1 -eq 1 ]]; do
+
+    # Ficheiros de log
+
+    if [ -f "$logservidor" ]; then mv $logservidor $logservidor.$$; fi
+    date > $logservidor
+    date > $loginicio
+
+    # Iniciar servicio
+    netstat -an | grep ":$puerto " | grep LISTEN
+
+    # Comprobar que se escoita no $puerto correcto 
+    if [[ $? -eq 0 ]]; then
+        echo "O porto $porto esta en uso."
+        exit 0
+    fi
+
+    # Iniciar o $programa e gardar o log principal
+    # ../$programa $porto 2> $logservidor
+    nohup "cd $reino && ../$programa $porto 2> ../$logservidor" > log/${programa}.servidor.completo.log &
+
+    # Borrar o log de apagado ao sair
+    if [ -f "$logapagado" ]; then
+	rm -f $logapagado
+	exit 0
+    fi
+
+    # En caso de fallo esperar 5 segundos antes de intentalo de nuevo.
+    sleep 5
+done

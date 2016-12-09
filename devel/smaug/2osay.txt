@@ -1,0 +1,64 @@
+Add to act_comm.c
+
+After do_say add this...
+
+void do_osay (CHAR_DATA * ch, char *argument)
+{
+    if (argument[0] == '\0')
+    {
+        send_to_char ("Osay what?\n\r", ch);
+        return;
+    }
+
+    act ("{6$n says OOCly '{7$T{6'{x", ch, NULL, argument, TO_ROOM);
+    act ("{6You say OOCly '{7$T{6'{x", ch, NULL, argument, TO_CHAR);
+
+    if (!IS_NPC (ch))
+    {
+        CHAR_DATA *mob, *mob_next;
+        for (mob = ch->in_room->people; mob != NULL; mob = mob_next)
+        {
+            mob_next = mob->next_in_room;
+            if (IS_NPC (mob) && HAS_TRIGGER (mob, TRIG_SPEECH)
+                && mob->position == mob->pIndexData->default_pos)
+                mp_act_trigger (argument, mob, ch, NULL, NULL, TRIG_SPEECH);
+   }
+    }
+    return;
+}
+
+
+
+Then search for 
+
+    ALTER_COLOUR (info)}
+    else if (!str_cmp (arg, "say_text"))
+    {
+
+and after it add this...
+
+
+    ALTER_COLOUR (info)}
+    else if (!str_cmp (arg, "osay"))
+    {
+    ALTER_COLOUR (info)}
+    else if (!str_cmp (arg, "osay_text"))
+    {
+
+
+Then in interp.c Search for...
+
+{"say", do_say, POS_RESTING, 0, LOG_NORMAL, 1},
+
+And below it add this...
+
+{"osay", do_osay, POS_RESTING, 0, LOG_NORMAL, 1},
+
+
+And finally, in interp.h search for this...
+
+DECLARE_DO_FUN( do_say                  );
+
+and after it add this...
+
+DECLARE_DO_FUN( do_osay                 );

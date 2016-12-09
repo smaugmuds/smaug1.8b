@@ -1,0 +1,121 @@
+	Hey, this is a very very simple snippet...(my very first!).  It allows for imms to set a BUSY flag, so that the mortals don't try to talk to them and get mad when they get no response(or all the imms be invisible and the players think noone is there to help at all.) I don't care about your making note, but if you feel like it feel free to!
+If you have troubles, can do it better, or just want to say thanks my email is rlandon15@hotmail.com
+
+*Tendark*
+
+---------------------------act_comm.c---------------------------
+add this stuff into do_channels
+
+    if (IS_SET (ch->comm, COMM_BUSY))
+        send_to_char ("You are Busy.\n\r", ch);
+
+I have it right after afk, but whatever floats your boat...
+next, add this
+
+void do_busy (CHAR_DATA * ch, char *argument)
+{
+    if (IS_SET (ch->comm, COMM_BUSY))
+    {
+        send_to_char ("Busy flag removed. Type 'replay' to see tells.\n\r", ch);
+        REMOVE_BIT (ch->comm, COMM_BUSY);
+    }
+    else
+    {
+        send_to_char ("You are now marked as busy.\n\r", ch);
+        SET_BIT (ch->comm, COMM_BUSY);
+    }
+}
+
+and in do_tell, and do_reply add this:
+
+    if (IS_SET (victim->comm, COMM_BUSY))
+    {
+        if (IS_NPC (victim))
+        {
+            act ("$E is Busy, and not receiving tells.", ch, NULL, victim,
+                 TO_CHAR);
+            return;
+        }
+
+        act ("$E is Busy, but your tell will go through when $E returns.",
+             ch, NULL, victim, TO_CHAR);
+        sprintf (buf, "%s tells you '%s'\n\r", PERS (ch, victim),
+                 argument);
+        buf[0] = UPPER (buf[0]);
+        add_buf (victim->pcdata->buffer, buf);
+        act ("You tell $N '$t'", ch, argument, victim, TO_CHAR);
+        act_new ("$n tells you '$t'", ch, argument, victim, TO_VICT, POS_DEAD);
+        return;
+    }
+
+---------------------------tables.c---------------------------
+
+In comm_flags[] (if you can't find it do a "find" thing for COMM_AFK)table thing
+add this somewhere (I have mine right before NULL)
+
+    {"busy", COMM_BUSY, TRUE},
+
+---------------------------act_info.c---------------------------
+
+in show_char_to_char_0 add:
+
+    if (IS_SET (victim->comm, COMM_BUSY))
+        strcat (buf, "[Busy] ");
+
+in do_whois, and do_who, add this after /*format it up*/ or whatever:
+
+in :
+            sprintf (buf, "[%2d %6s %s] %s%s%s%s%s%s%s%s\n\r",
+
+add another %s to that main block of them,
+
+and then there'll be a jumble of stuff after it that looks like:
+                     wch->level,
+                     wch->race < MAX_PC_RACE ? pc_race_table[wch->race].who_name : "     ",
+                     class,
+                     wch->incog_level >= LEVEL_HERO ? "(Incog) " : "",
+                     wch->invis_level >= LEVEL_HERO ? "(Wizi) " : "",
+                     clan_table[wch->clan].who_name,
+                     IS_SET (wch->comm, COMM_AFK) ? "[AFK] " : "",
+                     IS_SET (wch->act, PLR_KILLER) ? "(KILLER) " : "",
+                     IS_SET (wch->act, PLR_THIEF) ? "(THIEF) " : "",
+                     wch->name, IS_NPC (wch) ? "" : wch->pcdata->title);
+(maybe more hectic, I cleaned up whitespace in mine)
+
+somewhere before:
+                     wch->name, IS_NPC (wch) ? "" : wch->pcdata->title);
+add:
+                     IS_SET (wch->comm, COMM_BUSY) ? "[BUSY] " : "",
+
+---------------------------merc.h---------------------------
+
+look for:
+
+#define COMM_QUIET              (A)
+#define COMM_DEAF               (B)
+#define COMM_NOWIZ              (C)
+#define COMM_NOAUCTION          (D)
+#define COMM_NOGOSSIP           (E)
+#define COMM_NOQUESTION         (F)
+#define COMM_NOMUSIC            (G)
+#define COMM_NOCLAN             (H)
+#define COMM_NOQUOTE            (I)
+#define COMM_SHOUTSOFF          (J)
+
+use a free letter(I used K since it was skipped) add:
+
+#define COMM_BUSY               (K)
+
+replace K with the letter that you use.
+
+---------------------------interp.h---------------------------
+goto the bottom or really anywhere I suppose, and add this:
+
+DECLARE_DO_FUN( do_busy                 );
+
+---------------------------interp.c---------------------------
+with the other imm commands add this:
+
+    {"busy",      do_busy,      POS_DEAD,     IM, LOG_NORMAL, 1},
+
+and your done!

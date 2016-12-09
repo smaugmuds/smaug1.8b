@@ -1,0 +1,54 @@
+From: Phoenix <s080072@dutiwy.twi.tudelft.nl>
+
+
+I would be really great if everyone starting with a mud learned what a 
+previous declaration was :) as many don't seem to know. So here follows a 
+short explanation:
+
+When you make a function, so something like:
+
+bool my_spell_works( CHAR_DATA *ch, bool double_declaration )
+{
+   if ( double_declaration )
+      return FALSE;
+
+   return TRUE;
+}
+
+The function itself is called a definition, a definition counts as a 
+declaration. If you need your function in another .c file you can put a 
+declaration ( so not a definition ) of it in a .h and include it ( or 
+just add it somewhere above where you use it ).
+
+In your files you have a definition of 'spell_quench' in magic2.c ( the 
+new function you wrote, which counts as a declaration ) and you also 
+declared the function in the file 'magic.h'.
+Counting that up you have 2 declarations of the 'spell_quench' function. 
+Which is fine, you can any number of declarations you want. But what you 
+can't have are two declarations for the same function that differ in 
+anyway.
+They differ when what they return is not the same, or if the variable 
+types going 'in' the function are not the same.
+
+Take the example from above, you have a function returning 'bool' and 
+'taking' 'CHAR_DATA' and 'bool' as 'in' variables. If you define 
+'my_spell_works' somewhere like this:
+
+int my_spell_works( CHAR_DATA *ch, bool double_declaration );
+
+then those two declarations don't match ( the first one returns 'bool', 
+the second one returns 'int' ) and you get the 'previous declaration' 
+and 'conflicting types' error messages.
+
+To fix it, look at the two lines given by the compiler for 
+'spell_quench' and 'spell_sate' and make the two declarations you see 
+there the same. I'm just curious but did you look at those lines already?
+
+As I'm dutch I hope I used the correct terms in the above explanation, if 
+not please correct them.
+
+PhoenX
+ 
+NB. declarations are needed so the compiler knows what types are used for 
+what functions, if you use a function before the compiler sees its 
+declaration or definition it will assume that it returns an 'int'.

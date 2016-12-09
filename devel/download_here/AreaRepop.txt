@@ -1,0 +1,76 @@
+========
+| DB.C |
+========
+
+those goes after the wiznet announcement that an area has repoped:
+
+for (d = descriptor_list; d; d= d->next)
+if (d->connected == CON_PLAYING
+   && d->character->in_room != NULL
+   && d->character->in_room->area == pArea)
+{
+sprintf( buf, "%s", pArea->repop_msg );
+send_to_char(buf, d->character);
+send_to_char( "\n\r", d->character);
+}
+
+==========
+| MERC.H |
+==========
+
+in the area_data table put this:
+
+    char *		repop_msg;
+
+=========
+| OLC.C |
+=========
+
+    {   "credits",	aedit_credits	},
+put this after that:
+    {   "repop",		aedit_repop_msg	},
+
+=========
+| OLC.H |
+=========
+
+DECLARE_OLC_FUN( aedit_credits	);
+put this after that:
+DECLARE_OLC_FUN( aedit_repop_msg	);
+
+=============
+| OLC_ACT.C |
+=============
+
+put the following in the aedit_show function:
+
+    sprintf( buf, "Repop Message: {W[{g%s{W]{x\n\r", pArea->repop_msg);
+    send_to_char( buf, ch);
+
+put the following in before the aedit_file function:
+
+AEDIT( aedit_repop_msg )
+{
+    AREA_DATA *pArea;
+
+    EDIT_AREA(ch, pArea);
+
+    if ( argument[0] == '\0' )
+    {
+	send_to_char( "Syntax:   repop [MESSAGE]\n\r", ch );
+	return FALSE;
+    }
+
+    free_string( pArea->repop_msg );
+    pArea->repop_msg = str_dup( argument );
+
+    send_to_char( "Repop Message set.\n\r", ch );
+    return TRUE;
+}
+
+==============
+| OLC_SAVE.C |
+==============
+
+put the following right after "fprintf( fp, "Security %d\n",         pArea->security 	);" :
+    fprintf( fp, "RepopMsg %s~\n",		pArea->repop_msg 	);

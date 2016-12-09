@@ -1,0 +1,81 @@
+This snippet can be added for checking if a player has an item with a particular item type in their inventory. You can also search for more than one, and code can be added to make it do specific actions if you are returning FALSE.
+
+<<<MUD.H>>>
+UNDER: void    obj_fall  	args( ( OBJ_DATA *obj, bool through ) );
+
+ADD:
+
+bool    has_itemtype    args( ( CHAR_DATA *ch ) )
+
+<<<ACT_OBJ.C>>>
+
+AT THE BOTTOM ADD:
+
+/* 
+ * Checks a player's inventory for an item of a particular type.
+ * Written by David Reichard(Terell) 2004.
+ */
+bool has_itemtype (CHAR_DATA *ch)
+{
+        OBJ_DATA *obj;
+
+        if(!ch)
+                return FALSE;
+
+        for(obj = ch->last_carrying; obj; obj = obj->prev_content)
+        {
+        }
+
+        return TRUE;
+}
+
+Ok, well it wont do anything right now, so I'll give an example of it's usage and tell you how to add item types.
+
+Here is an example...
+
+bool has_itemtype (CHAR_DATA *ch,
+bool treasure,
+bool furniture)
+{
+        OBJ_DATA *obj;
+        bool has_treasure = FALSE;
+	bool has_furniture = FALSE;
+
+        if(!ch)
+                return FALSE;
+
+        for(obj = ch->last_carrying; obj; obj = obj->prev_content)
+        {
+                if(obj->item_type == ITEM_TREASURE)
+                        has_treasure = TRUE;
+		if(obj->item_type == ITEM_FURNITURE)
+			has_furniture = TRUE;
+        }
+
+
+	/* Could add some code here to take some kind of action if it will return false,
+	 * like a send_to_char or something.
+	 */
+        if(treasure && !has_treasure)
+                return FALSE;
+
+	if(furniture && !has_furniture)
+		return FALSE;
+
+        return TRUE;
+}
+
+And to use this function to check if a player has something of that item type, say you wanted to see if they had treasure, you do this:
+
+if (has_itemtype(ch, 1, 0))
+
+Or if you wanted to check for both....
+
+if (has_itemtype(ch, 1, 1))
+
+See the relationship? Although any experienced C programmer would have figured this out by now, I thought I would explain so it is hopefully easy for new programmers to understand. Basically 1=TRUE and 0=FALSE, so if you want it to check for the second item type in the function and not the first, you would put a 0 and then a 1.
+
+To add new checks for item types, just copy what I did in the example substituting your item types.
+
+
+Any suggestions or questions you can reach me at dmreichard@earthlink.net.

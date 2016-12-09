@@ -1,0 +1,40 @@
+
+Credits for programs that lead to the development of Area Editor are given below ... 
+
+* Diku Mud is copyright (C) 1990, 1991 by Sebastian Hammer, Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe. See file "license.diku" for their full licence agreement.
+
+* Merc Diku Mud is a derivative of the original Diku Mud. Merc Diku Mud contains substantial enhancements to Diku Mud. These enhancements are copyright 1992, 1993 by Michael Chastain, Michael Quan, and Mitchell Tse. See file "license.merc" for their full licence agreement.
+
+* SMAUG is a derivative of the version 2.1 distribution of Merc Diku Mud. SMAUG contains substantial enhancements to Merc Diku Mud, including some features of the original Diku Mud that were removed by the Merc team. See file "license.smaug" for their full licence agreement.
+
+* ROM 2.4 is copyright 1993-1998 Russ Taylor. ROM has been brought to you by the ROM consortium. Russ Taylor (rtaylor@hypercube.org), Gabrielle Taylor (gtaylor@hypercube.org) Brian Moore (zump@rom.org).
+See file "license.rom" for their full licence agreement.
+
+* SMAUG Editor is designed to edit area files used by the current version of the SMAUG server (1.04). SMAUG Editor is copyright (C) 1998 by Nick Gammon of Gammon Software Solutions.
+
+
+
+Area Editor licence details
+===========================
+
+ShareWare Fee
+-------------
+
+There will be a $US 30 ShareWare fee for using Area Editor or $US 40 if paying by check or postal order. The program includes a built-in registration form producer. This will encrypt your credit card details, if you wish to pay by credit card. The registration number which you will receive removes the start-up delay, and will continue to work for future versions of Area Editor. Site licences are available.
+
+For Australian users the fee is $AUD 45 including GST.
+
+Redistribution
+--------------
+
+The Area Editor distribution (AreaEditor*.zip) may be distributed on CDROMs and software archives, provided:
+
+a) No fee is charged for its distribution
+b) It is distributed unchanged.
+
+Copyright
+---------
+
+Area Editor is copyright (C) 2000 by Nick Gammon (nick@gammon.com.au) of Gammon Software Solutions. All rights are reserved worldwide.
+
+

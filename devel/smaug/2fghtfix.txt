@@ -1,0 +1,77 @@
+                          2 Fight Fixes for EmberMUD
+                      Fix Sheet 1.0 by Rindar (Ron Cole)
+                              Fix 1.0 by Rindar
+ 
+
+The Bugs: In fight.c, there are a number of "minor" errors in the various
+fighting techniques.  The problem is, most do not crash the game, so are
+extra hard to locate.  I have found two of these minor bugs, and posted 
+the easy fixes for them as well.
+    
+
+(Both of these fixes take place in fight.c)
+
+In the function do_bash:    
+    /* speed */
+    if (IS_SET(ch->off_flags,OFF_FAST))
+        chance += 10;
+    if (IS_SET(ch->off_flags,OFF_FAST))
+        chance -= 20;
+
+   Should be:
+
+    /* speed */
+    if (IS_SET(ch->off_flags,OFF_FAST))
+        chance += 10;
+    if (IS_SET(victim->off_flags,OFF_FAST))
+        chance -= 20;
+
+   The original version was both increasing and decreasing the ch's 
+  chance for having the FAST flag set.  The new version allows the 
+  victim to have a bonus for being fast.
+
+
+In the function do_dirt:
+    
+    /* speed  */
+    if (IS_SET(ch->off_flags,OFF_FAST) || IS_AFFECTED(ch,AFF_HASTE))
+        chance += 10;
+    if (IS_SET(victim->off_flags,OFF_FAST) || IS_AFFECTED(victim,OFF_FAST))
+        chance -= 25;
+
+   Should be:
+
+    /* speed  */
+    if (IS_SET(ch->off_flags,OFF_FAST) || IS_AFFECTED(ch,AFF_HASTE))
+        chance += 10;
+    if (IS_SET(victim->off_flags,OFF_FAST) || IS_AFFECTED(victim,AFF_HASTE))
+        chance -= 25;
+
+   The IS_AFFECTED check was trying to double-check for FAST instead of 
+  checking to see if the victim was hasted.
+
+
+
+-= Rindar
+clogar@concentric.net
+
+
+
+
+ =============================================================================
+/   ______ _______ ____   _____   ___ __    _ ______    ____  ____   _____   /
+\  |  ____|__   __|  _ \ / ____\ / _ \| \  / |  ____|  / __ \|  _ \ / ____\  \
+/  | |__     | |  | |_| | |     | |_| | |\/| | |___   | |  | | |_| | |       /
+/  | ___|    | |  | ___/| |   __|  _  | |  | | ____|  | |  | |  __/| |   ___ \
+\  | |       | |  | |   | |___| | | | | |  | | |____  | |__| | |\ \| |___| | /
+/  |_|       |_|  |_|  o \_____/|_| |_|_|  |_|______|o \____/|_| \_|\_____/  \
+\                                                                            /
+ ============================================================================
+
+------------------------------------------------------------------------------
+ftp://ftp.game.org/pub/mud      FTP.GAME.ORG      http://www.game.org/ftpsite/
+------------------------------------------------------------------------------
+
+ This file came from FTP.GAME.ORG, the ultimate source for MUD resources.
+
+------------------------------------------------------------------------------

@@ -1,0 +1,123 @@
+Templar Shield and God Sword skills. If you have a knight, Paladin or Templar
+Class these should work nicely. If not you can always doctor either of these
+functions to fit your spell-object-creating needs and the add_affect function
+is extremly helpful and can be used for lots :) -Xrakisis
+
+     void add_affect ( OBJ_DATA * obj, int apply, long value )
+        {
+        AFFECT_DATA * paf;
+
+        if ( affect_free == NULL )
+        paf = alloc_perm( sizeof( * paf ) );
+        else
+        {
+        paf         = affect_free;
+        affect_free = affect_free->next;
+        }
+        paf->type      = 0;
+        paf->duration  = -1;
+        paf->location  = apply;
+        paf->modifier  = value;
+        paf->bitvector = 0;
+        paf->next      = obj->affected;
+        obj->affected  = paf;
+        }
+
+
+// Templar
+void spell_knightshield( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    OBJ_DATA *item;
+    char buf     [MAX_STRING_LENGTH];
+    int hitroll = 0;
+    int damroll = 0;
+    int armor   = 0;
+            
+    item = create_object( get_obj_index( OBJ_VNUM_KNIGHTSHIELD ), 1 );
+   
+     
+    free_string(item->name);
+    sprintf(buf,"Templar Shield of %s",god_table[ch->god].name);
+    item->name = str_dup(buf);
+    free_string(item->short_descr);
+    sprintf(buf,"Templar Shield of %s",god_table[ch->god].name);
+    item->short_descr = str_dup(buf);
+    free_string(item->description);
+    sprintf(buf,"Templar Shield of %s",god_table[ch->god].name);
+    item->description = str_dup(buf);
+
+//    SET_BIT( item->item_type, ITEM_ARMOR );
+    item->item_type = ITEM_ARMOR;
+    SET_BIT( item->wear_flags, ITEM_TAKE );
+    SET_BIT( item->wear_flags, ITEM_WEAR_SHIELD );
+    SET_BIT( item->extra_flags, ITEM_MAGIC);
+    SET_BIT( item->extra_flags, ITEM_GLOW);       
+    item->value[0] = 200;  // pierce
+    item->value[1] = 200;  // bash 
+    item->value[2] = 200;  // slash
+    item->value[3] = 200;  // magic
+    item->level = ch->level;
+    item->condition = 100;
+    item->weight = 10;
+    if (ch->level <= 50) hitroll = 50; 
+    else hitroll = ch->level;
+    if (ch->level <= 50) damroll = 50; 
+    else damroll = ch->level;
+    armor = number_range(-200,-300);
+    add_affect( item, APPLY_HITROLL, hitroll );
+    add_affect( item, APPLY_DAMROLL, damroll );
+
+    obj_to_char(item,ch);
+    act("$p fades into existance in your hand.", ch, item, NULL, TO_CHAR);
+    act("$p fades into existance in $n's hand.", ch, item, NULL, TO_ROOM);
+    return;
+}
+
+
+// Templar
+void spell_godsword( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    OBJ_DATA *item;
+    char buf     [MAX_STRING_LENGTH];
+    int hitroll = 0;
+    int damroll = 0;
+    int armor   = 0;
+            
+    item = create_object( get_obj_index( OBJ_VNUM_KNIGHTSWORD ), 1 );
+   
+     
+    free_string(item->name);
+    sprintf(buf,"Templar Broad-Sword of %s",god_table[ch->god].name);
+    item->name = str_dup(buf);
+    free_string(item->short_descr);
+    sprintf(buf,"Templar Broad-Sword of %s",god_table[ch->god].name);
+    item->short_descr = str_dup(buf);
+    free_string(item->description);
+    sprintf(buf,"Templar Broad-Sword of %s",god_table[ch->god].name);
+    item->description = str_dup(buf);
+
+    item->item_type = ITEM_WEAPON;
+    SET_BIT( item->wear_flags, ITEM_TAKE );
+    SET_BIT( item->wear_flags, ITEM_WIELD );
+    item->weapon_class = WEAPON_SWORD;
+    SET_BIT( item->extra_flags, ITEM_MAGIC);
+    SET_BIT( item->extra_flags, ITEM_GLOW);       
+    item->value[1] = 20;  // bash 
+    item->value[2] = 20;  // slash
+    SET_BIT(item->value[4], WEAPON_FLAMING);
+    item->level = ch->level;
+    item->condition = 100;
+    item->weight = 10;
+    if (ch->level <= 50) hitroll = 50; 
+    else hitroll = ch->level;
+    if (ch->level <= 50) damroll = 50; 
+    else damroll = ch->level;
+    armor = number_range(-200,-300);
+    add_affect( item, APPLY_HITROLL, hitroll );
+    add_affect( item, APPLY_DAMROLL, damroll );
+
+    obj_to_char(item,ch);
+    act("$p fades into existance in your hand.", ch, item, NULL, TO_CHAR);
+    act("$p fades into existance in $n's hand.", ch, item, NULL, TO_ROOM);
+    return;
+}

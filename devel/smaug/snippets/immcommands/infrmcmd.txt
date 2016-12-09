@@ -1,0 +1,316 @@
+"Inform" command for Immortals v 1.2
+====================================
+
+Coded by Ian Wright (AKA Halcyon) for Smaug 1.4a
+(Should be compatible with most Smaug derivatives,
+with a tiny bit of tweaking.)
+
+Comments
+========
+
+I created this command with the idea in mind that I wanted
+lower level Immortals to be able to force players to read
+certain help files, but didn't want to give them the kind
+of power involved in bestowing them with "force." The
+"inform" command can be used to force players under the
+Imm's level to read a specified help file. Higher level
+Immortals can inform ALL players beneath them of a specific
+help file all at once, including players that are AFK or in
+a writing buffer. The accompanying command "noinform" is
+for removing an Immortal's ability to use the inform command
+if it is abused.
+
+You may consider adding in an extra player flag and the
+appropriate ifchecks so you can bestow lower level Imms
+that you trust to use inform all.
+
+Mobs can't use inform. :( But fear not! You can probably
+find the "mpinform" code at the same place you found this,
+so if you can think of a use for it, feel free to grab it,
+as well. (Slightly more restricted, outputs errors for
+troubleshooting mobprogs.)
+
+This snippet is free to use (Duh), but if you're going to
+use it, give me some credit in a help file somewhere, huh?
+(I'll regret not being more specific than that later.)
+
+Changes This Version
+====================
+
+Oops again. x.x;
+
+The fix I made last time to make sure you could mset
+the noinform flag and all that wasn't... Well, fixed.
+I mistakenly stated that you'd find the plr_flags
+in mud.h, whereas it's actually in build.c. Sorry. :/
+
+The code for the command itself has been tidied up a
+tad. I came to find that it generated warnings in a lot
+of compilers, mostly about adding extra parentheses in
+the big if statement near the end. Cleaned that out.
+Don't need any *extra* silliness to make me look bad. :P
+
+Installation Instructions
+=========================
+
+1. Open up "act_info.c" and after the do_help function add:
+
+/*
+ * My first ever command. *Sniff* Anyways, allows a
+ * lower level Imm to force help files on players,
+ * without giving them the loaded gun that is
+ * the actual command "force" :)			-Hal
+ */
+void do_inform( CHAR_DATA *ch, char *argument )
+{
+	char arg[MAX_INPUT_LENGTH];
+	char arg2[MAX_INPUT_LENGTH];
+	HELP_DATA *pHelp;
+
+	argument = one_argument( argument, arg );
+	argument = one_argument( argument, arg2);
+
+	if( xIS_SET( ch->act, PLR_CANTINFORM ) )
+	{
+		send_to_char( "Your inform ability was suspended.\n\r", ch);
+		return;
+	}
+
+	if( IS_NPC(ch))
+	{
+		send_to_char( "Mobs should use MPINFORM, silly.\n\r", ch);
+		return;
+	}
+
+	if( arg[0] == '\0' || arg2[0] == '\0')
+	{
+		send_to_char( "Inform whom of what?\n\r", ch );
+		return;
+	}
+
+	/*
+	 * Despite the fact that my MUD uses an enhanced
+	 * help command which looks for similar help
+	 * files, shouldn't the Immies know exactly
+	 * what help file they want to impose on someone? -Hal
+	 */
+    if ( (pHelp = get_help( ch, arg2 )) == NULL )
+	{
+		send_to_char( "No such help topic.\n\r", ch );
+		return;
+	}
+
+	if( !str_cmp( arg, "all" ) )
+	{
+		CHAR_DATA *vch;
+		CHAR_DATA *vch_next;
+
+		/*
+		 * I don't especially want entrance level
+		 * Imms to be able to inform EVERYONE of
+		 * a help topic, do you? If you're okay
+		 * with that, by all means, comment it
+		 * out. :)							-Hal
+		 */
+		if(get_trust(ch) < LEVEL_GOD )
+		{
+			send_to_char( "You can't do that.\n\r", ch );
+			return;
+		}
+
+		ch_printf( ch, "You inform everyone of the '%s' help topic.\n\r", arg2 );
+		for( vch = first_char; vch; vch = vch_next )
+		{
+			vch_next = vch->next;
+
+			if( (!IS_NPC(vch) && (get_trust(ch) > get_trust(vch))))
+			{
+				ch_printf( vch, "%s would like to inform you of the '%s' help topic.\n\r", ch->name, arg2 );
+				do_help(vch, arg2);
+			}
+		}
+		return;
+	}
+
+	else
+	{
+		CHAR_DATA *victim;
+
+		/*
+		 * Lower level Imms probably shouldn't be able to force
+		 * people that are in a writing buffer to read help files. -Hal
+		 */
+
+		if(( victim = get_char_world(ch, arg)) == NULL
+			|| IS_NPC(victim) || ( !IS_NPC(victim) && !victim->desc)
+			|| ((victim->desc && victim->desc->connected == CON_EDITING) && (get_trust(ch) < LEVEL_GOD)))
+		{
+			send_to_char( "That player isn't here.\n\r", ch );
+			return;
+		}
+
+		if( get_trust(ch) < get_trust(victim) )
+		{
+			send_to_char( "You can't inform your superiors.\n\r", ch);
+			return;
+		}
+		
+		/*
+		 * Ditto for AFK players. -Hal
+		 */
+		
+		if( !IS_NPC( victim ) && xIS_SET ( victim->act, PLR_AFK ) && get_trust (ch) < LEVEL_ASCENDANT )
+		{
+			send_to_char( "That player is AFK.\n\r", ch);
+			return;
+		}
+
+		ch_printf( ch, "You inform %s of the '%s' help topic.\n\r", victim->name, arg2 );
+		ch_printf( victim, "%s would like to inform you of the '%s' help topic.\n\r", ch->name, arg2 );
+		do_help(victim, arg2);
+		return;
+	}
+	return;
+}
+
+2. If you wish to use the accompanying "noinform" command
+   (And you probably will), add this into "act_wiz.c",
+   maybe under do_noemote?
+
+void do_noinform( CHAR_DATA *ch, char *argument )
+{
+	char arg[MAX_INPUT_LENGTH];
+	CHAR_DATA *victim;
+
+	one_argument( argument, arg );
+
+	if ( arg[0] == '\0' )
+	{
+		send_to_char( "Noinform whom?\n\r", ch );
+		return;
+	}
+
+	if ( IS_NPC( ch ))
+	{
+		send_to_char( "You can't do that.\n\r", ch );
+		return;
+	}
+
+	if ( ( victim = get_char_world( ch, arg ) ) == NULL || IS_NPC( victim ))
+	{
+		send_to_char( "That player isn't here.\n\r", ch );
+		return;
+	}
+
+	if ( ch == victim )
+	{
+		send_to_char( "Yeah, right.\n\r", ch );
+		return;
+	}
+
+	if ( get_trust( victim ) >= get_trust( ch ) )
+	{
+		send_to_char( "You failed.\n\r", ch );
+		return;
+	}
+	if ( xIS_SET(victim->act, PLR_CANTINFORM) )
+	{
+		xREMOVE_BIT(victim->act, PLR_CANTINFORM);
+		send_to_char( "You can use inform again.\n\r", victim );
+		ch_printf( ch, "%s can use inform again.\n\r", victim->name );
+	}
+	else
+	{
+		xSET_BIT(victim->act, PLR_CANTINFORM);
+		send_to_char( "You can no longer use inform.\n\r", victim );
+		ch_printf( ch, "%s can no longer use inform.\n\r", victim->name );
+	}
+	return;
+}
+
+   Also, you'll need to add a new player flag into "mud.h"
+   or this serves no purpose. ;) Locate the following in
+   mud.h:
+
+/*
+ * ACT bits for players.
+ */
+typedef enum
+{
+  PLR_IS_NPC,PLR_BOUGHT_PET, PLR_SHOVEDRAG, PLR_AUTOEXIT, PLR_AUTOLOOT, 
+  PLR_AUTOSAC, PLR_BLANK, PLR_OUTCAST, PLR_BRIEF, PLR_COMBINE, PLR_PROMPT, 
+  PLR_TELNET_GA, PLR_HOLYLIGHT, PLR_WIZINVIS, PLR_ROOMVNUM, PLR_SILENCE, 
+  PLR_NO_EMOTE, PLR_ATTACKER, PLR_NO_TELL, PLR_LOG, PLR_DENY, PLR_FREEZE, 
+  PLR_THIEF, PLR_KILLER, PLR_LITTERBUG, PLR_ANSI, PLR_RIP, PLR_NICE, PLR_FLEE, 
+  PLR_AUTOGOLD, PLR_AUTOMAP, PLR_AFK, PLR_INVISPROMPT
+} player_flags;
+
+   Eh, it'll look something like that. In after the last
+   player flag, add:
+
+	PLR_CANTINFORM,
+
+   Goofed this next one up in the last release. So sorry.
+   I'll get my act together one of these days. :(
+
+   Also in build.c, locate the following:
+
+char *	const	plr_flags [] =
+{
+"npc", "boughtpet", "shovedrag", "autoexits", "autoloot", "autosac", "blank", 
+"outcast", "brief", "combine", "prompt", "telnet_ga", "holylight", 
+"wizinvis", "roomvnum","silence", "noemote", "attacker", "notell", "log", 
+"deny", "freeze", "thief","killer", "litterbug", "ansi", "rip", "nice", 
+"flee" ,"autogold", "automap", "afk", "invisprompt"
+};
+
+   Again, something like that. Anyways, add this at the
+   end:
+
+	, "noinform"
+
+   And that's it for that. :)
+
+3. Add the appropriate DECLARE_DO_FUNs in mud.h and table
+   entries in tables.c. If you don't know how to do this,
+   you need to learn. There's likely a tutorial for that
+   somewhere.
+
+4. Ok, now that that's all done, make clean, and recompile.
+
+5. Add commands to your command table for inform and, if
+   you chose to use it, noinform. I recommend that you set
+   them both to be logged so you can keep an eye on who's
+   doing what. Inform so you can monitor its usage to ensure
+   it's not being abused, and noinform to make sure Imms
+   aren't contradicting their superiors.
+
+Syntax for usage:
+
+	inform <player> <helptopic>
+	inform all <helptopic>
+	noinform <player>
+
+If you have any trouble with installation, you can email me at:
+
+rockmanxnxs*AT*yahoo.com
+
+Yeah, you know what to replace with what. :P
+
+Please feel free to include the name of your MUD and connect
+info, I'm always eager to see how my code's being used. :)
+
+But don't email me if you didn't follow instructions, and if
+you didn't credit me somewhere, probably shouldn't mention
+your MUD, cause I'll be lookin'. :D
+
+This snippet was designed for use with Smaug 1.4a. I currently
+run Smaug FUSS 1.6, a very well bugfixed version of Smaug.
+No guarantees are made or implied that this will work with your
+code. It should, however, need only minimal adjustments to be
+compatible with other codebases, particularly Diku derivatives.
+If not... Sorry, you're SOL. :(
+
+NOTE: SWR and related codebases apparently don't use XBVs
+(Extended bitvectors). If that's the case, just find someplace
+else to cram the flag in, shouldn't be a big deal.

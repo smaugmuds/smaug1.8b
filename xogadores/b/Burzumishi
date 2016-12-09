@@ -1,0 +1,92 @@
+#PLAYER
+Version      3
+Name         BuRZuMiSHi~
+Sex          1
+Class        3
+Race         0
+Languages    -1 1
+Level        65
+Played       28552
+Room         21053
+HpManaMove   9999 9999 9999 9999 999 999
+Stance       0
+Stances      0 0 0 0 0 0 0 0 0 0 0 0
+Gold         1215736564
+Exp          1215752191
+Height          59
+Weight          163
+Act          704644682&1024
+Position     113
+Style     2
+Practice     999
+Alignment    0
+SavingThrows 0 0 0 0 0
+Favor	       0
+Glory        0
+MGlory       0
+Honour       0
+Hitroll      0
+Damroll      0
+Armor        100
+Mentalstate  -7
+Password     594eb7126fbf3900b1bf907010b738e918db6f90bbdfabf6893891f7fbb92fb7~
+Title         O Mestre das Tebras!~
+Email     burzum_ishi__@hotmail.com~
+WizInvis     65
+Flags        8421384
+PKills       0
+PDeaths      0
+MKills       0
+MDeaths      0
+IllegalPK    0
+AttrPerm     16 13 13 14 15 13 11
+AttrMod      0 0 0 0 0 0 0
+Condition    0 47 47 10
+Site         hox-burzumishi.Home
+Skill        22 'mount'
+Tongue       100 'common'
+End
+
+#OBJECT
+Vnum         10333
+WearLoc      17
+Values       5 5 0 0 0 0
+End
+
+#OBJECT
+Count        2
+Vnum         21019
+Values       2 2 6 0 0 0
+End
+
+#OBJECT
+Count        3
+Vnum         21017
+Values       10 10 10 0 0 0
+End
+
+#OBJECT
+Vnum         21069
+Level        8
+Values       10 4 12 3 0 0
+End
+
+#OBJECT
+Count        2
+Vnum         21046
+ExtraFlags   1
+Values       75 1 0 1 0 0
+End
+
+#MOBILE
+Vnum	21058
+Room	21053
+Description The black steed snorts as you examine him.  His fine black coat shines
+brightly regardless of light and the warhorse seems as though it could
+run tirelessly for days.
+A neck tag says 'I belong to BuRZuMiSHi'.
+~
+Position 12
+Flags 786691
+EndMobile
+#END

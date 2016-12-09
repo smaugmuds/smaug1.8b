@@ -1,0 +1,107 @@
+HITTING NATURAL AC v1.1 (Physical hit but no damage)
+
+     This snippet will add some spice to the generic smaug combat miss code.
+In fight.c, smaug addresses all dicerolls that don't hit your AC as a miss,
+and that's it.  This little piece of code takes into account your natural AC
+as well (armor class without any armor, but still including dex and racial
+bonuses that reflect speed affecting AC) so it's possible to physically
+strike an opponent but have armor prevent damage.
+     To me, it's a little silly to assume all attacks by a trained fighter
+will end up just hitting or missing. Striking a target should be fairly easy
+barring any dodge, parry, or tumble skills, but actually causing damage...
+that's another story.  A pure miss should be when an attack misses your
+natural AC (missing your physical form completely).  Attacks prevented by
+armor being worn still reflect a physical hit but no damage is dealt.  Once
+again it's silly to assume that wearing armor improves your speed and
+dexterity to the point where you can duck and sidestep more and more attacks.
+All armor should do is prevent actual hits from doing damage...
+
+A little math (note AC is multiplied by 10 in mud terms):
+
+Bob has an AC of 5 (naturally 10 with no armor)
+Joe has a thac0 of 15. (to hit armor class zero... needs to roll a 15 to hit AC 0)
+So Joe needs to roll a 10 or better to hit bob.
+Joe rolls an 8.
+Joe makes an attack that would've hit AC 7 but misses AC 5
+Joe still hit Bob (the attack would've hit the natural AC of 10) but armor
+being worn prevented the strike from causing damage.
+
+Anyay, simply put, this code adds an additional miss message that shows
+a near miss.
+
+Changes in this version
+1. Fixed a bug where missing the initial attack would not initiate combat.
+2. Added a seperate message for mage-type classes (take it out if you don't need
+   it.  In my mud mages can't wear armor.)
+
+
+
+
+In fight.c in function one_hit find:
+
+     /*
+      * The moment of excitement!
+      */
+     while ( ( diceroll = number_bits( 5 ) ) >= 20 )
+ 	;
+
+     if ( diceroll == 0
+     || ( diceroll != 19 && diceroll < thac0 - victim_ac ) )
+     {
+ 	    /* Miss. */
+ 	    if ( prof_gsn != -1 )
+ 	    learn_from_failure( ch, prof_gsn );
+ 	    damage( ch, victim, 0, dt );
+ 	    tail_chain( );
+ 	    return rNONE;
+     }
+
+
+And replace it with:
+
+        /*
+         * The moment of excitement!
+         */
+        while ( ( diceroll = number_bits( 5 ) ) >= 20 )
+    	;
+
+        if ( diceroll == 0
+        || ( diceroll != 19 && diceroll < thac0 - victim_ac ) )
+        {
+    		/* Physical hit with no damage (hit natural AC) -Seven*/
+    	    if ( diceroll < thac0 - victim_ac
+    		&& diceroll >= thac0 - (10 + (dex_app[get_curr_dex(ch)].defensive / 10) + (race_table[victim->race]->ac_plus / 10))
+    		&& diceroll != 19
+    		&& diceroll != 0 )
+    		{
+    	    if ( prof_gsn != -1 )
+    	    learn_from_failure( ch, prof_gsn );
+    		if ( victim->class == CLASS_MAGE )
+    		{
+    			act( AT_PLAIN, "Your attack is halted by a wall of energy.", ch, NULL, victim, TO_CHAR );
+    			act( AT_PLAIN, "$n's attack is stopped by your energy field.", ch, NULL, victim, TO_VICT );
+    		}
+    		else
+    		{
+    			act( AT_PLAIN, "Your attack is deflected by $N's armor.", ch, NULL, victim, TO_CHAR );
+    			act( AT_PLAIN, "Your armor deflects $n's attack.", ch, NULL, victim, TO_VICT );
+    		}
+    		if (!victim->fighting && victim->in_room == ch->in_room)
+    		set_fighting(victim, ch);
+    		tail_chain( );
+    		return rNONE;
+    		}
+    	    else
+    		{
+     	    /* Miss. */
+    	    if ( prof_gsn != -1 )
+    	    learn_from_failure( ch, prof_gsn );
+    	    damage( ch, victim, 0, dt );
+    	    tail_chain( );
+    	    return rNONE;
+    		}
+    }
+
+     Recompile and you're done.  You might want to add a random chance to
+damage armor being worn.  I'll look into this myself and may post an update
+soon.  Send any questions, comments, flames, etc to seven@nycap.rr.com

@@ -1,0 +1,304 @@
+===================================
+Getting Started — A Short Devel FAQ
+===================================
+
+This file is intended to help address the several questions that I am often asked;
+
+	* How do I assign vnums to a player?
+	* How do I make a new area file?
+ 	* How do I edit an existing area?
+ 	  » Changing an existing Mobile
+ 	  » Changing an existing Object
+ 	* How do I start building if I don't have SMAUG?
+ 	* How do I make a shop?
+ 	* How do I make a pet shop?
+ 	* How do I make a repair shop or Blacksmith?
+ 	* How do I make a maze?
+ 	* How do I add my new area into the MUD?
+ 	* How do I erase everything and start with only my own areas?
+ 	* How do I run SMAUG on my own computer?
+ 	* How do I make myself Level 65 on my MUD?
+ 	* How do I get my areas to save?
+
+
+Assigning Vnums
+===============
+
+To assign new vnums to a player, or yourself, you must first determine whether the range of vnumbers belongs to another area. There are a couple of ways to do this using the "zones" or "newzones" commands, but in a large MUD, it is often hard to search through all the vnums being used to find free ones. The best way to avoid conflicts is to find a range that you think is free and use the CHECKVNUM command.
+
+Syntax:
+checkvnum   field [low range] [high range]
+
+
+Example:
+--------
+ 
+checkvnum mobs 1000 1999	[Check for mob conflicts, range 1000-1999]
+checkvnum rooms 1000 1999	[Check for room conflicts, range 1000-1999]
+checkvnum all 1000 1999	[Check for all conflicts, range 1000-1999 (most useful)]
+
+Note: If you wish to assign a player 100 vnums, remember that the first room is also included in the count. (In other words, if you assign room 1000 to 1100, you have assigned 101 rooms, not 100. You should have assigned rooms 1000 to 1099 to get 100 rooms.)
+
+Once you have determined that you have no vnum conflicts, you can go ahead and assign the vnums using the RASSIGN, OASSIGN, and MASSIGN.
+
+Syntax:	 
+rassign <player> 1000 1099	[Assign rooms 1000 to 1099 to player]
+oassign <player> 1000 1099	[Assign objects 1000 to 1099 to player]
+massign <player> 1000 1099	[Assign mobiles 1000 to 1099 to player]
+
+There is no reason to assign a player rooms, mobiles and objects all at the same time, in fact, many MUDs only assign a new builder rooms to begin with until a certain level trust is built up. As a builder increases in levels, their commands become more powerful and they should be aware of the fact that their actions could adversely affect the MUD. Also, there is no reason to assign a builder 100 objects or 100 mobiles if they have 100 rooms, but it has always been considered "good vnumber accounting" to do so.
+
+I should also mention that programs like AreaEditor are very useful for renumbering or compacting area files should you find that you need to move an area or shrink an area once it has been installed. Just remember that if you renumber an area, any reference to old vnumbers in programs will be wrong, as well, any objects already on players with the old vnumbers could be altered or destroyed if you change their vnums. So only renumber new areas.
+
+
+Making New Area Files
+=====================
+
+Generally, I wouldn't suggest making an area file completely in a text editor, although it is possible to do so — The old MERC areas were made entirely in a text editor before OLC. Your best idea is to use an area-making program like ORB or Area Editor and then "tweaking" them on a MUD, or better yet, building the area on a MUD to begin with.
+
+See the section on assigning vnums (above) for more information on how to start a new area from within a MUD. If you don't have access to your own copy of WinSMAUG, you can download it from the SMAUG homepage.
+
+
+Editting Existing Areas
+=======================
+
+Changing an existing or installed area is fairly easy, but can also be dangerous.
+
+When you make changes to an existing area, you are only changing the copy of that area file that is currently loaded into the MUD — when the MUD is rebooted, all your changes will be lost. To make your changes permanent, you must become familiar with two commands; aassign, and foldarea.
+
+Depending on your level, you may also need to have the area you wish to edit "bestowed" or assigned to you by a higher level Immortal. This is done by using the "bestowarea" command.
+
+Bestowarea
+----------
+
+Syntax: bestowarea <victim> {filename.are}
+
+Examples:
+bestowarea herne builder.are	[Allow Herne to make changes to builder.are]
+bestowarea herne list	[List all areas bestowed on Herne.]
+bestowarea herne none	[Remove all Herne's bestowed areas. You cannot remove a single area, if a person has multiple areas bestowed, you will need to remove all bestowed areas and then bestow the areas you wish the Builder to keep once again.]
+
+Once you have an area bestowed, you are free to use aassign to assign the area to yourself for editting. Example: aassign filename.are
+
+Now that you have the area assigned, you can go off and make changes to the rooms as required. After making your changes, you'll want to be able to save them so that the next time the MUD reboots, those changes will be loaded. To do this you first need to remove the area from your assigned slot (aassign none) and then use foldarea (foldarea filename.are) to save the changes. It is usually a good idea to use foldarea twice, once to save the file and a second time to overwrite the backup file.
+
+Making changes to mobs and objects is a little more difficult.
+
+
+Changing Existing Mobs
+======================
+
+If you make changes to a mob that is loaded, you are only making changes to that single mob — even if you have the area assigned to you. If you want your changes to be effective, you need to first flag the mobile as a prototype (mset <mob> flags prototype). When you flag the mob "prototype," it tells the MUD that you are making changes to this mob and it will suppress the mob's usual reactions and movements. Depending on your level, you may need to have the command "protoflag" bestowed to you by a higher level Immortal. Protoflag gives you the ability to set the prototype flag on installed mobs and objects.
+
+To recap, if you want to change a mob in an existing area;
+
+First:  	mset <mob> flags prototype	[add the prototype flag to the mob]
+Second:  	Make your changes to the mob.	 
+Third:  	mset <mob> flags prototype	[remove the prototype flag]
+Last:  	aassign none then foldarea <areaname.are>	[save your changes]
+
+
+Changing Existing Objects
+=========================
+
+Making changes to an existing object is much the same as making changes to an existing mobile, with one exception — Any change you make to an existing object will affect every copy of that object — whether it is online or not. Which means that if you make do something like add 1 DR to a sword in your installed area, you are adding 1 DR to every copy of that object, and as soon as a player who is carrying a copy of that object logs on, his copy of that sword will have that 1 DR added.
+
+If you change an existing object, you change every copy of that object. Be warned.
+
+To make the change, follow the same steps as you would for a mob — oset <object> flags prototype, then make the changes, remove the proto flag, and then save the changes. Some objects may require you to add "oset <object> wear take" so that you can pick up the object and edit it.
+
+
+Building Areas Without SMAUG
+============================
+
+There is no reason for you to build an area online, or even within a local copy of WinSMAUG on your own computer. To make the actual area file, you need a MUD, but to go through the mechanics of building the area — the actual writing of descripions and so on can be done without any computer at all. In fact, it's probably better if you're nowhere near your computer when you start.
+
+To understand what I mean read my short essay entitled; The Mechanics of Building.
+
+
+Making Shops
+============
+
+Shop making is covered in my OLC-Mob file under "shops."
+
+This file covers the commands: makeshop, shopset, shopvalues, shopstat and shops.
+
+A shop requires a mobile to define as the shopkeeper, so if you don't have mobile vnumbers yet you will need to get them in order to proceed.
+
+
+Making Pet Shops
+----------------
+
+Making a Pet Shop is a little different as it requires both a mobile and a roomflag to make it work.
+
+In order to make the shop, you first require a mob as the "shopkeeper" and a number of other mobs defined as the "pets." You will also require two consecutive room vnumbers (ie: 1000 and 1001) to define as "shop" and "kennel."
+
+To make the petshop work, you need to do the following;
+
+Step 1:	Make two consecutive rooms. (Example; vnums 1000 and 1001)
+Step 2:	In the first room (1000 in this example) make your shopkeeper mobile, (See shops for instructions on how to make a shopkeeper.) and flag the room as a petshop (Syntax; redit flags petshop) — Without the special roomflag, the petshop code will not work. Set your room description and shopkeeper mob descriptions as desired.
+Step 3:	Your pet mobs are placed in the second room (1001 in this example). Pet mobs must have the mobile flag called "pet" in order for the petshop code to work. This second room should have no exits and be flagged as "noastral" and "noportal" — You don't want people wandering into this room to interfere with your pet mobs.
+
+Pets are cheap, prices are based on the level of the mobile and there doesn't seem to be a way to manually set the value of a pet. As a Builder, it would be in your best interests to make a pet fairly weak even though players can only purchase one pet per level. At level 50, a pet sells for about 25000 gold, so imagine what would happen if you made this mob as you would any regular mob — You would have a 10000 HP, 100 DR robot roaming around that a player could use to attack other mobs and people, or they may try to kill the pet themselves in order to gain some cheap experience points — this would be bad. So keep your pets basic and fairly weak so that they can be used as mounts, etc and you won't have trouble with players abusing them.
+
+
+Making Repair Shops Or Blacksmiths
+==================================
+
+Repair shop making is covered in my OLC-Mob file under "repairshops."
+
+This file covers the commands: makerepair, repairset, repairstat, and repairshops.
+
+A repair shop or "blacksmith" requires a mobile to define as the shopkeeper, so if you don't have mobile vnumbers yet you will need to get them in order to proceed.
+
+
+Making A Maze
+=============
+
+Making a maze is fairly simple, here is my method.
+
+First I decide how many rooms I am going to use to make the maze (let's says 9). Then I map out the safe path through the maze. Finally I go back and make the random exits.
+
+Map 1:
+This map shows a simple 9-room maze. The arrows indicate the "solved" pathway through the maze.
+
+Once you've set the exits for the solved path, you would go back to your first room and start adding more exits which are intended to confuse the players. It's not usually a good idea to simply make an exit back to the same room you're leaving (ie: don't make an exit from room 1000 to room 1000), and it's probably not a good idea to make an exit from the first room to the last room as this defeats the purpose of having your maze.
+
+Map 2:
+This detail map shows how you would add exits to your maze rooms to confuse the players. You should be careful not to give the players an exit that comes too close to the end of the maze or they will simply choose the shorter path to solve the maze, this defeats the purpose.
+
+Also, each room need not have exits at every point, in fact it might make a maze more confusing if it doesn't. Some mazes may also have more than one exit, although for your second exit, you may want to put the player back at the beginning of the maze.
+
+Finally, a maze doesn't necessarily need one entrance and one exit. You may want to build a large labyrinth with several entrances and several exits, which makes things even more interesting when players don't find themselves where they thought they would end up.
+
+     
+Installing New Areas
+====================
+
+See Resets — "Installing Areas" for more information.
+
+
+Starting A MUD From Scratch
+===========================
+
+You've downloaded SMAUG and you want to erase everything and start with your own areas.
+
+This is fairly easy to accomplish, however SMAUG requires that you retain a number of important area files that contain the objects that are hardcoded into the normal running of the MUD.
+
+First, go into your Areas folder and find the file called "area.lst" and open it with a text-editting program such as Notepad. You should find a file that contains a list of area names such as these, followed by a dollar sign ($) which tells the MUD that this is the end of file (EOF).
+
+help.are
+imc-help.are
+ice-help.are
+gods.are
+limbo.are
+newacad.are
+newgate.are
+newdark.are
+haon.are
+midennir.are
+sewer.are
+redferne.are
+grove.are
+dwarven.are
+daycare.are
+grave.are
+chapel.are
+astral.are
+Build.are
+pixie.are
+export.are
+srefuge.are
+manor.are
+unholy.are
+gallery.are
+$
+
+In order for the MUD to operate it requires only 5 of these area files. A sixth area file, newdark.are isn't required, but if it is not included you will need to reset the default recall point (vnum) from within the MUD code.
+
+gods.are
+limbo.are
+help.are	
+
+These three areas contain items that a required by the MUD and must be included, although the descriptions and such within the files can be altered to conform more closely to your "theme."
+
+limbo.are contains objects such as coins, body parts, notes, fire, bloodstains, magical springs, etc that have specific properties which can't be duplicated with any "built" object.
+help.are contains all the help files associated with the MUD and may be modified to include new files, or rewritten as your theme requires.
+newgate.are is where players first find themselves when they enter the MUD. This file is required, however it can be rewritten using the same vnumbers to reflect your new theme. You must be careful to remain within the set vnumbers, however, and remember that every player enters the MUD at room 100.
+newacad.are is another hardcoded area where your new player finds themselves after they have been authorized (room 10300), or where they find themselves if you've changed authorization to "automatic." There are several objects contained within this area that are required to equip and train new players, however this area can also be re-written within the same vnumbers to reflect your theme.
+newdark.are isn't a required file, however all players default to recall to 21001 or Harakiem. When a player joins a guild, order, or clan, etc their default recall point is changed to the vnum defined in their clan file. You could either re-write newdark using the same vnumbers, or redefine the default recall vnum within the code of the MUD.
+imc-help.are
+ice-help.are	These two files deal w ith the IMC Network (Inter-MUD Communication Network) and are not required. You may wish to include them if you intend to use the network and its associated code but they are not required for the general well-being of the MUD.
+
+
+Running SMAUG On Your Own
+=========================
+
+As I said before, I do not code. I have no idea how the SMAUG code works, I have no knowledge of C++, and I have no knowledge of how to set up SMAUG on your computer.
+
+Do not send me questions on coding, they will not be answered.
+
+All questions relating to SMAUG code should be addressed to the SMAUG mailing list, or the SMAUG How-To website. I have nothing to do with either of these sites, and I don't know anything code related.
+
+
+How Do I Make Myself Level 65?
+==============================
+
+Once you've downloaded your version of WinSMAUG and unstuffed it, it's fairly easy to get it up and running so you can log on.
+
+First, using text editor (like Notepad), load sysdata.dat and change "Waitforauth 1" to "Waitforauth 0". This will disable the name authorization system, and new characters will
+appear in the academy and be advanced from level 1 to level 2.
+
+Once you've made your character and it is advanced to level 2, go in to the corresponding player directory (ie: B for Bob, etc), load the pfile into your text editor, and then edit its level to 65, then re-save the file are text only (without the .txt at the end of the filename).
+
+The next time you log into the MUD, you should be Level 65.
+
+
+Saving Areas
+============
+
+There was a bug in the downloadable Windows version of SMAUG that wouldn't allow player data to be saved. I'm not sure if this has been addressed yet, but you may want to try downloading a newer version of SMAUG 1.4a from the SMAUG homepage and see if this helps. If not, then I can only suggest a workaround as I know nothing about coding.
+
+Nick Gammon's website has another copy of WinSMAUG that seems to save player data just fine, so you may want to download his copy of SMAUG and try again. The only thing that seems to be missing from Nick's version is the "Building" directory, so you'll need to add that folder to your SMAUG directory before you're able to save proto areas.
+
+Nick also has a shareware program called AreaEditor that allows you to make SMAUG 1.4a areas without actually having a SMAUG MUD running on your machine. I'd assume that any areas made with this program would require "tweaking" before they could be installed, but you should be able to do 90% of your work with it.
+
+Workaround;
+Assuming you've already edited your pfile so that you are the "Supreme Entity," you should also be able to simply edit your pfile to include your PROTO area vnums so you can work on it. If you don't know how to make yourself L65, see "How do I make myself Level 65?"
+
+First, use checkvnum to make sure the range of vnums you want to use don't conflict with any other areas and then assign yourself the vnums you'll need to work with. These vnums won't save with your pfile, but the MUD will still create the area file <yourname>.are in the Building directory — having the area file is the important thing.
+
+Now, go into the Player directory and find the folder that has the first letter of your player name (ie: if your player name was Bob, find the B folder), your original player file will be in that folder. Once you've found your player file, open it in any text editor, such as Wordpad or Notepad. (For this example, let's assume your area vnums are from 10000 to 10099.)
+
+Look for the following information;
+
+And add your vnums like so;
+
+Hitroll 0
+Damroll 0
+Armor 100
+ICEListen ~
+Password iamagawd~
+Title the Supreme Entity~
+WizInvis 0
+Flags 32768
+PKills 0
+PDeaths 0	Hitroll 0
+Damroll 0
+Armor 100
+ICEListen ~
+Password iamagawd~
+Title the Supreme Entity~
+WizInvis 0
+RoomRange 10000 10099
+ObjRange 10000 10099
+MobRange 10000 10099
+Flags 32768
+PKills 0
+PDeaths 0
+
+I'm not sure if the position of the text is crucial, but when I managed to test it on my copy of WinSMAUG, the MUD placed the values right after "WizInvis".
+
+Once you have finished editting your pfile, save it was "text only" back into the same player folder that you got it from. Remember to remove the ".txt" extension after the file or the MUD won't read the file (ie: it should be "Bob," not "Bob.txt").
+
+Now when you log your player onto your WinSMAUG, you should see your assigned vnums in your score. If your area isn't loaded, use loadarea to load it.

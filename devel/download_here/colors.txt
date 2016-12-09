@@ -1,0 +1,100 @@
+ /* 050301 */
+ #define CB_RED         "\\e[0;41m"    /* Normal Colours (Background) */
+ #define CB_GREEN       "\\e[0;42m"
+ #define CB_YELLOW     "\\e[0;43m"
+ #define CB_BLUE         "\\e[0;44m"
+ #define CB_MAGENTA     "\\e[0;45m"
+ #define CB_CYAN         "\\e[0;46m"
+ #define CB_WHITE        "\\e[0;47m"
+ #define CB_D_GREY     "\\e[1;40m"     /* Light Colors (Background) */
+ #define CB_B_RED        "\\e[1;41m"
+ #define CB_B_GREEN     "\\e[1;42m"
+ #define CB_B_YELLOW     "\\e[1;43m"
+ #define CB_B_BLUE     "\\e[1;44m"
+ #define CB_B_MAGENTA    "\\e[1;45m"
+ #define CB_B_CYAN     "\\e[1;46m"
+ #define CB_B_WHITE     "\\e[1;47m"
+ #define C_BLINKING  "\\e[5m"
+ #define C_UNDERSCORE "\\e[4m"
+ #define C_REVERSE  "\\e[7m"
+ #define CLEAR_SCR  "\\e[2J"  /* Clear Screen */
+ #define CLEAR_HOME  "\\e[1;1H"  /* cursor home  */
+ /*#define WORD_WRAP_ON "\\e[7H"  / * word wrap on  * /
+ #define WORD_WRAP_OFF "\\e[71"  / * word wrap off  */
+ 
+ /* 050301 */
+ #define UNDERSCORE  4
+ #define BLINKING  5
+ #define REVERSE   6
+ #define HIDDEN   8
+ 
+ 
+ then in colour in comm.c add
+ 
+ /* 050301 */
+   case ')':
+   strcpy (code, CB_BLUE);
+   break;
+   case '|':
+   strcpy (code, CB_CYAN);
+   break;
+   case '=':
+   strcpy (code, CB_GREEN);
+   break;
+   case '/':
+   strcpy (code, CB_MAGENTA);
+   break;
+   case '':
+   strcpy (code, CB_WHITE);
+   break;
+   case '+':
+   strcpy (code, CB_YELLOW);
+   break;
+   case '%':
+   strcpy (code, CB_B_BLUE);
+   break;
+   case '&':
+   strcpy (code, CB_B_CYAN);
+   break;
+   case '#':
+   strcpy (code, CB_B_GREEN);
+   break;
+   case '^':
+   strcpy (code, CB_B_MAGENTA);
+   break;
+   case '@':
+   strcpy (code, CB_B_RED);
+   break;
+   case '(':
+   strcpy (code, CB_B_WHITE);
+   break;
+   case '$':
+   strcpy (code, CB_B_YELLOW);
+   break;
+   case '!':
+   strcpy (code, CB_D_GREY);
+   break;
+   case 'z':
+   strcpy (code, C_BLINKING);
+   break;
+   case 'u':
+   strcpy (code, C_UNDERSCORE);
+   break;
+   case 'v':
+   strcpy (code, C_REVERSE);
+   break;
+   case '0':
+   strcpy (code, CLEAR_SCR);
+   break;
+  }
+ 
+  and in help add the helps for the new colors.
+ 
+ Just give me credit in the code and use this if you like.
+ 
+ Viola
+Taka
+ taka@ghostmud.com
+ bb12.betterbox.net port 3333
+ www.ghostmud.com
+ Head Coder and developer of GhostMUD 

@@ -1,0 +1,581 @@
+/***************************************************************************
+ *                                                                         *
+ *                   VALUES OF INTEREST TO AREA BUILDERS                   *
+ *                   (Start of section ... start here)                     *
+ *                                                                         *
+ ***************************************************************************/
+
+
+#define CLAN_PLAIN	 0
+#define CLAN_VAMPIRE	 1
+#define CLAN_WARRIOR	 2
+#define CLAN_DRUID	 3
+#define CLAN_MAGE	 4
+#define CLAN_CELTIC	 5
+#define CLAN_THIEF	 6
+#define CLAN_CLERIC	 7
+#define CLAN_UNDEAD	 8
+#define CLAN_CHAOTIC	 9
+#define CLAN_NEUTRAL	10
+#define CLAN_LAWFUL	11
+#define CLAN_NOKILL	12
+
+#define ACT_IS_NPC		 BV00		/* Auto set for mobs	*/
+#define ACT_SENTINEL		 BV01		/* Stays in one room	*/
+#define ACT_SCAVENGER		 BV02		/* Picks up objects	*/
+#define ACT_AGGRESSIVE		 BV05		/* Attacks PC's		*/
+#define ACT_STAY_AREA		 BV06		/* Won't leave area	*/
+#define ACT_WIMPY		 BV07		/* Flees when hurt	*/
+#define ACT_PET			 BV08		/* Auto set for pets	*/
+#define ACT_TRAIN		 BV09		/* Can train PC's	*/
+#define ACT_PRACTICE		 BV10		/* Can practice PC's	*/
+#define ACT_IMMORTAL		 BV11
+#define ACT_DEADLY		 BV12
+#define ACT_POLYSELF		 BV13
+#define ACT_META_AGGR		 BV14
+#define ACT_GUARDIAN		 BV15
+#define ACT_RUNNING		 BV16
+#define ACT_NOWANDER		 BV17
+#define ACT_MOUNTABLE		 BV18
+#define ACT_MOUNTED		 BV19
+#define ACT_PROTOTYPE		 BV30
+
+/*
+ * Bits for 'affected_by'.
+ * Used in #MOBILES.
+ */
+#define AFF_BLIND		  BV00
+#define AFF_INVISIBLE		  BV01
+#define AFF_DETECT_EVIL		  BV02
+#define AFF_DETECT_INVIS	  BV03
+#define AFF_DETECT_MAGIC	  BV04
+#define AFF_DETECT_HIDDEN	  BV05
+#define AFF_HOLD		  BV06		/* Unused	*/
+#define AFF_SANCTUARY		  BV07
+#define AFF_FAERIE_FIRE		  BV08
+#define AFF_INFRARED		  BV09
+#define AFF_CURSE		  BV10
+#define AFF_FLAMING		  BV11		/* Unused	*/
+#define AFF_POISON		  BV12
+#define AFF_PROTECT		  BV13
+#define AFF_PARALYSIS		  BV14		/* Unused	*/
+#define AFF_SNEAK		  BV15
+#define AFF_HIDE		  BV16
+#define AFF_SLEEP		  BV17
+#define AFF_CHARM		  BV18
+#define AFF_FLYING		  BV19
+#define AFF_PASS_DOOR		  BV20
+#define AFF_FLOATING		  BV21
+#define AFF_TRUESIGHT		  BV22
+#define AFF_DETECTTRAPS		  BV23
+#define AFF_SCRYING	          BV24
+#define AFF_FIRESHIELD	          BV25
+#define AFF_SHOCKSHIELD	          BV26
+
+/*
+ * Resistant Immune Susceptible flags
+ */
+#define RIS_FIRE		  BV00
+#define RIS_COLD		  BV01
+#define RIS_ELECTRICITY		  BV02
+#define RIS_ENERGY		  BV03
+#define RIS_BLUNT		  BV04
+#define RIS_PIERCE		  BV05
+#define RIS_SLASH		  BV06
+#define RIS_ACID		  BV07
+#define RIS_POISON		  BV08
+#define RIS_DRAIN		  BV09
+#define RIS_SLEEP		  BV10
+#define RIS_CHARM		  BV11
+#define RIS_HOLD		  BV12
+#define RIS_NONMAGIC		  BV13
+#define RIS_PLUS1		  BV14
+#define RIS_PLUS2		  BV15
+#define RIS_PLUS3		  BV16
+#define RIS_PLUS4		  BV17
+#define RIS_PLUS5		  BV18
+#define RIS_PLUS6		  BV19
+#define RIS_MAGIC		  BV20
+
+/*
+ * Attack types
+ */
+#define ATCK_BITE		  BV00
+#define ATCK_CLAWS		  BV01
+#define ATCK_TAIL		  BV02
+#define ATCK_STING		  BV03
+#define ATCK_PUNCH		  BV04
+#define ATCK_KICK		  BV05
+#define ATCK_TRIP		  BV06
+#define ATCK_BASH		  BV07
+#define ATCK_STUN		  BV08
+#define ATCK_GOUGE		  BV09
+#define ATCK_BACKSTAB		  BV10
+#define ATCK_FEED		  BV11
+#define ATCK_DRAIN		  BV12
+#define ATCK_FIREBREATH		  BV13
+#define ATCK_FROSTBREATH	  BV14
+#define ATCK_ACIDBREATH		  BV15
+#define ATCK_LIGHTNBREATH	  BV16
+#define ATCK_GASBREATH		  BV17
+#define ATCK_POISON		  BV18
+#define ATCK_NASTYPOISON	  BV19
+#define ATCK_GAZE		  BV20
+#define ATCK_BLINDNESS		  BV21
+#define ATCK_CAUSESERIOUS	  BV22
+#define ATCK_EARTHQUAKE		  BV23
+#define ATCK_CAUSECRITICAL	  BV24
+#define ATCK_CURSE		  BV25
+#define ATCK_FLAMESTRIKE	  BV26
+#define ATCK_HARM		  BV27
+#define ATCK_FIREBALL		  BV28
+#define ATCK_COLORSPRAY		  BV29
+#define ATCK_WEAKEN		  BV30
+
+/*
+ * Defense types
+ */
+#define DFND_PARRY		  BV00
+#define DFND_DODGE		  BV01
+#define DFND_HEAL		  BV02
+#define DFND_CURELIGHT		  BV03
+#define DFND_CURESERIOUS	  BV04
+#define DFND_CURECRITICAL	  BV05
+#define DFND_DISPELMAGIC	  BV06
+#define DFND_DISPELEVIL		  BV07
+#define DFND_SANCTUARY		  BV08
+#define DFND_FIRESHIELD		  BV09
+#define DFND_SHOCKSHIELD	  BV10
+#define DFND_SHIELD		  BV11
+#define DFND_BLESS		  BV12
+#define DFND_STONESKIN		  BV13
+#define DFND_TELEPORT		  BV14
+#define DFND_MONSUM1		  BV15
+#define DFND_MONSUM2		  BV16
+#define DFND_MONSUM3		  BV17
+#define DFND_MONSUM4		  BV18
+#define DFND_DISARM		  BV19
+
+/*
+ * Body parts
+ */
+#define PART_HEAD		  BV00
+#define PART_ARMS		  BV01
+#define PART_LEGS		  BV02
+#define PART_HEART		  BV03
+#define PART_BRAINS		  BV04
+#define PART_GUTS		  BV05
+#define PART_HANDS		  BV06
+#define PART_FEET		  BV07
+#define PART_FINGERS		  BV08
+#define PART_EAR		  BV09
+#define PART_EYE		  BV10
+#define PART_LONG_TONGUE	  BV11
+#define PART_EYESTALKS		  BV12
+#define PART_TENTACLES		  BV13
+#define PART_FINS		  BV14
+#define PART_WINGS		  BV15
+#define PART_TAIL		  BV16
+#define PART_SCALES		  BV17
+/* for combat */
+#define PART_CLAWS		  BV18
+#define PART_FANGS		  BV19
+#define PART_HORNS		  BV20
+#define PART_TUSKS		  BV21
+#define PART_TAILATTACK		  BV22
+#define PART_SHARPSCALES	  BV23
+
+/*
+ * Sex.
+ * Used in #MOBILES.
+ */
+#define SEX_NEUTRAL		      0
+#define SEX_MALE		      1
+#define SEX_FEMALE		      2
+
+
+#define TRAP_TYPE_POISON_GAS	      1
+#define TRAP_TYPE_POISON_DART	      2
+#define TRAP_TYPE_POISON_NEEDLE	      3
+#define TRAP_TYPE_POISON_DAGGER	      4
+#define TRAP_TYPE_POISON_ARROW	      5
+#define TRAP_TYPE_BLINDNESS_GAS	      6
+#define TRAP_TYPE_SLEEPING_GAS	      7
+#define TRAP_TYPE_FLAME		      8
+#define TRAP_TYPE_EXPLOSION	      9
+#define TRAP_TYPE_ACID_SPRAY	     10
+#define TRAP_TYPE_ELECTRIC_SHOCK     11
+#define TRAP_TYPE_BLADE		     12
+#define TRAP_TYPE_SEX_CHANGE	     13
+#define MAX_TRAPTYPE		     13
+
+#define TRAP_ROOM      		   BV00
+#define TRAP_OBJ	      	   BV01
+#define TRAP_ENTER_ROOM		   BV02
+#define TRAP_LEAVE_ROOM		   BV03
+#define TRAP_OPEN		   BV04 
+#define TRAP_CLOSE		   BV05
+#define TRAP_GET		   BV06
+#define TRAP_PUT		   BV07
+#define TRAP_PICK		   BV08
+#define TRAP_UNLOCK		   BV09
+#define TRAP_N			   BV10
+#define TRAP_S			   BV11 
+#define TRAP_E	      		   BV12
+#define TRAP_W	      		   BV13
+#define TRAP_U	      		   BV14
+#define TRAP_D	      		   BV15
+#define TRAP_EXAMINE		   BV16
+
+/*
+ * Well known object virtual numbers.
+ * Defined in #OBJECTS.
+ */
+#define OBJ_VNUM_MONEY_ONE	      2
+#define OBJ_VNUM_MONEY_SOME	      3
+
+#define OBJ_VNUM_CORPSE_NPC	     10
+#define OBJ_VNUM_CORPSE_PC	     11
+#define OBJ_VNUM_SEVERED_HEAD	     12
+#define OBJ_VNUM_TORN_HEART	     13
+#define OBJ_VNUM_SLICED_ARM	     14
+#define OBJ_VNUM_SLICED_LEG	     15
+#define OBJ_VNUM_SPILLED_GUTS	     16
+#define OBJ_VNUM_BLOOD		     17
+#define OBJ_VNUM_BLOODSTAIN	     18
+#define OBJ_VNUM_SCRAPS		     19
+
+#define OBJ_VNUM_MUSHROOM	     20
+#define OBJ_VNUM_LIGHT_BALL	     21
+#define OBJ_VNUM_SPRING		     22
+
+#define OBJ_VNUM_FIRE		     30
+#define OBJ_VNUM_TRAP		     31
+
+#define OBJ_VNUM_SCHOOL_MACE	  10315
+#define OBJ_VNUM_SCHOOL_DAGGER	  10312
+#define OBJ_VNUM_SCHOOL_SWORD	  10313
+#define OBJ_VNUM_SCHOOL_VEST	  10308
+#define OBJ_VNUM_SCHOOL_SHIELD	  10310
+#define OBJ_VNUM_SCHOOL_BANNER    10311
+
+/*
+ * Item types.
+ * Used in #OBJECTS.
+ */
+#define ITEM_LIGHT		      1
+#define ITEM_SCROLL		      2
+#define ITEM_WAND		      3
+#define ITEM_STAFF		      4
+#define ITEM_WEAPON		      5
+#define ITEM_TREASURE		      8
+#define ITEM_ARMOR		      9
+#define ITEM_POTION		     10
+#define ITEM_FURNITURE		     12
+#define ITEM_TRASH		     13
+#define ITEM_CONTAINER		     15
+#define ITEM_DRINK_CON		     17
+#define ITEM_KEY		     18
+#define ITEM_FOOD		     19
+#define ITEM_MONEY		     20
+#define ITEM_BOAT		     22
+#define ITEM_CORPSE_NPC		     23
+#define ITEM_CORPSE_PC		     24
+#define ITEM_FOUNTAIN		     25
+#define ITEM_PILL		     26
+#define ITEM_BLOOD		     27
+#define ITEM_BLOODSTAIN		     28
+#define ITEM_SCRAPS		     29
+#define ITEM_PIPE		     30
+#define ITEM_HERB_CON		     31
+#define ITEM_HERB		     32
+#define ITEM_INCENSE		     33
+#define ITEM_FIRE		     34
+#define ITEM_BOOK		     35
+#define ITEM_SWITCH		     36
+#define ITEM_LEVER		     37
+#define ITEM_PULLCHAIN		     38
+#define ITEM_BUTTON		     39
+#define ITEM_DIAL		     40
+#define ITEM_RUNE		     41
+#define ITEM_RUNEPOUCH		     42
+#define ITEM_MATCH		     43
+#define ITEM_TRAP		     44
+#define ITEM_MAP		     45
+#define MAX_ITEM_TYPE		     45
+/*
+ * Extra flags.
+ * Used in #OBJECTS.
+ */
+#define ITEM_GLOW		BV00
+#define ITEM_HUM		BV01
+#define ITEM_DARK		BV02
+#define ITEM_LOCK		BV03
+#define ITEM_EVIL		BV04
+#define ITEM_INVIS		BV05
+#define ITEM_MAGIC		BV06
+#define ITEM_NODROP		BV07
+#define ITEM_BLESS		BV08
+#define ITEM_ANTI_GOOD		BV09
+#define ITEM_ANTI_EVIL		BV10
+#define ITEM_ANTI_NEUTRAL	BV11
+#define ITEM_NOREMOVE		BV12
+#define ITEM_INVENTORY		BV13
+#define ITEM_ANTI_MAGE		BV14
+#define ITEM_ANTI_THIEF	        BV15
+#define ITEM_ANTI_WARRIOR	BV16
+#define ITEM_ANTI_CLERIC	BV17
+#define ITEM_ORGANIC		BV18
+#define ITEM_METAL		BV19
+#define ITEM_DONATION		BV20
+#define ITEM_CLANOBJECT		BV21
+#define ITEM_CLANCORPSE		BV22
+#define ITEM_ANTI_VAMPIRE	BV23
+#define ITEM_ANTI_DRUID	        BV24
+#define ITEM_HIDDEN		BV25
+#define ITEM_PROTOTYPE		BV30
+
+/* Lever/dial/switch/button/pullchain flags */
+#define TRIG_UP			BV00
+#define TRIG_UNLOCK		BV01
+#define TRIG_LOCK		BV02
+#define TRIG_D_NORTH		BV03
+#define TRIG_D_SOUTH		BV04
+#define TRIG_D_EAST		BV05
+#define TRIG_D_WEST		BV06
+#define TRIG_D_UP		BV07
+#define TRIG_D_DOWN		BV08
+#define TRIG_DOOR		BV09
+#define TRIG_CONTAINER		BV10
+#define TRIG_OPEN		BV11
+#define TRIG_CLOSE		BV12
+#define TRIG_PASSAGE		BV13
+#define TRIG_OLOAD		BV14
+#define TRIG_MLOAD		BV15
+#define TRIG_TELEPORT		BV16
+#define TRIG_TELEPORTALL	BV17
+#define TRIG_TELEPORTPLUS	BV18
+#define TRIG_DEATH		BV19
+#define TRIG_CAST		BV20
+#define TRIG_FAKEBLADE		BV21
+#define TRIG_RAND4		BV22
+#define TRIG_RAND6		BV23
+#define TRIG_TRAPDOOR		BV24
+#define TRIG_ANOTHEROOM		BV25
+#define TRIG_USEDIAL		BV26
+#define TRIG_ABSOLUTEVNUM	BV27
+#define TRIG_SHOWROOMDESC	BV28
+
+#define TELE_SHOWDESC		BV00
+#define TELE_TRANSALL		BV01
+#define TELE_TRANSALLPLUS	BV02
+
+
+/*
+ * Wear flags.
+ * Used in #OBJECTS.
+ */
+#define ITEM_TAKE		BV00
+#define ITEM_WEAR_FINGER	BV01
+#define ITEM_WEAR_NECK		BV02
+#define ITEM_WEAR_BODY		BV03
+#define ITEM_WEAR_HEAD		BV04
+#define ITEM_WEAR_LEGS		BV05
+#define ITEM_WEAR_FEET		BV06
+#define ITEM_WEAR_HANDS		BV07
+#define ITEM_WEAR_ARMS		BV08
+#define ITEM_WEAR_SHIELD	BV09
+#define ITEM_WEAR_ABOUT		BV10
+#define ITEM_WEAR_WAIST		BV11
+#define ITEM_WEAR_WRIST		BV12
+#define ITEM_WIELD		BV13
+#define ITEM_HOLD		BV14
+#define ITEM_DUAL_WIELD		BV15
+#define ITEM_WEAR_EARS		BV16
+#define ITEM_WEAR_EYES		BV17
+#define ITEM_MISSILE_WIELD	BV18
+
+
+/*
+ * Apply types (for affects).
+ * Used in #OBJECTS.
+ */
+#define APPLY_NONE		      0
+#define APPLY_STR		      1
+#define APPLY_DEX		      2
+#define APPLY_INT		      3
+#define APPLY_WIS		      4
+#define APPLY_CON		      5
+#define APPLY_SEX		      6
+#define APPLY_CLASS		      7
+#define APPLY_LEVEL		      8
+#define APPLY_AGE		      9
+#define APPLY_HEIGHT		     10
+#define APPLY_WEIGHT		     11
+#define APPLY_MANA		     12
+#define APPLY_HIT		     13
+#define APPLY_MOVE		     14
+#define APPLY_GOLD		     15
+#define APPLY_EXP		     16
+#define APPLY_AC		     17
+#define APPLY_HITROLL		     18
+#define APPLY_DAMROLL		     19
+#define APPLY_SAVING_PARA	     20
+#define APPLY_SAVING_ROD	     21
+#define APPLY_SAVING_PETRI	     22
+#define APPLY_SAVING_BREATH	     23
+#define APPLY_SAVING_SPELL	     24
+#define APPLY_CHA		     25
+#define APPLY_AFFECT		     26
+#define APPLY_RESISTANT		     27
+#define APPLY_IMMUNE		     28
+#define APPLY_SUSCEPTIBLE	     29
+#define APPLY_WEAPONSPELL	     30
+#define MAX_APPLY_TYPE		     30
+
+/*
+ * Values for containers (value[1]).
+ * Used in #OBJECTS.
+ */
+#define CONT_CLOSEABLE		      1
+#define CONT_PICKPROOF		      2
+#define CONT_CLOSED		      4
+#define CONT_LOCKED		      8
+
+/*
+ * Well known room virtual numbers.
+ * Defined in #ROOMS.
+ */
+#define ROOM_VNUM_LIMBO		      2
+#define ROOM_VNUM_CHAT		   1200
+#define ROOM_VNUM_TEMPLE	   3001
+#define ROOM_VNUM_ALTAR		   3054
+#define ROOM_VNUM_SCHOOL	  10300
+
+
+/*
+ * Room flags.           Holy cow!  Talked about stripped away..
+ * Used in #ROOMS.       Those merc guys know how to strip code down.
+ *			 Lets put it all back... ;)
+ */
+
+#define ROOM_DARK		BV00
+#define ROOM_DEATH		BV01
+#define ROOM_NO_MOB		BV02
+#define ROOM_INDOORS		BV03
+#define ROOM_LAWFUL		BV04
+#define ROOM_NEUTRAL		BV05
+#define ROOM_CHAOTIC		BV06
+#define ROOM_NO_MAGIC		BV07
+#define ROOM_TUNNEL		BV08
+#define ROOM_PRIVATE		BV09
+#define ROOM_SAFE		BV10
+#define ROOM_SOLITARY		BV11
+#define ROOM_PET_SHOP		BV12
+#define ROOM_NO_RECALL		BV13
+#define ROOM_DONATION		BV14
+#define ROOM_NODROPALL		BV15
+#define ROOM_SILENCE		BV16
+#define ROOM_LOGSPEECH		BV17
+#define ROOM_NODROP		BV18
+#define ROOM_CLANSTOREROOM	BV19
+#define ROOM_NO_SUMMON		BV20
+#define ROOM_NO_ASTRAL		BV21
+#define ROOM_TELEPORT		BV22
+#define ROOM_TELESHOWDESC	BV23
+#define ROOM_NOFLOOR		BV24
+#define ROOM_PROTOTYPE	     	BV30
+
+/*
+ * Directions.
+ * Used in #ROOMS.
+ */
+#define DIR_NORTH		      0
+#define DIR_EAST		      1
+#define DIR_SOUTH		      2
+#define DIR_WEST		      3
+#define DIR_UP			      4
+#define DIR_DOWN		      5
+
+
+
+/*
+ * Exit flags.
+ * Used in #ROOMS.
+ */
+#define EX_ISDOOR		  BV00
+#define EX_CLOSED		  BV01
+#define EX_LOCKED		  BV02
+#define EX_SECRET		  BV03
+#define EX_SWIM			  BV04
+#define EX_PICKPROOF		  BV05
+#define EX_FLY			  BV06
+#define EX_CLIMB		  BV07
+#define EX_DIG			  BV08
+
+#define EX_NOPASSDOOR		  BV10
+#define EX_HIDDEN		  BV11
+
+/*
+ * Sector types.
+ * Used in #ROOMS.
+ */
+#define SECT_INSIDE		      0
+#define SECT_CITY		      1
+#define SECT_FIELD		      2
+#define SECT_FOREST		      3
+#define SECT_HILLS		      4
+#define SECT_MOUNTAIN		      5
+#define SECT_WATER_SWIM		      6
+#define SECT_WATER_NOSWIM	      7
+#define SECT_UNUSED		      8
+#define SECT_AIR		      9
+#define SECT_DESERT		     10
+#define SECT_DUNNO		     11
+#define SECT_MAX		     12
+
+
+
+/*
+ * Equpiment wear locations.
+ * Used in #RESETS.
+ */
+#define WEAR_NONE		     -1
+#define WEAR_LIGHT		      0
+#define WEAR_FINGER_L		      1
+#define WEAR_FINGER_R		      2
+#define WEAR_NECK_1		      3
+#define WEAR_NECK_2		      4
+#define WEAR_BODY		      5
+#define WEAR_HEAD		      6
+#define WEAR_LEGS		      7
+#define WEAR_FEET		      8
+#define WEAR_HANDS		      9
+#define WEAR_ARMS		     10
+#define WEAR_SHIELD		     11
+#define WEAR_ABOUT		     12
+#define WEAR_WAIST		     13
+#define WEAR_WRIST_L		     14
+#define WEAR_WRIST_R		     15
+#define WEAR_WIELD		     16
+#define WEAR_HOLD		     17
+#define WEAR_DUAL_WIELD		     18
+#define WEAR_EARS		     19
+#define WEAR_EYES		     20
+#define WEAR_MISSILE_WIELD	     21
+#define MAX_WEAR		     22
+
+/*
+ * Positions
+ */
+#define POS_DEAD		      0
+#define POS_MORTAL		      1
+#define POS_INCAP		      2
+#define POS_STUNNED		      3
+#define POS_SLEEPING		      4
+#define POS_RESTING		      5
+#define POS_SITTING		      6
+#define POS_FIGHTING		      7
+#define POS_STANDING		      8
+#define POS_MOUNTED		      9
+

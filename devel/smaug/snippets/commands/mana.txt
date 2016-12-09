@@ -1,0 +1,173 @@
+                     SHOWS MANA REQUERIMENTS TO CAST A SPELL.
+This snippet shows the mana (or blood, if vampire) needed for a player
+to cast a spell with success.
+You can type 'mana all' (or 'blood all') and you will see a list of all the spells
+you can cast (if you have the minim level required and if you have practiced
+it) followed by the amount of mana you need to cast it. If you have set ANSI
+to ON, the spells that you can cast (because you have the enough mana) will be
+yellow coloured, and the one you cannot will be red.
+Also it is possible to type: mana <spell_name> , and it shows you the mana
+required to this specific spell to be cast.
+
+In MUD.H:
+-Add this two defines:
+#define MANA UMAX(skill->min_mana,100/(2+ch->level-skill->skill_level[ch->class])) 
+#define BLOOD UMAX(1,(MANA+4)/8)
+
+-Look for similar declarations and add:
+DECLARE_DO_FUN( do_mana        );
+
+In TABLES.C:
+-Look for similar sentences of other commands and add:
+ if ( !str_cmp( name, "do_mana" ))		return do_mana;
+
+ if ( skill == do_mana  )		return "do_mana";
+
+In ACT_INFO.C:
+Cut and paste all this, (i.e. just before 'void do_slist...'
+
+/***************************************************************************
+*     Shows mana and blood (if vampire) requirements to cast a spell.      *
+*          Created by Desden, el Chaman Tibetano - Jun 1999                *
+* Snippets page: http://luisso.net/smaug_snippets.htm *
+*                Email: jose@luisso.net                          *
+***************************************************************************/
+void do_mana( CHAR_DATA *ch, char *argument)
+{
+SKILLTYPE *skill=NULL;
+char arg1[MAX_INPUT_LENGTH];
+int sn;
+int col = 0;
+
+argument=one_argument(argument, arg1);
+
+if (IS_NPC(ch))
+   {
+   send_to_char("Mobs cannot use this command.\n\r", ch);
+  return;
+    }
+
+if (ch->class==CLASS_WARRIOR)
+ {
+ send_to_char("Warriors don't use mana to cast.\n\r",ch);
+ return;
+ }
+
+if (arg1[0]=='\0')
+ {
+  if(IS_VAMPIRE(ch))
+  send_to_char("Syntax: blood all\n\r        blood <spell>\n\r",ch);
+  else
+  send_to_char("Syntax: mana all\n\r        mana <spell>\n\r",ch);
+  return;
+ }
+
+if(!strcmp(arg1,"all"))
+ {
+  set_pager_color(AT_YELLOW,ch); 
+ 
+ if(IS_VAMPIRE(ch))
+ send_to_pager("                         BLOOD REQUIRED TO CAST\n\r", ch);
+ else
+ send_to_pager("                         MANA REQUIRED TO CAST\n\r", ch);
+
+ send_to_pager("                        -----------------------\n\r", ch);
+  
+for ( sn = 0; sn < top_sn ; sn++ )   
+       	{
+ 	  skill=get_skilltype(sn);  
+          if(ch->pcdata->learned[sn] < 1 ||
+           !skill->name || !skill->min_mana )
+         continue;
+
+      if(ch->level>=skill->skill_level[ch->class]  )
+       {
+          if(IS_VAMPIRE(ch))
+           {	
+            if(ch->pcdata->condition[COND_BLOODTHIRST] >= BLOOD)
+        	pager_printf_color(ch, "&Y%-12.12s:%4d   ",
+                  skill->name, BLOOD);
+            else
+	     pager_printf_color(ch, "&R%-12.12s:%4d   ",
+                skill->name, BLOOD);
+           }
+       else
+           {
+          if(ch->mana >= MANA)
+        	pager_printf_color(ch, "&Y%-12.12s:%4d   ",
+                  skill->name, MANA );
+           else
+	     pager_printf_color(ch, "&R%-12.12s:%4d   ",
+                skill->name, MANA );
+           }	    
+           
+          if(++col % 4 == 0)
+            
+          pager_printf(ch,"\n\r");
+         
+        }
+     }
+
+         pager_printf(ch,"\n\r");
+   }
+
+   else   
+
+   {
+    if((sn =skill_lookup( arg1)) > 0)
+     { 
+     skill=get_skilltype(sn);
+     
+     if(!skill->min_mana)
+     {
+      ch_printf(ch, "%s, '%s' doesn't use %s points.\n\r", ch->name, skill->name, IS_VAMPIRE(ch)?"blood":"mana");
+    return;
+     }
+     
+ if(ch->pcdata->learned[sn] < 1)
+       {
+         if (  ch->level < skill->skill_level[ch->class]  )
+         {
+         send_to_char( "You have not enough level to cast it.\n\r", ch );
+         return;
+         }
+       else
+        {
+       send_to_char("You must practice a spell before using it.\n\r",ch);
+       return;
+       }   
+      }
+
+  pager_printf(ch,"You need %d %s points to cast '%s' with success.\n\r",IS_VAMPIRE(ch)?BLOOD:MANA,IS_VAMPIRE(ch)?"blood":"mana", skill->name);
+    }
+else
+    ch_printf(ch, "That is not a spell or a skill.\n\r");
+   }
+return;
+}
+
+In ../SYSTEM/COMMANDS.DAT:
+Add this two new commands:
+#COMMAND
+Name        blood~
+Code        do_mana 
+Position    100
+Level       1  
+Log         0
+End
+
+#COMMAND
+Name        mana~
+Code        do_mana 
+Position    100
+Level       1  
+Log         0
+End
+
+Now, you must do a 'make clean' and a 'make', and that´s all.
+
+Please if you try it send me a mail telling me if you like it, errors, or any
+comments you want. I'll thank you if mail me telling you are using this code. Thanks ;)
+Desden el Chaman Tibetano - Jun 1999
+Email: jose@luisso.net  
+

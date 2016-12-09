@@ -1,0 +1,698 @@
+
+  LIVING INSIDE THE (OPERATING) SYSTEM: COMMUNITY IN VIRTUAL REALITY (DRAFT)
+                                       
+by John Unsworth
+
+   
+     _________________________________________________________________
+   
+   Send a Comment or Suggestion
+     _________________________________________________________________
+   
+     "Machines speak to machines before speaking to man, and the
+     ontological domains that they reveal and secrete are, at each
+     occurrence, singular and precarious."
+     
+   
+   
+   -- Felix Guattari, "Machinic Heterogenesis"[1]
+   
+     "We live by the mode of referendum precisely because there is no
+     longer any referential."
+     
+   
+   
+    -- Jean Baudrillard, Simulations [2]
+   
+     "I think a lot of the common assumptions we make are actually built
+     in to the MOO apparatus . . . . The elements of the MOO are
+     constructed for the most part to simulate a real physical community.
+     Ideas like 'privacy' and 'ownership' are constantly implied by the
+     descriptions and properties if not the actual programming of every
+     object."
+     
+   
+   
+    --Ogre, in "MOO.Terrorism"[3]
+     _________________________________________________________________
+   
+   
+   
+   This essay is an attempt to describe and explain the way that an
+   unusual (but by no means anomalous) culture has developed under the
+   aegis of PMC-MOO, a text-based virtual-reality program that runs on a
+   networked Unix workstation. It is also an attempt to describe the
+   scholarly and pedagogical trajectory of this program, by identifying
+   the conceptual coordinates of its origin.
+   
+   MOOs belong to a class of programs known as MUDs, and MUDs are ably
+   defined by Pavel Curtis, the inventor of MOOs, as follows:
+   
+     A MUD (Multi-User Dungeon or, sometimes, Multi-User Dimension) is a
+     network-accessible, multi-participant, user-extensible virtual
+     reality whose user interface is entirely textual. Participants
+     (usually called players) have the appearance of being situated in an
+     artificially-constructed place that also contains those other
+     players who are connected at the same time. Players can communicate
+     easily with each other in real time.[4] This virtual gathering place
+     has many of the social attributes of other places, and many of the
+     usual social mechanisms operate there. Certain attributes of this
+     virtual place, however, tend to have significant effects on social
+     phenomena, leading to new mechanisms and modes of behavior not
+     usually seen `IRL' (in real life).
+     
+   
+   
+   I will substantially disagree with that last point in the course of
+   this essay, but suffice it to say, for now, that in practical terms,
+   the experience of participating in a MOO is that one sits at a
+   keyboard, in front of a screen, and projects oneself over a global
+   computer network into an entirely textual world, and into an entirely
+   virtual community. Community is generally a function of shared
+   location, shared interests, and sometimes shared government and shared
+   property: in order to deserve the name, a community needs more than
+   one, though not necessarily all, of those attributes.
+   
+   In the case of PMC-MOO, the community which I will discuss here, all
+   those attributes are present in some sense or in some measure.
+   However, it would be a mistake to see this community, or the larger
+   archipelago civilization of MOOs to which it belongs, as entirely
+   communitarian, or as entirely self- determining. Rather, I will argue,
+   PMC-MOO and MOOs in general take shape under twin forces not unlike
+   fate and free will, where free will is what we always have understood
+   it to be, but where the role of fate is played by the operating system
+   in which the MOO is embedded. The aporia in this analogy, and it is an
+   important one for my argument, is that unlike transcendental fate,
+   computer operating systems are historically and culturally determined.
+   
+  Unix and Monopoly Capital:
+  
+   
+   
+    To understand the cultural moment that is expressed in the operating
+   system in question, Unix, and to understand the effects of Unix on the
+   formation of MOO code and MOO culture, we must isolate and understand
+   a few concepts and a little history as well. For our purposes, the
+   concepts that matter most are expressed in their most basic form in
+   the Unix filesystem, as hierarchy, user groups, and ownership. The
+   Unix filesystem is hierarchical in its organization, and the
+   particular kind of hierarchy is, in essence, dendritic: file systems
+   have a tree- like structure, with a "root" directory containing files
+   and other directories, or branches, of the filesystem, which in turn
+   can contain other files and directories. In Unix, every file (and
+   indeed, every process) has an individual owner, and the hierarchy of
+   owners explicitly mirrors the hierarchy of the filesystem itself, with
+   the superuser of all users and user groups called "root." Every
+   individual user, then, belongs to one or more user groups, and the
+   permission to read, write, delete, search, or execute a particular
+   file is precisely defined for owner, group, and other. It is difficult
+   to exaggerate the importance of these basic concepts in Unix: in fact,
+   the filesystem organization is itself a kind of first cause for Unix,
+   inasmuch as its origins lie in the dim prehistory of Unix, in Multics.
+   Multics was a multi-user mainframe operating system developed jointly
+   in the late 1960s by Bell Labs, MIT, and General Electric and intended
+   to permit time-sharing on large, expensive, centralized computer
+   resources. Not surprisingly, the developers of Multics, and after
+   them, the developers of Unix, reasoned that if an operating system
+   will permit many users to look at and manipulate the same files at the
+   same time, it is necessary to establish which users are associated
+   with which files, and what permissions are granted them.
+   
+   AT&T; began developing Multics in 1964,[5] eight years after the 1956
+   Consent Decree which settled the last anti-trust suit against the
+   company. Although the 1956 decision said nothing about software
+   (because the concept wasn't available), AT&T; interpreted the decision
+   cautiously, and when Unix came along, the company decided to
+   distribute its operating system on non-profit terms-- licensed at very
+   low cost to universities, and priced prohibitively high for commercial
+   clients, expressly so as to avoid developing a software business. In
+   fact, what was distributed was the source code, which meant that
+   university researchers could tinker with the system, offer
+   improvements, and make modifications to suit their needs. However,
+   since Bell Labs was distributing the software at or near cost, it
+   wasn't particularly interested in providing user support. This
+   fostered two things--a kind of priesthood of the code, manifested as a
+   hierarchy of arcane knowledge about the complex and often cryptically
+   documented system, and also a self-supporting user community, which
+   became incarnate in the late 1970s and early 1980s as Usenet. Usenet
+   was (and is) an independent mail network that allowed users to post
+   questions and receive answers about specific features of Unix, or
+   about applications that run under Unix. Usenet still flourishes, and
+   still fulfills its original function, but it has expanded to include
+   discussion of many topics that have nothing to do with operating
+   systems, and it has become an asynchronous culture in its own
+   right.[6]
+   
+   In the largest context, then, Unix developed as a byproduct of
+   research at a corporate laboratory, under the constraints imposed by
+   anti-trust legislation, which helped to force it out of the channels
+   in which proprietary inventions usually travel in a capitalist
+   economy, and into the freely exchanged economy of academic research
+   and invention. It should also be noted, though, that Bell Labs itself,
+   at least in its research divisions, was and may still be a more
+   fertile environment for technological creativity than many
+   universities. The nature of pure research is that one doesn't know
+   what will ultimately "pay off": therefore, it's necessary to invest in
+   a diversified portfolio of research activities. According to Samuel P.
+   Morgan, a member of the Bell labs Research Area beginning in 1947 and,
+   during the early seventies, Director of the Computing Science Research
+   Center,
+   
+     If there aren't a certain number of things taken up in the
+     organization every year that don't work out, we're not being
+     sufficiently aggressive, or innovative, or we are not gambling
+     enough. . . . We work on percentages, and of course this is true
+     throughout any research organization. We've got to have a certain
+     number of failures. . . .[7]
+     
+   
+   
+   In fact, it is only a very large accumulation of wealth that makes it
+   practical to gamble in this way, investing resources in doing research
+   with no immediately obvious economic benefit. Moreover, the kind of
+   research environment that produces these unpredictable benefits,
+   especially in the area of computer hardware and software, has proven
+   to be decentralized and voluntaristic. This is true even outside of
+   the area of pure research, in the application of computer technology
+   to business operations. According to V.M. Wolontis, Executive Director
+   of the Operations Research Division at Bell labs during the early days
+   of Unix,
+   
+     Things in the computer applications field have developed because
+     individual people at the working level have had ideas and have
+     pursued them. Things have grown from the working level up, rather
+     than by some major management figure sitting at his desk saying this
+     shall be computerized, and bingo, a hundred people march in the
+     direction of computerizing a big segment of the operation. There is
+     a tendency for the computer as a tool to inject itself into the
+     operation through the efforts of interested specialists who enjoy it
+     and who want to make the contribution. Management approval is a
+     subsequent step.[8]
+     
+   
+   
+   Although the kind of intellectual freedom to "play around" with
+   problems and "contribute" solutions does depend on the kind of
+   corporate security that comes only under the auspices of monopoly
+   capital or government, individual projects still have to at least
+   attempt to justify themselves with respect to some cost- benefit
+   analysis, however putative: even when gambling, there are better and
+   worse bets. Within the atmosphere of free invention, the time-sharing
+   and resource-coupling nature of the Unix operating system was driven,
+   paradoxically, by the prohibitive cost of mainframes, which dictated
+   that each machine should have more than one user and, if possible,
+   more than one user at a time. One of the original developers of Unix
+   recalls that, when their group faced the decline of Multics, their
+   requests for new computer equipment on which to write a new operating
+   system were repeatedly rebuffed: "[I]t is perfectly obvious in
+   retrospect (and should have been at the time) that we were asking the
+   Labs to spend too much money on too few people with too vague a
+   plan."[9]
+   
+   The fact that the operating system developed in the context of a
+   corporate entity whose primary business was telecommunications, and
+   whose primary interests were communications and connectivity, helped
+   to enshrine within it the principles of modularity and
+   interoperability. But at another level, one extremely relevant to the
+   effects that Unix has had in the world, communication was a motivating
+   factor in the design of this operating system:
+   
+     Even though Multics could not then support many users, it could
+     support us, albeit at exorbitant cost. We didn't want to lose the
+     pleasant niche we occupied, because no similar ones were available;
+     even the time-sharing service that would later be offered under GE's
+     operating system did not exist. What we wanted to preserve was not
+     just a good environment in which to do programming, but a system
+     around which a fellowship could form. We knew from experience that
+     the essence of communal computing, as supplied by remote-access,
+     time-shared machines, is not just to type programs into a terminal
+     instead of a keypunch, but to encourage close communication.[10]
+     
+   
+   
+   The fact that the software these researchers produced was easy to
+   modify, good at accepting instructions from remote users, and
+   unsupported by its corporate parent, helped to ensure that one of the
+   first uses to which it would be put, once it reached the outside
+   world, was the networking of users into a community, originally a
+   user-support community, but later something much more diverse.
+   
+   If we consider all these factors together, the paradoxes are striking.
+   On the one hand, as a mental representation of the universe of
+   information, Unix is deeply indebted to culturally determined notions
+   such as private property, class membership, and hierarchies of power
+   and effectivity. Most of these ideas are older than the modern Western
+   culture that produced Unix, but the constellation of cultural elements
+   gathered together in Unix's basic operating principles seems
+   particularly Western and capitalist--not surprisingly, given that its
+   creators were human extensions of one of the largest accumulations of
+   capital in the Western world. On the other hand, this tool, shaped
+   though it was by the notions of ownership and exclusivity, spawned a
+   culture of cooperation, of homemade code, of user-contributed
+   modifications and improvements (viz. the canonical /contrib/bin in
+   Unix filesystems, where user-contributed programs are stored) --in
+   short, of "fellowship." And finally, in some sense it is true, as
+   Guattari suggests, that the entire assemblage of causes for Unix is an
+   instance of machines speaking to machines, or needing to speak to
+   machines, with humans as the midwife at this precarious and unlikely
+   birth. In order to explicate this paradox, though, it might help us to
+   consider a set of relevant insights from an early and expert analyst
+   of capitalism, Karl Marx.
+   
+  MOOs and Marx:
+  
+   
+   
+    In writing about the French Revolution, Karl Marx observed that the
+   civil [or bourgeois] society that was established for the first time
+   by that revolution understands itself to be based on the "natural and
+   imprescriptible rights" declared in the Constitution of 1793, namely
+   "equality, liberty, security, property." According to that document,
+   liberty "consists in the right to do anything which does not harm
+   others;" the right of property "is the right vested in every citizen
+   to enjoy and dispose of his goods, his revenues, the fruit of his
+   labour and of his industry according to his will;" equality "consists
+   in the fact that the same law applies to all, whether that law
+   protects or punishes;" and security "consists in the protection which
+   society offers to each of its members for the preservation of his
+   person, his rights, and his property." It is worth pointing out that
+   each of these rights has its equivalent in the world of Unix: users,
+   the equivalent of citizens, are permitted actions which do not harm
+   the data of others--unless those others have, of their own free will,
+   disposed of that data so that permission is granted to others to
+   overwrite it; the same rights apply to all (within a given user class,
+   at least. All bets are off when it comes to root--but even in
+   Enlightenment democracies, equality has always been the most
+   problematic right, especially when it comes to conflicts of interest
+   between an individual and the state. . .and arguably, since all rights
+   are granted, ultimately, by root, root is the Unix equivalent of the
+   State). Security, in Unix terms, is called exactly the same thing, and
+   providing systems security, so as to protect the accumulated labor of
+   legitimate users, is considered the paramount duty of the Unix systems
+   administrator.[11]
+   
+   Marx finds these "so-called rights of man" to be the defining
+   characteristics of bourgeois society because none of them
+   
+     goes beyond the egoistic man, beyond man as a member of civil
+     society, as man separated from life in the community and withdrawn
+     into himself, into his private interest and his private arbitrary
+     will. These rights are far from conceiving man as a species-being.
+     They see, rather, the life of the species itself, society, as a
+     frame external to individuals, as a limitation of their original
+     independence. The only bond that keeps men together is natural
+     necessity, need and private interest, the preservation of property
+     and of their egoistic person.[12]
+     
+   
+   
+    Because I am arguing that the MOO draws out and enacts some of the
+   contradictions inherent not only in Unix and Unix culture, but also in
+   capitalism and Western culture, it is important to stop here and
+   concentrate for a moment on the term that Marx opposes to bourgeois
+   monadic egotism. Marx defines "species- being" elsewhere, in
+   manuscripts written during the same period, in terms that cast an
+   interesting light on my earlier assertion that Unix, and in its own
+   turn, the MOO, are mental representations of a world:
+   
+     His creation, in practice, of an objective world, his working upon
+     inorganic nature, is the proof that man is a conscious
+     species-being, that is a being which is related to the species as
+     its own essence or to itself as a species being. To be sure, animals
+     also produce. They build themselves nests, dwelling places, as the
+     bees, beavers, ants, etc. do. But the animal produces what it needs
+     directly for itself or its young. It produces one-sidedly, while man
+     produces universally. It produces under the domination of direct
+     physical need while man produces even when he is free from physical
+     need and produces truly, indeed, only in freedom from such need. The
+     animal produces only itself, while man reproduces the whole of
+     nature. . . . It is precisely in his working over of the objective
+     world, therefore, that man proves himself to be really a species
+     being. This production is his active species-life. In and through
+     such production, nature appears as his work and his reality. The
+     object of labor, therefore, is the objectification of the
+     species-life of man: for man duplicates himself not only
+     intellectually, as in consciousness, but also actively, in reality,
+     and therefore contemplates himself in a world that he has created.
+     
+   
+   
+    Once again, the paradox I have in view is that the material
+   conditions and conceptual rubrics out of which Unix developed are the
+   epitome of capitalist endeavor, and yet Unix itself was circulated on
+   quite anti-capitalist terms, answers fairly well to Marx's description
+   of universal production (or production that doesn't answer to an
+   immediate need).
+   
+   The tension between these two concepts--civil [or bourgeois] society
+   as incarnated in the French Revolution's "Declaration of the Rights of
+   Man," and the "species-being" that (Marx says) these rights ignore--is
+   precisely the enabling condition of capitalism:
+   
+     In so far as alienated labor tears the object of his production away
+     from man, therefore, it tears away from him his species-life, his
+     actual objectivity as a member of the species and transforms his
+     advantage over the animal into the disadvantage that his inorganic
+     body, nature, is taken away from him. . . . A direct consequence of
+     man's alienation from the product of his labor, from his life
+     activity, from his species-being, is the alienation of man from man.
+     When man confronts himself, he confronts another man. . . .
+     Generally, the proposition that man's species-being is alienated
+     from him means that one man is alienated from another, just as each
+     of them is alienated from human nature.[13]
+     
+   
+   
+    The second level of our paradox is that, when the MOO arises it
+   answers, better than Unix or even capitalism itself, to Marx's
+   description of alienation: within the MOO, when one confronts oneself,
+   one literally confronts the representation of a representation of a
+   person--a player, a character, a projection of (alienated)
+   personality. And yet, again, the labor that goes into creation in the
+   MOO is labor which answers exactly to the call of species-life: it is
+   creation in the absence of need, the creation of a supremely useless
+   object, an object world, an objectification of life in the world.
+   
+   This brings me to the second chapter of this history, which begins
+   about ten years after the invention of Unix, but still in the
+   corporate neighborhood of AT&T;, when Pavel Curtis and others at Xerox
+   PARC invented MOOcode. MOOs are not intended to replace Unix in any
+   sense, but they do mimic some of the functions of an operating system,
+   and they mirror many of the features of Unix. In the MOO, which is
+   really just a large database, the world is made up of objects: objects
+   always have a particular location within the database and the fictive
+   landscape of the MOO, and objects are in turn composed of properties
+   and verbs. The universe itself is an object (object #0), as are all
+   players. Players own themselves, and they belong to one or more
+   classes of players.
+   
+   The basic classes of MOO-character are player, programmer, and wizard.
+   Many refinements and elaborations of that tripartite scheme have been
+   implemented, but the basic distinctions remain significant: players
+   can move around and communicate, but they cannot build or create
+   things; programmers are players who can also create, program, and
+   recycle their own objects, and they can bestow owned objects on
+   others; wizards are programmers who can also program or recycle other
+   programmers' objects and players themselves. To this extent, then, the
+   MOO adopts the notion of a "root" user, expressing it more fancifully
+   in the term "wizard"-- the superuser of all MOO users. In keeping with
+   the dendritic hierarchy of files (and processes) in Unix, the MOO has
+   its own (anthropomorphized) hierarchy of parents and children.Every
+   object and player inherits the verbs and properties of its parent, and
+   commands are always executed along a search path that includes one's
+   entire parentage. In the moo, things can be readable, writable, and
+   executable by wizards only, by the owner, or by anyone, and the system
+   of parentage, in its effect, mimics the functionality of user groups
+   --for example, the average player on PMC-MOO belongs to the programmer
+   class, which in turn is a child of the basic builder class, which in
+   turn is a child of Frand's player class, which in turn is a child of
+   the basic player class. Such a player has permission to execute any
+   verb associated with any group or class that appears in that family
+   tree.
+   
+   Unix and MOOcode share the following characteristics, then: both
+   emerged from large corporate research labs (Bell and Xerox,
+   respectively); both are hierarchical, multi-user, time-sharing
+   environments for the creation, storage, and retrieval of information;
+   both systems are predicated on the notion that every object (or file)
+   has both an owner and a location, and perhaps most importantly, both
+   Unix and MOO function as command interpreters and as programming
+   environments. It is this last thing, more than any other single
+   feature, that unites MOOcode with Unix and distinguishes it from other
+   forms of gaming and/or virtual-reality environments. The "OO" in MOO
+   stands for Object Oriented, and it means that programmers can easily
+   have access to the individual building blocks of the MOO, and can use
+   the tools within the MOO to alter or add to those building blocks.
+   
+   The important difference between a MOO and the Unix operating system,
+   though, is that while both may be considered to be mental
+   representations, or self-representations, of information
+   processing--models, if you will, of collective memory, of communal
+   libraries, even of collective intelligence-- the MOO is the world it
+   models, as well as the model of that world. In other words, if
+   capitalism is a first-order model of the way labor and value and power
+   circulate in the world, Unix is a second-order simulacrum of the way
+   that a particular kind of capital, namely information, works in the
+   world, and the MOO--an inhabitable model of Unix --is then a
+   third-order simulacrum of the world, in which information is not only
+   a representation of labor, and a source of power, and a form of value,
+   but is also quite literally the form that the species-being takes,
+   "not unreal, but a simulacrum, never again exchanging for what is
+   real, but exchanging in itself, in an uninterrupted circuit without
+   reference or circumference."[13]
+   
+  PMC-MOO: A Virtual Community
+  
+   
+   
+    It's time now to discuss the way in which one such simulacrum has
+   actually developed, and to think about the future of MOOs in general.
+   PMC-MOO is the MOO with which I am most familiar, since I have been
+   (with the help of many others)* running it for the last couple of
+   years, and since it has, at various times, taken up a good deal of my
+   time. It is not the first MOO I started--the NCSU Virtual Campus has
+   that dubious distinction [14]--nor is it the newest (iath-moo, the
+   virtual conference center for the Institute for Advanced Technology in
+   the Humanities is the most recent), but it has become the largest and
+   longest lasting of the MOO experiments with which I've been involved.
+   PMC-MOO is an offshoot of the electronic journal Postmodern Culture,
+   and it was established to serve two principal functions. First and
+   foremost, it was intended to provide a text-based conferencing
+   facility for journal-related activities, a kind of real-time
+   supplement to PMC-Talk, the listserv-based discussion group that has
+   always run alongside the peer-reviewed journal. Second, because the
+   object-oriented nature of the MOO made this feasible, it was to
+   provide an opportunity for interested users to produce interactive
+   programs that would demonstrate or interrogate concepts of relevance
+   to the study of postmodernism--object-lessons, if you will. In other
+   words, from the outset, PMC-MOO had that Disney schizophrenia that
+   characterizes Epcot Center--a conference hall surrounded by a theme
+   park, work embedded in play.
+   
+   For a time, quite a time, it seemed that work might never surface at
+   all in this environment, and early visitors to the MOO would have been
+   justified in doubting that this would ever develop into an environment
+   in which anything useful could ever be done. MOOs are naturally
+   somewhat chaotic, since the program allows everyone in a room to speak
+   and be heard in sequence, with no possibility of interrupting another
+   speaker and with little in the way of etiquette that encourages
+   orderly, single-topic, limited-participation conversations. Users who
+   have spent some time in MOOs do learn to use some common tools, such
+   as the stage-talk feature, to identify the topic to which they are
+   speaking or the speaker to whom they are responding, and (more
+   importantly) they seem to develop a certain ability to do
+   conversational multi-tasking, but the MOO tends to be a noisy place
+   when there's anything happening at all.
+   
+   Beyond the noise factor, there is the issue of identity and
+   accountability. Professional life and professional credit depends, to
+   a large extent, on being able to identify the sources of intellectual
+   contributions, and on attributing borrowed ideas to their originators.
+   The MOO, by contrast, encourages the borrowing of code, by making it
+   easy to copy objects and verbs (or pieces of objects and verbs that
+   seem useful) without attribution. The flip side of attribution is
+   accountability: since most MOOs, including PMC-MOO (but not iath-moo)
+   allow users to create fictitious names for their players, and since it
+   is generally the case that only wizards can locate a player's home
+   site, anti-social behavior including theft, harassment, impersonation,
+   and even "virtual rape," are common problems in these virtual
+   environments. PMC-MOOs most famous episode of anti-social behavior
+   came to be described as MOO Terrorism, and is described elsewhere in a
+   kind of MOO documentary.[15] After our rocky infancy, though, the
+   community has stabilized a good deal, and it has begun to develop some
+   of the familiar features of civic life--it has a zoning board, a board
+   that reviews requests for quota (the permission to create things),
+   regular public events including poetry slams and other performance
+   events, social hours, and special seminars and events. It also has
+   spawned a number of internal discussion groups on various topics, some
+   of them theoretical, some of them social, some organizational. It is
+   worth noting that, although postmodernism is steeped in the kind of
+   theory that even educated non- specialists find difficult to
+   penetrate, PMC-MOO has succeeded in drawing a broad range of
+   non-specialists into the discussion of theoretical issues, and those
+   non-specialists have frequently challenged and in other ways affected
+   the conversation on those issues. High school students, college
+   students, graduate students, professors, librarians, as well as
+   non-academics, government workers, professionals: the population of
+   PMC-MOO is diverse, if not by comparison to the general public,
+   certainly by comparison to the usual audience for literary and
+   critical theory. Furthermore, people whose background was
+   non-technical have become interested in programming through the
+   experience of inhabiting a shared programming environment, and
+   especially (I think) as a result of being able to see and immediately
+   share the results of their efforts from within the same environment in
+   which they are produced. Some programming that demonstrates postmodern
+   theoretical concepts has, in fact, been done, and efforts are underway
+   to foreground that programming in the landscape of the MOO.
+   
+   What this factual history suggests is that, like its parent, Unix, the
+   MOO has the capacity to turn play into something useful (though it
+   isn't always easy to predict what kinds of play will prove useful, or
+   in what ways), and it certainly fulfills the desire of the early Unix
+   developers for a communal programming environment in which fellowship
+   could come about. The MOO is also clearly an environment in which,
+   independent of need, one can pursue creative activities with tangible,
+   communal, and perhaps even economic results.[16] As with pure research
+   at Bell labs, it seems clear that in the MOO innovation comes from the
+   ground up: in fact, the same thing could be said of the internet
+   itself--that it was born from a monopoly (in this case, the military),
+   and that due to certain external constraints (the threat of nuclear
+   war, which dictated its decentralized design) it has developed into a
+   chaotic, voluntarist, and unpredictably fertile world in which
+   individuals invest large amounts of time and energy "playing" in ways
+   that sometimes produce enormously useful innovations. As far as
+   teaching and research go, the MOO (and the same could be said of the
+   internet itself) is demonstrably useful for some kinds of pedagogical
+   and conferencing purposes, particularly those which rely heavily on
+   verbal information (as opposed to graphics or sound), and particularly
+   when the community of users has developed a set of consensual rules of
+   behavior that downplay the potential for communicational chaos and
+   anti-social behavior, and that play up the potential for cooperation
+   and collaboration.
+   
+   In closing, I'd like to recall for a moment a recent advertising
+   campaign for AT&T;, in which lots of "ordinary" (but very
+   professional-looking) people are shown using technology in futuristic
+   ways. The tag-line of the campaign is "have you ever ... You will":
+   "Have you ever gone to a meeting in your bathrobe?" asks the
+   voice-over, while a man lounges at the breakfast table while
+   video-conferencing, "Or sent a fax from the beach?" while the man
+   lounges in his beach-chair, sending a fax from his (apparently
+   sand-proof) laptop: "You will." I'm sure that AT&T; intends this
+   campaign to present a happy vision of the future, in which work
+   somehow is less work-like; I'm equally certain, though, that it's
+   possible to view the campaign in exactly the opposite light, to hear
+   an imperative tone in that "You Will," and to consider that, without
+   that handy laptop, the man on the beach might not have to be working.
+   It is, in some sense, the essence of professional occupation that it
+   crosses the line into our personal lives: no profession is truly 9-5.
+   If technology, born from useful play, becomes an environment in which
+   work can be carried on in the guise of play, then either we will never
+   really work, or we will never really play, after this. It remains to
+   be seen which of these--or both, or neither--proves to be the case.
+     _________________________________________________________________
+   
+  Notes
+  
+   
+   
+    * Grateful acknowledgements are due to PMC-MOO's many productive and
+   creative inhabitants, but especially to Chris Barrett, Lisa Brawley,
+   Craig Horman, Paul Outka, David Sewell, Ted Whalen, and Shawn Wilbur,
+   the wizards who have helped to keep the community running, during good
+   times and bad. Back
+   
+   Felix Guattari, "Machinic Heterogenesis" in Rethinking Technologies,
+       ed. Verena Andermatt Conley (U of Minnesota P, 1993), 22. Back
+       
+       
+   Jean Baudrillard, Simulations (New York: Semiotext(e), 1983), 116.
+       Back
+       
+       
+   Moo.Terrorism is the name of an ascii text file available by anonymous
+       ftp from jefferson.village.virginia.edu, as
+       pub/pubs/pmc/pmc-moo/MOO.Terrorism. It consists of material
+       collected from the MOO database, its mail system, and its player
+       logs, and edited (or "ruthlessly pillaged") by Troy Whitlock. Back
+       
+       
+   For a suggestive, if somewhat hysterical, discussion of the term "real
+       time," see Paul Virilio, "The Third Interval: A Critical
+       Transition" in Rethinking Technologies. Back
+       
+       
+   See Tom Van Vleck's Multics Chronology; for further information see
+       Van Vleck's Multics General Information, and Multics Features. A
+       first-hand discussion of some Unix-related history can be found in
+       Van Vleck's Unix and Multics, with pointers to more WWW-based
+       information about some of the early developers of both systems.
+       Back
+       
+       
+   For an extensive treatment of the history of Usenet, see Netizens, an
+       anthology of essays collected by Ronda and Michael Hauben,
+       available by anonymous ftp from umcc..umich.edu, in
+       pub/users/ronda, or from jefferson.village.virginia.edu, in
+       pub/projects/netizens. Back
+       
+       
+   Malcolm G. Stevenson, "Bell Labs: A Pioneer in Computing Technology"
+       (Part III. Computers in Technology--Today and Tomorrow). Bell Labs
+       Record (February, 1974): 57. Back
+       
+       
+   Malcolm G. Stevenson, "Bell Labs: A Pioneer in Computing Technology"
+       (Part II. Helping Man Use the Computing Machine). Bell Labs Record
+       (January, 1974), 18. Back
+       
+       
+   D.M. Ritchie, "The Evolution of the UNIX Time-sharing System," AT&T
+       Bell Laboratories Technical Journal 63.8 (October, 1984): 2. Back
+       
+       
+   Ritchie, 3. Back
+       
+       
+   It is a somewhat bitter irony that, on the very day I wrote this
+       sentence, PMC-MOO crashed and--because of somewhat shoddy systems
+       administration practices on my part--two weeks worth of changes to
+       the database were lost. Back
+       
+       
+   Karl Marx, "On the Jewish Question" (1844) Back
+       
+       
+   Karl Marx, Economic and Philosophical Manuscripts (1844) Back
+       
+       
+   Baudrillard, 11. Back
+       
+       
+   A paper describing my experience teaching on the Virtual Campus is
+       available by gopher from the Institute for Advanced Technology in
+       the Humanities:
+       Gopher:
+       jefferson.village.virginia.edu/00/pubs/publications/Virtual.Campus
+       .txt
+       FTP: pub/pubs/publications/Virtual.Campus.txt
+       WWW:
+       gopher://jefferson.village.virginia.edu/00/pubs/publications/Virtu
+       al.Campus.txt
+       Back
+       
+       
+   See Troy Whitlock's "Fuck Art: Let's Kill! Towards a Post-Modern
+       Community." Available from the Institute for Advanced Technology
+       in the Humanities via
+       Gopher:
+       jefferson.village.virginia.edu/00/pubs/pmc/pmc-moo/Moo.Terrorism
+       FTP: jefferson.village.virginia.edu,
+       pub/pubs/pmc/pmc-moo/Moo.Terrorism
+       WWW:
+       gopher://jefferson.village.virginia.edu/00/pub/pubs/pmc/pmc-moo/Mo
+       o.Terrorism
+       Back
+       
+       
+   The National Institute of Standards and Technology, for example, in
+       June of 1994 issued a call for proposals on the use of MUDs for
+       manufacturing--a virtual shop floor, if you will. This brings my
+       argument full circle, and perhaps raises the specter of virtual
+       Taylorism... Back
+       
+   
+     _________________________________________________________________
+   
+   Last Modified: Thursday, 29-Jun-95 17:00:10 EDT
+
+
+
+
+------------------------------------------------------------------------------
+ftp://ftp.game.org/pub/mud      FTP.GAME.ORG      http://www.game.org/ftpsite/
+------------------------------------------------------------------------------
+
+ This document came from FTP.GAME.ORG, the ultimate source for MUD resources.
+
+------------------------------------------------------------------------------

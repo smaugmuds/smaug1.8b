@@ -1,0 +1,953 @@
+* --------------------------------------------------------------
+* This configuration file is for use by Area Editor to set program defaults
+*
+* Area Editor was written by Nick Gammon <nick@gammon.com.au>
+*
+* It (and other programs) are available from: http://www.gammon.com.au/
+*
+*
+* Note that descriptions must end with a tilde (~) - they may span multiple lines
+*  if necessary.
+*
+* Flag names must be a single word - flags range from Flag01 to Flag32
+*
+* --------------------------------------------------------------
+
+* --------------------------------------------------------------
+*  Standard settings for ROM
+* --------------------------------------------------------------
+
+
+* --------------------------------------------------------------
+* Area limits
+* --------------------------------------------------------------
+
+#GENERAL
+
+maxlevel 65
+maxvnum  2147483647
+maxresetfreq 60
+maxdescriptionlength 255
+End
+
+* --------------------------------------------------------------
+* Mob default descriptions and limits
+* --------------------------------------------------------------
+
+#MOBILES
+
+defaultname                 new mob~
+defaultshortdescription     A newly created mob~
+defaultlongdescription      A newly created mob is standing here~
+defaultdescription          Someone has abandoned a new mob here
+~
+minac          -300
+maxac          +300
+maxdamnodice    100
+maxdamplus      1000
+maxdamroll      65
+maxdamsizedice  100
+maxhitnodice    32767
+maxhitplus      32767
+maxhitroll      85
+maxhitsizedice  32767
+maxmanaplus     32767
+maxmanasizedice 32767
+maxmananodice   999
+minstats        0   
+maxstats        25      * max basic stats, eg. str wis dex con  
+minalignment    -1000
+maxalignment    1000
+maxnumattacks   20
+minsavingthrow -30
+maxsavingthrow +65
+End
+
+* --------------------------------------------------------------
+* Object default descriptions
+* --------------------------------------------------------------
+
+#OBJECTS
+
+defaultname                 Object name~
+defaultshortdescription     A newly created object~
+defaultdescription          A newly created object sits here.
+~
+mincondition  0				* minimum condition for objects
+maxcondition  100			* maximum condition for objects
+End
+
+* --------------------------------------------------------------
+* Room default descriptions
+* --------------------------------------------------------------
+
+#ROOMS
+
+defaultname                 Room name~
+defaultdescription          You stumble into a newly created room.
+~
+End
+
+* --------------------------------------------------------------
+* Exits default descriptions
+* --------------------------------------------------------------
+
+#EXITS
+
+defaultkeywords             ~
+defaultdescription          Exit description~
+End
+
+* --------------------------------------------------------------
+* Repairs limits
+* --------------------------------------------------------------
+
+#REPAIRS
+
+minprofitfix 1
+maxprofitfix 1000
+End
+
+* --------------------------------------------------------------
+* Shops limits
+* --------------------------------------------------------------
+
+#SHOPS
+
+minprofitbuy  1
+maxprofitbuy  1000
+minprofitsell 1
+maxprofitsell 1000
+End
+
+* --------------------------------------------------------------
+* Flags that affect mobs
+* --------------------------------------------------------------
+
+#ACT
+
+Flag01   Npc
+Flag02   Sentinel
+Flag03   Scavenger
+Flag06   Aggressive
+Flag07   Stayarea
+Flag08   Wimpy
+Flag09   Pet
+Flag10   Train
+Flag11   Practice
+Flag15   Undead 
+Flag17   Cleric 
+Flag18   Mage       
+Flag19   Thief  
+Flag20   Warrior    
+Flag21   Noalign    
+Flag22   Nopurge    
+Flag23   Outdoors   
+Flag25   Indoors    
+Flag27   Healer 
+Flag28   Gain       
+Flag29   Update_always
+Flag30   Changer    
+
+End
+
+
+#AFFECT
+
+Flag01    Blind     
+Flag02    Invisible 
+Flag03    Detect_evil   
+Flag04    Detect_invis  
+Flag05    Detect_magic  
+Flag06    Detect_hidden
+Flag07    Detect_good   
+Flag08    Sanctuary 
+Flag09    Faerie_fire   
+Flag10    Infrared      
+Flag11    Curse     
+Flag13    Poison        
+Flag14    Protect_evil  
+Flag15    Protect_good  
+Flag16    Sneak     
+Flag17    Hide          
+Flag18    Sleep     
+Flag19    Charm     
+Flag20    Flying        
+Flag21    Pass_door 
+Flag22    Haste     
+Flag23    Calm          
+Flag24    Plague        
+Flag25    Weaken        
+Flag26    Dark_vision   
+Flag27    Berserk       
+Flag28    Swim          
+Flag29    Regeneration  
+Flag30    Slow          
+End
+
+#ATTACK
+
+Flag01    Area_attack   
+Flag02    Backstab      
+Flag03    Bash          
+Flag04    Berserk       
+Flag05    Disarm        
+Flag06    Dodge     
+Flag07    Fade          
+Flag08    Fast          
+Flag09    Kick          
+Flag10    Dirt_kick 
+Flag11    Parry     
+Flag12    Rescue        
+Flag13    Tail          
+Flag14    Trip          
+Flag15    Crush     
+Flag16    Assist_all    
+Flag17    Assist_align  
+Flag18    Assist_race   
+Flag19    Assist_players
+Flag20    Assist_guard  
+Flag21    Assist_vnum   
+End
+
+
+#PARTS
+
+Flag01    Head      
+Flag02    Arms      
+Flag03    Legs      
+Flag04    Heart 
+Flag05    Brains    
+Flag06    Guts      
+Flag07    Hands 
+Flag08    Feet      
+Flag09    Fingers   
+Flag10    Ear       
+Flag11    Eye       
+Flag12    Long_tongue
+Flag13    Eyestalks
+Flag14    Tentacles
+Flag15    Fins      
+Flag16    Wings 
+Flag17    Tail      
+Flag21    Claws 
+Flag22    Fangs 
+Flag23    Horns 
+Flag24    Scales    
+Flag25    Tusks 
+End
+
+
+#RESIST
+
+Flag01   Summon 
+Flag02   Charm  
+Flag03   Magic  
+Flag04   Weapon 
+Flag05   Bash       
+Flag06   Pierce 
+Flag07   Slash  
+Flag08   Fire       
+Flag09   Cold       
+Flag10   Lightning
+Flag11   Acid       
+Flag12   Poison 
+Flag13   Negative   
+Flag14   Holy       
+Flag15   Energy 
+Flag16   Mental 
+Flag17   Disease    
+Flag18   Drowning   
+Flag19   Light  
+Flag20   Sound  
+Flag24   Wood       
+Flag25   Silver 
+Flag26   Iron       
+End
+
+
+* --------------------------------------------------------------
+* Flags that affect objects
+* --------------------------------------------------------------
+
+#OBJECT
+
+Flag01   Glow	      
+Flag02   Hum		      
+Flag03   Dark	      
+Flag04   Lock	      
+Flag05   Evil	      
+Flag06   Invis	      
+Flag07   Magic	      
+Flag08   Nodrop	      
+Flag09   Bless	      
+Flag10   Anti_good	  
+Flag11   Anti_evil	  
+Flag12   Anti_neutral  
+Flag13   Noremove	  
+Flag14   Inventory	  
+Flag15   Nopurge		  
+Flag16   Rot_death	  
+Flag17   Vis_death     
+Flag19   Nonmetal	  
+Flag20   Nolocate	  
+Flag21   Melt_drop	  
+Flag22   Had_timer	  
+Flag23   Sell_extract  
+Flag25   Burn_proof	  
+Flag26   Nouncurse	  
+End
+
+
+#WEAR
+
+Flag01    Take
+Flag02    Finger
+Flag03    Neck
+Flag04    Body
+Flag05    Head
+Flag06    Legs
+Flag07    Feet
+Flag08    Hands
+Flag09    Arms
+Flag10    Shield
+Flag11    About
+Flag12    Waist
+Flag13    Wrist
+Flag14    Wield
+Flag15    Hold
+Flag16    No_sac
+Flag17    Wear_float
+End
+
+
+#FURNITURE
+
+Flag01 Stand_at
+Flag02 Stand_on
+Flag03 Stand_in
+Flag04 Sit_at
+Flag05 Sit_on
+Flag06 Sit_in
+Flag07 Rest_at
+Flag08 Rest_on
+Flag09 Rest_in
+Flag10 Sleep_at
+Flag11 Sleep_on
+Flag12 Sleep_in
+Flag13 Put_at
+Flag14 Put_on
+Flag15 Put_in
+Flag16 Put_inside
+End
+
+
+#CONTAINER
+
+Flag01 Closeable
+Flag02 Pickproof
+Flag03 Closed	
+Flag04 Locked	
+Flag05 Put_on	
+End
+
+#PORTAL
+
+Flag01 Normal_exit
+Flag02 Nocurse	
+Flag03 Gowith
+Flag04 Buggy	
+Flag05 Random
+End
+
+
+#WEAPONFLAGS
+
+Flag01 Flaming	
+Flag02 Frost		
+Flag03 Vampiric	
+Flag04 Sharp		
+Flag05 Vorpal		
+Flag06 Two_hands
+Flag07 Shocking	
+Flag08 Poison		
+End
+
+
+
+
+
+* --------------------------------------------------------------
+* Flags that affect rooms
+* --------------------------------------------------------------
+
+#ROOM
+
+Flag01    Dark
+Flag03    Nomob
+Flag04    Indoors
+Flag10    Private
+Flag11    Safe
+Flag12    Solitary
+Flag13    Petshop
+Flag14    Norecall
+Flag15    Imp_only
+Flag16    Gods_only
+Flag17    Heroes_only
+Flag18    Newbies_only
+Flag19    Law
+Flag20    Nowhere
+End
+
+
+
+* --------------------------------------------------------------
+* List of possible sexes that mobs can have
+* --------------------------------------------------------------
+
+#SEX
+
+None	
+Male	
+Female
+Either
+End
+
+
+#SIZE
+
+Tiny	
+Small 
+Medium
+Large	
+Huge
+Giant
+End
+
+
+#RACE
+
+Unique
+Human
+Elf
+Dwarf
+Giant
+Bat
+Bear
+Cat
+Centipede
+Dog
+Doll
+Dragon
+Fido
+Fox
+Goblin
+Hobgoblin
+Kobold
+Lizard
+Modron
+Orc
+Pig
+Rabbit
+School monster
+Snake
+Song bird
+Troll
+Water fowl
+Wolf
+Wyvern
+End
+
+
+#AFFECTS
+
+None		
+Str		    
+Dex		    
+Int		    
+Wis		    
+Con		    
+Sex		    
+Class		
+Level		
+Age		    
+Height		
+Weight		
+Mana		
+Hit		    
+Move		
+Gold		
+Exp		    
+Ac		    
+Hitroll		    
+Damroll		    
+Saving_para	  
+Saving_rod	  
+Saving_petri	
+Saving_breath	
+Saving_spell	
+Spell_affect	
+End
+
+
+#WEAPON
+
+Exotic
+Sword
+Mace	
+Dagger
+Axe	
+Staff	
+Flail	
+Whip	
+Polearm
+End
+
+
+#WEAPONCONDITION 
+
+In superb condition
+In excellent condition
+In very good condition
+In good shape
+Showing a bit of wear
+A little run down
+In need of repair
+In great need of repair
+In dire need of repair
+Very badly worn
+Practically worthless
+Almost broken
+Broken
+End
+
+
+#ARMOURCONDITION  
+
+In superb condition
+In very good condition
+In good shape
+Showing a bit of wear
+A little run down
+In need of repair
+In great need of repair
+In dire need of repair
+Very badly worn
+Practically worthless
+Broken
+End
+
+#FOODCONDITION    
+
+Is fresh
+Is nearly fresh
+Is perfectly fine
+Looks good
+Looks ok
+Is a little stale
+Is a bit stale
+Smells slightly off
+Smells quite rank
+Smells revolting
+Is crawling with maggots
+End
+
+#SECTOR    
+
+In a room		
+In a city	
+In a field		
+In a forest	
+Hills		    
+On a mountain	
+In the water		
+In rough water	
+Underwater 	
+In the air	
+In a desert	
+Somewhere
+Ocean floor 	
+Underground	
+End
+
+#DIRECTION 
+
+North 
+East 
+South 
+West 
+Up 
+Down
+End
+
+
+#ITEM
+
+(none)
+Light
+Scroll
+Wand
+Staff
+Weapon
+Treasure=8
+Armor
+Potion
+Clothing
+Furniture
+Trash
+Container=15
+Drink=17
+Key
+Food
+Money
+Boat=22
+Npc_corpse
+Pc_corpse
+Fountain
+Pill
+Protect
+Map
+Portal
+Warp_stone
+Room_key
+Gem
+Jewelry
+Jukebox
+End
+
+
+#POSITION
+
+dead            
+mort    
+incap
+stun    
+sleep   
+rest    
+sit
+fight
+stand
+mounted 
+being shoved 
+being dragged
+
+End
+
+#LIQUID     
+Water			
+Beer			
+Red wine	
+Ale		
+Dark ale	
+Whisky		
+Lemonade	
+Firebreather	
+Local specialty	
+Slime mold juice	
+Milk		
+Tea			
+Coffee	
+Blood		
+Salt water	
+Coke			
+Root beer	
+Elvish wine	
+White wine	
+Champagne		
+Mead			
+Rose wine	
+Benedictine wine	
+Vodka		
+Cranberry juice	
+Orange juice
+Absinthe		
+Brandy			
+Aquavit	
+Schnapps		
+Icewine	
+Amontillado		
+Sherry			
+Framboise	
+Rum			
+Cordial
+End
+ 
+
+#SPECIAL
+
+(none)
+spec_breath_any     
+spec_breath_acid        
+spec_breath_fire        
+spec_breath_frost       
+spec_breath_gas     
+spec_breath_lightning   
+spec_cast_adept     
+spec_cast_cleric        
+spec_cast_judge     
+spec_cast_mage      
+spec_cast_undead        
+spec_executioner        
+spec_fido               
+spec_guard          
+spec_janitor            
+spec_mayor          
+spec_poison         
+spec_thief          
+spec_nasty          
+spec_troll_member       
+spec_ogre_member        
+spec_patrolman      
+spec_questmaster
+End
+
+
+#SKILLTYPE   
+
+Unknown 
+Spell 
+Skill 
+Weapon 
+Tongue 
+Herb 
+Racial 
+Disease
+End
+
+
+#ROMSKILL
+
+(none)=-1
+Reserved
+Acid blast
+Armor
+Bless
+Blindness
+Burning hands
+Call lightning
+Calm
+Cancellation
+Cause critical
+Cause light
+Cause serious
+Chain lightning
+Change sex
+Charm person
+Chill touch
+Colour spray
+Continual light
+Control weather
+Create food
+Create rose
+Create spring
+Create water
+Cure blindness
+Cure critical
+Cure disease
+Cure light
+Cure poison
+Cure serious
+Curse
+Demonfire
+Detect evil
+Detect good
+Detect hidden
+Detect invis
+Detect magic
+Detect poison
+Dispel evil
+Dispel good
+Dispel magic
+Earthquake
+Enchant armor
+Enchant weapon
+Energy drain
+Faerie fire
+Faerie fog
+Farsight
+Fireball
+Fireproof
+Flamestrike
+Fly
+Floating disc
+Frenzy
+Gate
+Giant strength
+Harm
+Haste
+Heal
+Heat metal
+Holy word
+Identify
+Infravision
+Invisibility
+Know alignment
+Lightning bolt
+Locate object
+Magic missile
+Mass healing
+Mass invis
+Nexus
+Pass door
+Plague
+Poison
+Portal
+Protection evil
+Protection good
+Ray of truth
+Recharge
+Refresh
+Remove curse
+Sanctuary
+Shield
+Shocking grasp
+Sleep
+Slow
+Stone skin
+Summon
+Teleport
+Ventriloquate
+Weaken
+Word of recall
+Acid breath
+Fire breath
+Frost breath
+Gas breath
+Lightning breath
+General purpose
+High explosive
+Axe
+Dagger
+Flail
+Mace
+Polearm
+Shield block
+Spear
+Sword
+Whip
+Backstab
+Bash
+Berserk
+Dirt kicking
+Disarm
+Dodge
+Enhanced damage
+Envenom
+Hand to hand
+Kick
+Parry
+Rescue
+Trip
+Second attack
+Third attack
+Fast healing
+Haggle
+Hide
+Lore
+Meditation
+Peek
+Pick lock
+Sneak
+Steal
+Scrolls
+Staves
+Wands
+Recall
+End
+
+#ATTACKLIST
+
+None
+Slice
+Stab
+Slash
+Whip
+Claw
+Blast
+Pound
+Crush
+Grep
+Bite
+Pierce
+Suction
+Beating
+Digestion
+Charge
+Slap
+Punch
+Wrath
+Magic
+Divine
+Cleave
+Scratch
+Peck
+Peckb
+Chop
+Sting
+Smash
+Shbite
+Flbite
+Frbite
+Acbite
+Chomp
+Drain
+Thrust
+Slime
+Shock
+Thwack
+Flame
+Chill
+End
+
+#WEARLIST
+
+(none)=-1
+Light
+Finger-L
+Finger-R
+Neck-1
+Neck-2
+Body
+Head
+Legs
+Feet
+Hands
+Arms
+Shield
+About
+Waist
+Wrist-L
+Wrist-R
+Wield
+Hold
+Dual Wield
+Ears
+Eyes
+Missile Wield
+End
+
+#CLASS
+
+Mage 
+Cleric 
+Thief
+Warrior
+End
+
+#EXIT
+Flag01   isdoor 
+Flag06   pickproof 
+Flag07	 nopass
+End
+
+#AFFECTWHERE
+
+Affects
+Object	
+Immune	
+Resist	
+Vuln		
+Weapon	
+End
+
+#END

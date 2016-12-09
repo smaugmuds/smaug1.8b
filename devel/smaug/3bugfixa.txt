@@ -1,0 +1,137 @@
+                       Three easy bugfixes for EmberMUD
+                        Fix Sheet by Rindar (Ron Cole)
+             Code by Raven (Laurie Zenner) and Rindar (Ron Cole)
+     (Though this was so easy, I'm not sure I want to take credit for it)
+
+The Bugs:  There are three minor bugs in the EmberMUD code that 
+appear to be because of carelessness.  The first is that items set 
+to be polearms become whips.  The second is that tells with too long 
+of a name and message will crash the game.  The third is that the 
+first race in the game will always be of evil alignment, no matter what 
+is actually chosen on roll-up.
+
+The Bugfixes:  Because these fixes are so easy, I'm not going to 
+take a lot of time to explain them.  Just open up the appropriate
+files and pop them in, then recompile.
+
+ * * *
+
+The Polearm Fix
+In bit.c, find the constant structure weapon_class.  It should
+look like this:
+
+const struct flag_type weapon_class[] =
+{
+    {   "exotic",        0,                    TRUE    },
+    {   "sword",         1,                    TRUE    },
+    {   "dagger",        2,                    TRUE    },
+    {   "spear",         3,                    TRUE    },
+    {   "mace",          4,                    TRUE    },
+    {   "axe",           5,                    TRUE    },
+    {   "flail",         6,                    TRUE    },
+    {   "whip",          7,                    TRUE    },
+    {   "polearm",       7,                    TRUE    },
+    {   "",              0,                    0       }
+};
+
+Change the value of polearm to 8.  The new code should look 
+like this:
+
+const struct flag_type weapon_class[] =
+{
+    {   "exotic",        0,                    TRUE    },
+    {   "sword",         1,                    TRUE    },
+    {   "dagger",        2,                    TRUE    },
+    {   "spear",         3,                    TRUE    },
+    {   "mace",          4,                    TRUE    },
+    {   "axe",           5,                    TRUE    },
+    {   "flail",         6,                    TRUE    },
+    {   "whip",          7,                    TRUE    },
+    {   "polearm",       8,                    TRUE    },
+    {   "",              0,                    0       }
+};
+
+ * * *
+
+The Tell Fix
+In act_comm.c, find the function do_tell.  It should look like 
+this:
+
+void do_tell( CHAR_DATA *ch, char *argument )
+{
+   char buf [MAX_INPUT_LENGTH];
+   char arg [MAX_INPUT_LENGTH]; 
+   CHAR_DATA *victim;
+
+Now, change the first variable's size to that of MAX_STRING_LENGTH. 
+The new code should look like this:
+
+void do_tell( CHAR_DATA *ch, char *argument )
+{
+   char buf [MAX_STRING_LENGTH];
+   char arg [MAX_INPUT_LENGTH]; 
+   CHAR_DATA *victim;
+
+ * * *
+
+The Alignment Fix
+In comm.c in the function void nanny, find the section on 
+alignments.  It should look like the section below:
+
+case CON_GET_ALIGNMENT:
+        if (ch->race == 1) ch->alignment = -750;
+        else switch( argument[0])
+        {
+            case 'g' : case 'G' : ch->alignment = 750;  break;
+            case 'n' : case 'N' : ch->alignment = 0;    break;
+            case 'e' : case 'E' : ch->alignment = -750; break;
+            default:
+
+The fix is simple.  Mark out the line of code which makes the 
+first race evil, then change the else switch statement to a 
+switch.  The new code should look like this:
+
+case CON_GET_ALIGNMENT:
+        /* if (ch->race == 1) ch->alignment = -750; */
+        switch( argument[0])
+        {
+            case 'g' : case 'G' : ch->alignment = 750;  break;
+            case 'n' : case 'N' : ch->alignment = 0;    break;
+            case 'e' : case 'E' : ch->alignment = -750; break;
+            default:
+
+ * * *
+
+All done.  Know of any other good fixes?  Let me know!
+
+-= Rindar
+clogar@concentric.net
+
+** Note:  These fixes are provided "as is" and may be used so long as 
+1)  The author's name is kept at the top of the function (if requested) and
+2)  all other previous licensing aggreements are abided by.  The author 
+assumes no responsibility for problems that occur through use or install-
+ation, including lost wages, bugs, deletions, downtimes, etc...  Use at 
+your own risk.  All new code is copyrighted by its author.
+
+
+
+
+
+ =============================================================================
+/   ______ _______ ____   _____   ___ __    _ ______    ____  ____   _____   /
+\  |  ____|__   __|  _ \ / ____\ / _ \| \  / |  ____|  / __ \|  _ \ / ____\  \
+/  | |__     | |  | |_| | |     | |_| | |\/| | |___   | |  | | |_| | |       /
+/  | ___|    | |  | ___/| |   __|  _  | |  | | ____|  | |  | |  __/| |   ___ \
+\  | |       | |  | |   | |___| | | | | |  | | |____  | |__| | |\ \| |___| | /
+/  |_|       |_|  |_|  o \_____/|_| |_|_|  |_|______|o \____/|_| \_|\_____/  \
+\                                                                            /
+ ============================================================================
+
+------------------------------------------------------------------------------
+ftp://ftp.game.org/pub/mud      FTP.GAME.ORG      http://www.game.org/ftpsite/
+------------------------------------------------------------------------------
+
+ This file came from FTP.GAME.ORG, the ultimate source for MUD resources.
+
+------------------------------------------------------------------------------

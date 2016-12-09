@@ -1,0 +1,53 @@
+This is the code for percentage based Damage messages for Rom 2.4 originally.
+Add credit in the opening sequence of your mud as:
+"Percentage based damage messages by Ryouga<ryouga@jessi.indstate.edu>."
+somewhere in the MOTD.
+
+This is easy, so don't make it harder than it is. =)
+in fight.c, look in the function dam_message.
+
+Remove all of the damage messages.
+
+Put this in it's place.
+
+
+    int pain_percent;
+    pain_percent = 1000 * dam/victim->max_hit;
+	 
+	 if ( dam  ==   0 ) { vs = "miss";	vp = "misses";		}
+    else if ( pain_percent <=   5 ) { vs = "scratch";	vp = "scratches";	}
+    else if ( pain_percent <=  10 ) { vs = "graze";	vp = "grazes";		}
+    else if ( pain_percent <=  25 ) { vs = "hit";	vp = "hits";		}
+    else if ( pain_percent <=  30 ) { vs = "injure";	vp = "injures";		}
+    else if ( pain_percent <=  40 ) { vs = "wound";	vp = "wounds";		}
+    else if ( pain_percent <=  55 ) { vs = "maul";       vp = "mauls";		}
+    else if ( pain_percent <=  65 ) { vs = "decimate";	vp = "decimates";	}
+    else if ( pain_percent <=  70 ) { vs = "devastate";	vp = "devastates";	}
+    else if ( pain_percent <=  80 ) { vs = "maim";	vp = "maims";		}
+    else if ( pain_percent <=  90 ) { vs = "MUTILATE";	vp = "MUTILATES";	}
+    else if ( pain_percent <=  100 ) { vs = "DISEMBOWEL";	vp = "DISEMBOWELS";	}
+    else if ( pain_percent <=  120 ) { vs = "DISMEMBER";	vp = "DISMEMBERS";	}
+    else if ( pain_percent <=  140 ) { vs = "MASSACRE";	vp = "MASSACRES";	}
+    else if ( pain_percent <=  160 ) { vs = "MANGLE";	vp = "MANGLES";		}
+    else if ( pain_percent <=  180 ) { vs = "*** DEMOLISH ***";
+			     vp = "*** DEMOLISHES ***";			}
+    else if ( pain_percent <=  190 ) { vs = "*** DEVASTATE ***";
+			     vp = "*** DEVASTATES ***";			}
+    else if ( pain_percent <= 210)  { vs = "=== OBLITERATE ===";
+			     vp = "=== OBLITERATES ===";		}
+    else if ( pain_percent <= 230)  { vs = ">>> ANNIHILATE <<<";
+			     vp = ">>> ANNIHILATES <<<";		}
+    else if ( pain_percent <= 250)  { vs = "<<< ERADICATE >>>";
+			     vp = "<<< ERADICATES >>>";			}
+    else                   { vs = "do UNSPEAKABLE things to";
+			     vp = "does UNSPEAKABLE things to";		}
+
+    punct   = (pain_percent <= 90) ? '.' : '!';
+
+
+
+
+
+
+That's it.  You can change the percentages if you want (the numbers are %*10)
+Thank you, and don't forget to credit me if you use it!

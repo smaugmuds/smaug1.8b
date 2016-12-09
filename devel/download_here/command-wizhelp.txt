@@ -1,0 +1,232 @@
+/***************************************************************************
+ *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,        *
+ *  Michael Seifert, Hans Henrik Staerfeldt, Tom Madsen, and Katja Nyboe.  *
+ *                                                                         *
+ *  Merc Diku Mud improvments copyright (C) 1992, 1993 by Michael          *
+ *  Chastain, Michael Quan, and Mitchell Tse.                              *
+ *                                                                         *
+ *  In order to use any part of this Merc Diku Mud, you must comply with   *
+ *  both the original Diku license in 'license.doc' as well the Merc       *
+ *  license in 'license.txt'.  In particular, you may not remove either of *
+ *  these copyright notices.                                               *
+ *                                                                         *
+ *  Much time and thought has gone into this software and you are          *
+ *  benefitting.  We hope that you share your changes too.  What goes      *
+ *  around, comes around.                                                  *
+ ***************************************************************************/
+
+/***************************************************************************
+*	ROM 2.4 is copyright 1993-1998 Russ Taylor			   *
+*	ROM has been brought to you by the ROM consortium		   *
+*	    Russ Taylor (rtaylor@hypercube.org)				   *
+*	    Gabrielle Taylor (gtaylor@hypercube.org)			   *
+*	    Brian Moore (zump@rom.org)					   *
+*	By using this code, you have agreed to follow the terms of the	   *
+*	ROM license, in the file Rom24/doc/rom.license			   *
+***************************************************************************/
+                    
+Two modified commands are offered for your use, as long as you are following the
+Diku license. Please read the above.
+
+The first is a sorted "command" command. The commands are sorted by a new
+category called "cat" which is coder-configurable. The second command is a wizhelp
+that's been sorted by level as well as showing which level the commands are gained at.
+There's not too much work involved in this, so please make sure you understand what's
+going on. I'm fairly new at coding, but with the help of great snippet writers and
+well documented code, I've been able to learn really fast. This is my first contribution
+to the MUD community, so please be gentle with any flames ;)
+
+Comments are welcomed, you can email admin@1mud.org or visit One Percent at
+1mud.org port 9000. We're still in beta, so don't expect much ;)
+Atlas (Mark Nielsen)
+
+
+
+interp.h
+__________________________________________________________________________
+FIRST: You need to add the new element "cat" (category) to the following structure found
+in interp.h
+This is what will be used to do the categorizing and sorting of the command list.
+
+/*
+ * Structure for a command in the command lookup table.
+ */
+struct	cmd_type
+{
+    char * const	name;
+    DO_FUN *		do_fun;
+    sh_int		position;
+    sh_int		level;
+    sh_int		log;
+    sh_int              show;
+    sh_int		cat; /* <---------- ADD THIS */
+};
+__________________________________________________________________________________
+
+
+interp.c
+_________________________________________________________________________________
+SECOND: You will need to go through EACH command listed in interp.c and add the "cat"
+field. For my purposes, I used 8 categories, listed below.
+	0) Immortal commands
+	1) Configuration commands
+	2) Common Commands (read: no better place to put these ones)
+	3) Communication commands
+	4) Informational commands
+	5) Object Manipulation commands
+	6) Movement commands
+	7) Combat commands
+Of course, you can easily alter these to better fit your MUD, I'll explain how later.
+For each command, you need to insert the number for which category you want the command
+to show up in.
+For example:
+                                                                           ADD THIS #
+    { "commands",	do_commands,	POS_DEAD,	 0,  LOG_NORMAL, 1, 4 },
+The addition of the 4 puts this command in the Informational commands category.
+
+    { "murder",		do_murder,	POS_FIGHTING,	 5,  LOG_ALWAYS, 1, 7 },
+Notice that this command is in category 7, combat commands.
+
+As you can see, the category is the 6th element (our counting starts at 0 ;) This relates to the
+new "sh_int   cat;" element we added in the interp.h file. This is what we'll sort on.
+MAKE SURE YOU DO THIS FOR *EACH* COMMAND IN interp.c
+_________________________________________________________________________________________________
+
+
+interp.c further down
+___________________________________________________________________________________________
+Find the do_commands function, and replace it with the below function. I always suggest commenting
+out the original first, then adding the new function. This makes it easy to restore the old function
+if you have problems. Of course, good backups must be kept as well ;)
+
+/*
+ * Contributed by Alander.
+ * Modified to sort by category by Atlas of One Percent MUD. 1mud.org port 9000
+ * Please read and follow the DIKU license, as this modification is a derivative work!
+ */
+void do_commands( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    int cmd;
+    int col;
+    int category;
+ 
+    col = 0;
+
+ /* I had to categorize the immortal commands, but not print them to mortals, 
+  * so immortal commands are category 0, and I started the loop with category
+  * 1 commands. There's probably a better way to do this, but hey, it works!
+  * I also have the commands that I felt were most important in the higher 
+  * categories, which print out last. The more useless commands are in lower 
+  * categories so they might scroll off the screen.
+  */
+    for( category = 1; category < 8; category++ )
+    {
+      switch(category)
+      {
+      case 1:
+	      send_to_char("*** Configuration Commands ***\n\r", ch);      
+	      break;							
+      case 2: 							
+	      send_to_char("*** Common Commands ***\n\r", ch); 		 
+	      break;								 
+      case 3:
+	      send_to_char("*** Communication Commands ***\n\r", ch);
+	      break;
+      case 4:
+	      send_to_char("*** Informational Commands ***\n\r", ch);
+	      break;
+      case 5:
+	      send_to_char("*** Object Manipulation Commands ***\n\r", ch);
+	      break;
+      case 6:
+	      send_to_char("*** Movement Commands ***\n\r", ch);
+	      break;
+      case 7:
+	      send_to_char("*** Combat Commands ***\n\r", ch);
+	      break;
+      }
+       for ( cmd = 0; cmd_table[cmd].name[0] != '\0'; cmd++ )
+       {
+           if ( cmd_table[cmd].level <  LEVEL_HERO
+           &&   cmd_table[cmd].level <= get_trust( ch ) 
+	   &&   cmd_table[cmd].show
+	   &&   cmd_table[cmd].cat == category) /* <--- this ensures the category equals the current category loop value */
+	   {
+	       sprintf( buf, "   %-12s", cmd_table[cmd].name );
+	       send_to_char( buf, ch );
+	       if ( ++col % 6 == 0 )
+		  send_to_char( "\n\r", ch );
+	   }
+       }
+       if (col % 6 != 0 )
+       {
+       send_to_char( "\n\r", ch );
+       col = 0;
+       }
+    }
+ 
+    if ( col % 6 != 0 )
+	send_to_char( "\n\r", ch );
+    return;
+}
+I've also removed my color codes, since not everyone uses Lope's colour. (so I hear, anyways).
+It looks alot better to add some color to the category header. I hope what this is doing is 
+apparent to everyone. I tried to comment it a bit so even the newbie coder (much like myself just
+a short time ago) can easily implement this and see what's going on.
+
+If you'd like your categories a little different, no problem! This is highly configurable. Simply
+change the name of the category, move them up or down in the switch statement, or whatever suits your
+needs. It's also quite simple to move commands from one category to another. Simply change the
+command category number up above.
+
+One last thing, some commands don't make sense to show. Characters that don't have certain skills
+shouldn't see that command in their command list, IMHO. Something I found out about during my addition
+of this is that there's a way to hide the command.
+                                                                       show?
+    { "backstab",	do_backstab,	POS_FIGHTING,	 0,  LOG_NORMAL, 0, 8 },
+The 5th element (starting our counting at 0) after LOG_NORMAL is an integer to either show or not show
+a command in the command list. I hid all commands for which there existed skills. So in the above
+example, backstab is set to NOT show in the command list by having the show field set to 0.
+Characters with backstab will see it in their skills, so why show it in commands too?
+
+I hope this command helps to improve your MUD. Feel free to send me an email with any problems, or if
+you'd just be kind enough to let me know it's being put to good use. I require no credit whatsoever for
+the command, especially since all I've done is modify Alander's work a bit.
+
+__________________________________________________________________________________
+BONUS!!
+I've also added this sorted do_wizhelp for anyone interested. I received this from
+one of my immortals, Ambuoroko (although badly broke at the time). It's a wizhelp
+which is sorted by level, and also shows at which level each wiz command is granted.
+Just replace your do_wizhelp (in interp.c near do_commands) with the following.
+
+void do_wizhelp( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    int cmd;
+    int col;
+    int clevel;
+    col = 0;
+
+    for( clevel = LEVEL_HERO + 1; clevel < MAX_LEVEL + 1; clevel++ ) 
+    {
+        for ( cmd = 0; cmd_table[cmd].name[0] != '\0'; cmd++ )
+	{ 
+            if ( cmd_table[cmd].level >= LEVEL_HERO
+            &&   cmd_table[cmd].level <= get_trust( ch ) 
+            &&   cmd_table[cmd].show
+	    &&   cmd_table[cmd].level == clevel)
+	    {
+	        sprintf( buf, "{c[{x%-3d{c] %-12s{x", cmd_table[cmd].level, cmd_table[cmd].name );
+	        send_to_char( buf, ch );
+	        if ( ++col % 5 == 0 )
+		    send_to_char( "\n\r", ch );
+	    }
+	}
+    }
+ 
+    if ( col % 5 != 0 )
+	send_to_char( "\n\r", ch );
+    return;
+}

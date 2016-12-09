@@ -1,0 +1,41 @@
+REMOVING LEVEL DISPLAY FROM DO_WHO
+
+A simple "fix" really.  If you're like me and believe a player's level
+should be kept to oneself here's a simple modification to do_who to
+strip the level display and disable the level parameters of the who
+command.
+
+
+In ACT_INFO.C, function do_who find:
+
+sprintf( class_text, "%s%2d %s", NOT_AUTHED(wch) ? "N" : " ", wch->level, class_table[wch->class]->who_name );
+
+And change it to read:
+
+sprintf( class_text, "%s %s", NOT_AUTHED(wch) ? "N" : " ", class_table[wch->class]->who_name, NULL );
+
+
+Then find:
+
+	if ( is_number( arg ) )
+	{
+	    switch ( ++nNumber )
+	    {
+	    case 1: iLevelLower = atoi( arg ); break;
+	    case 2: iLevelUpper = atoi( arg ); break;
+	    default:
+		send_to_char( "Only two level numbers allowed.\n\r", ch );
+		return;
+	    }
+	}
+
+And replace with:
+
+	if ( is_number( arg ) )
+	{
+	   send_to_char( "That's not a class, race, order, guild, or council.\n\r", ch );
+	   return;
+	}
+
+
+Recompile and you're done.  Any comments, questions etc, send to seven70707@hotmail.com

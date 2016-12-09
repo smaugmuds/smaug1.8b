@@ -1,0 +1,24 @@
+You can press F6 to switch between the left and right-hand panes.
+You can press "*" on the numeric keypad to expand all nodes of the tree control from the current selection downwards.
+You can press "-" on the numeric keypad to collapse all nodes of the tree control from the current selection downwards.
+You can press Ctrl+Tab to switch tabs in the right-hand pane, if it has the focus.
+You can load more than one area file at once.
+You can load many area files by using "Open Area List" (CTRL+L)
+You can go directly to a mob/object/room by vnum by using Edit > Go To Vnum (CTRL+G)
+You can generate random character names by using Edit > Generate Name (CTRL+E)
+You can close all open windows by using Window > Close All
+You can use the "choose" button to choose a mobile/room/object/exit number from a list when entering exits or resets.
+You can use the "go to" button to go to the mobile/room/object/exit whose number is adjacent to that button.
+You can add new mobiles, rooms, objects etc. by clicking on the appropriate word in the left-hand view (eg. "Rooms" to add a new room) and then selecting "Add Item" from the "Area" menu, or pressing Ctrl+A.
+You can delete anything in the left-hand view (except for the area header detail) by clicking on the desired item (eg. a mobile) and then selecting "Delete Item" from the "Area" menu, or pressing <Del>.
+You can add programs to mobiles by selecting the appropriate mobile in the left-hand view, and then selecting "Add Item" from the "Area" menu, or pressing Ctrl+A.
+You can add affects, descriptions and programs to objects by selecting the appropriate object in the left-hand view, and then selecting "Add Item" from the "Area" menu, or pressing Ctrl+A.
+You can add descriptions, exits, maps and programs to rooms by selecting the appropriate room in the left-hand view, and then selecting "Add Item" from the "Area" menu, or pressing Ctrl+A.
+You can review any warnings that occurred when you loaded your area by selecting View > Warnings.
+You can change the limits for various things (eg. maxmimum level, maximum vnum) by editing the file SMAUGCONFIG.DAT or ROMCONFIG.DAT.
+You can load ROM areas by using the File > Open As menu item.
+You can default to opening ROM areas by using File > Preferences > General and setting the default area type to ROM.
+You can convert from SMAUG to ROM areas (or vice-versa) by loading the appropriate area and then changing the area "type" on the Area view.
+You can use the "area walkthrough" option under the Area menu to simulate walking through your area. When you have finished the walkthrough the last room you visited is automatically selected.
+If you have a room selected in the "tree view" (on the left) and then select "area walkthrough" (CTRL+W) the walkthrough will start with the selected room.
+You can check your area for problems (including unused rooms/mobs/objects) by using the "area check" option under the Area menu.

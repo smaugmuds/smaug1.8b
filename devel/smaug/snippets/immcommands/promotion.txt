@@ -1,0 +1,94 @@
+Promote snippet
+What this command does is allow you to promote any level of player to a immortal level of your choosing,
+but without all the spam that advance level has.  Now I have hardly tested this command so it may have
+some security issues here and there, but let me know if you have problems with it.  I am also planning
+on adding a demote command soon.
+
+Use it if you want it.
+
+/* do_promote added by Vladaar - CTA 1/31/03 */
+/* http://cta-mud.org  */
+/* cta-mud.org Port 5050 */
+
+void do_promote( CHAR_DATA *ch, char *argument )
+{
+    char arg1 [MAX_INPUT_LENGTH];
+    char arg2 [MAX_INPUT_LENGTH];
+    char arg3 [MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+    char buf [MAX_INPUT_LENGTH];
+    int value;
+
+   set_char_color( AT_YELLOW, ch );
+
+    if ( IS_NPC( ch ) || !IS_IMMORTAL(ch))
+    {
+        send_to_char( "You can't promote.\n\r", ch );
+        return;
+ }
+
+       argument = one_argument( argument, arg1 );
+       argument = one_argument( argument, arg2 );
+        argument = one_argument( argument, arg3 );
+
+ if ( ( victim = get_char_world( ch, arg1 ) ) == NULL )
+    {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+    }
+    if ( victim == ch )
+    {
+	send_to_char( "You cannot promote yourself\n\r", ch );
+	return;
+    }
+
+    if ( victim->level >= ch->level )
+    {
+	send_to_char( "You cannot promote them.\n\r", ch );
+	return;
+    }
+
+ if (arg1[0] == '\0' || arg2[0] == '\0' )
+    {
+       send_to_char( "Syntax: Promote <player> level <value>\n\r", ch );
+       return;
+    }
+
+ if (!str_cmp(arg2, "level"))
+    {
+
+        if ( !is_number( arg3 ) )
+        {
+            send_to_char( "Value must be numeric.\n\r", ch );
+            return;
+        }
+     value = atoi( arg3 );
+
+        if ( value < 101 || value > MAX_LEVEL )
+        {
+            send_to_char( "Value must be betwen 101 and 108.\n\r", ch );
+            return;
+        }
+    victim->level = value;
+    set_char_color( AT_WHITE, victim );
+    send_to_char( "You suddenly feel very strange...\n\r\n\r", victim );
+    set_char_color( AT_LBLUE, victim );
+   
+   sprintf( buf, "\n\r\n\rPlease congratulate our newest &CC&YT&RA &WStaff member %s!", victim->name);
+  echo_to_all( AT_WHITE, buf, ECHOTAR_ALL );
+/* Cannot tell a lie, got the idea for interpret configurations from DotdII source - Vladaar*/
+        interpret(victim, "chan +all");
+        interpret(victim, "holylight");
+ /* shadowform is a skill I made so staff members didn't have to bother opening doors
+        interpret(victim, "shadowform");    - Vladaar*/
+  /* restore_char is a function sadiq put out awhile back that restores a victims hitpoints      
+        restore_char(victim);  - Vladaar*/
+        interpret(victim, "speak all");
+        interpret(victim, "title the New &CC&YT&RA&G Staff Member.");
+        interpret(victim, "save");
+ make_wizlist();      
+  interpret(victim, "imm Greetings everybody!");
+    return;
+    }
+return;
+}

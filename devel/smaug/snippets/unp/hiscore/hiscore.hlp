@@ -1,0 +1,48 @@
+#HELPS
+51 HISCOSET~
+{YSyntax: hiscoset <command> [keyword] [field] [value]{x
+
+Hiscoset is the command to set and create hiscore tables.
+
+Command can be:
+    list                     Lists all hiscore tables.
+    show <kwd>               Shows the data for that table.
+    create <kwd>             Create new table with that keyword.
+    destroy <kwd>            Destroy table with that keyword.
+    set <kwd> <field> <val>  Sets data for that table.
+
+Field can be:
+    keyword <str>            Set new keyword for the table.
+    vnum <num>               Set an object vnum for this table.
+    desc <str>               Set the description.
+    maxlength <num>          Set Max entries in the table.
+    entry <name> <score>     Change the score for a player.
+
+If the 'vnum' field is -1, the table will be accessible via the
+'hiscore' command; if it's different from -1, it will be visible
+only by looking at the object with that vnum.
+If you decrease maxlength, entries at the end will be chopped. If
+you increase it, it will slowly fill up.
+
+See also: {YHISCORE{x.
+~
+
+5 HISCORE~
+{YSyntax: hiscore [keyword]{x
+
+This command is used to see a hiscore table. Without parameters, it
+lists all the tables. If you supply a parameter, it will show you
+the table, unless the table is set to be visible only by looking
+at the apropriate sign.
+
+AUTHOR: Cronel {G({Wcronel_kal@hotmail.com{G){x
+          of {YFrozenMUD {G({Wempire.digiunix.net 4000{G){x
+
+Ported to rom by: {RX{rantha{x {G({Wtwhiting@xanth.2y.net{G){x
+
+~
+
+-1 $~
+
+#$
+

@@ -1,0 +1,211 @@
+Study Command for Smaug (Revised for 1.4a by GenmaC)
+
+/* The study command will allow your players to learn spells from studying
+wands, staves, or scrolls.  If you only want them to be able to study one
+of these items, the others can easily be removed.  Study was originally
+written for Yrth, yrth.mudservices.com 5000.  I don't ask for any credit,
+except to leave the study by Absalom comment in void do_study.  I can be
+reached for questions about the snippet at clap@wolfenet.com.  Reports on
+bugs, enhancements, etc. are greatly welcomed. */
+
+/*
+
+Revision 2-13-2002 by GenmaC - upgraded to SMAUG version 1.4a
+
+gsn_wands, gsn_staves, etc. no longer exist, and neither do some of the old functions
+Absalom was using.  These have been replaced with the appropriate code, and gsn_study 
+must be added (you are fixing to see how).  If you wish to give me credit, just include the
+comments with my name it.  Email me at frag16@yahoo.com with questions about this
+version.
+
+Bug Fix 2-19-02: No longer consumes all scrolls of same type when study fails.
+
+*/
+
+/* in db.c, ADD on or around line 166*/
+
+sh_int			gsn_study;
+
+/* in db.c, ADD on or around line 609 */
+
+ASSIGN_GSN( gsn_study,		"study" );
+
+/* in mud.h, ADD on or around line 3020 */
+
+extern	sh_int	gsn_study;	// study skill
+
+/*
+
+You must add study to skills.dat.  I would recommend just pasting the code for scribe
+and changing it...or hell, just add this to your skills.dat file:
+
+#SKILL
+Name         study~
+Type         Skill
+Info         0
+Flags        0
+Target       4
+Minpos       112
+Slot         503
+Rounds       12
+Code         do_study
+Dammsg       ~
+Minlevel     51
+End
+
+Then add the skill to the class files you wish to allow to access this command, aka:
+Skill 'study' 15 90
+
+Be warned that this skill can unbalance things if you leave a lot of powerful spell
+scrolls around for lower level players - however, it will give them the spell at a
+very low percentage, so it won't be too powerful if used properly.
+
+*/
+
+/* in act_obj.c, ADD at the bottom of file: */
+
+/*
+	do_study - study skill.  Upgrades to 1.4a by GenmaC.
+*/
+
+void do_study( CHAR_DATA *ch, char *argument ) /* study by Absalom */
+{
+    char arg[MAX_INPUT_LENGTH];
+    OBJ_DATA *obj;
+    int sn = 0;
+
+    one_argument( argument, arg );
+
+    if ( arg[0] == '\0' )
+    {
+	send_to_char( "Study what?\n\r", ch );
+	return;
+    }
+
+    if ( ( obj = get_obj_carry( ch, arg ) ) == NULL )
+    {
+	send_to_char( "You do not have that item.\n\r", ch );
+	return;
+    }
+
+    if ( obj->item_type != ITEM_STAFF && obj->item_type != ITEM_WAND &&
+	obj->item_type != ITEM_SCROLL )
+    {
+	send_to_char( "You can only study scrolls, wands, and staves.\n\r", ch );
+	return;
+    }
+
+	act( AT_PLAIN, "$n studies $p.", ch, obj, NULL, TO_NOTVICT );
+	act( AT_PLAIN, "You study $p.", ch, obj, NULL, TO_CHAR );
+
+    if (ch->level < obj->level) /* if character level lower than object level, fail */
+	{
+	send_to_char("You cannot glean any knowledge from it.\n\r",ch);
+	act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	separate_obj( obj );
+	extract_obj( obj );
+	}
+
+    if (obj->item_type == ITEM_STAFF)
+	{
+	sn = obj->value[3];
+	if ( sn < 0 || sn >= MAX_SKILL || skill_table[sn]->spell_fun == 0 )
+	    {
+	    bug( "Do_study: bad sn %d.", sn );
+	    return;
+	    }
+	if ( !can_use_skill(ch, number_percent(), gsn_study ) ) /* see if player suceeds */
+		{
+       set_char_color ( AT_MAGIC, ch );
+       send_to_char("You cannot glean any knowledge from it.\n\r", ch);
+       learn_from_failure( ch, gsn_study );
+       act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	   act( AT_MAGIC, "$n accidently destroys a $p!", ch, obj, NULL, TO_NOTVICT);
+	   separate_obj( obj );
+	   extract_obj( obj );
+       return;
+		}
+	if ( ch->pcdata->learned[sn])
+	    {
+	    send_to_char("You already know that spell!\n\r",ch);
+	    return;
+	    }
+	ch->pcdata->learned[sn] = 1;
+	act(AT_PLAIN, "You have learned the art of $t!",
+	ch,skill_table[sn]->name,NULL,TO_CHAR);
+	act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	separate_obj( obj );
+	extract_obj( obj );
+	return;
+	}
+
+    if (obj->item_type == ITEM_WAND)
+	{
+	sn = obj->value[3];
+	if ( sn < 0 || sn >= MAX_SKILL || skill_table[sn]->spell_fun == 0 )
+	    {
+	    bug( "Do_study: bad sn %d.", sn );
+	    return;
+	    }
+	if ( !can_use_skill(ch, number_percent(), gsn_study ) )
+		{
+       set_char_color ( AT_MAGIC, ch );
+       send_to_char("You cannot glean any knowledge from it.\n\r", ch);
+       learn_from_failure( ch, gsn_study );
+       act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	   act( AT_MAGIC, "$n accidently destroys a $p!", ch, obj, NULL, TO_NOTVICT);
+	   separate_obj( obj );
+	   extract_obj( obj );
+       return;
+		}
+	if ( ch->pcdata->learned[sn])
+	    {
+	    send_to_char("You already know that spell!\n\r",ch);
+	    return;
+	    }
+	ch->pcdata->learned[sn] = 1;
+	act(AT_PLAIN, "You have learned the art of $t!",
+	ch,skill_table[sn]->name,NULL,TO_CHAR);
+	act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	separate_obj( obj );
+	extract_obj( obj );
+	return;
+	}
+
+    if (obj->item_type == ITEM_SCROLL)
+	{
+	sn = obj->value[1];
+	if ( sn < 0 || sn >= MAX_SKILL || skill_table[sn]->spell_fun == 0 )
+	    {
+	    bug( "Do_study: bad sn %d.", sn );
+	    return;
+	    }
+	if ( !can_use_skill(ch, number_percent(), gsn_study ) )
+		{
+       set_char_color ( AT_MAGIC, ch );
+       send_to_char("You cannot glean any knowledge from it.\n\r", ch);
+       learn_from_failure( ch, gsn_study );
+       act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	   act( AT_MAGIC, "$n accidently destroys a $p!", ch, obj, NULL, TO_NOTVICT);
+	   separate_obj( obj );
+	   extract_obj( obj );
+       return;
+		}
+	if ( ch->pcdata->learned[sn])
+	    {
+	    send_to_char("You already know that spell!\n\r",ch);
+	    return;
+	    }
+	ch->pcdata->learned[sn] = 1;
+	act(AT_PLAIN, "You have learned the art of $t!",
+	ch,skill_table[sn]->name,NULL,TO_CHAR);
+	act( AT_PLAIN, "$p burns brightly and is gone.", ch, obj, NULL, TO_CHAR );
+	separate_obj( obj );
+	extract_obj( obj );
+	return;
+	}
+
+}
+
+
+

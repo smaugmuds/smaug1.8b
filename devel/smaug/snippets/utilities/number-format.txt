@@ -1,0 +1,93 @@
+
+                             PUNCT SNIPPET ( Smaug 1.4)
+This snippet is to format big numbers for easy understanding. After adding it you well see, for instance,"You have 5.678.975 gold coins", instead of "You have 5678975 gold coins".
+
+ Follow the next steps to include the snippet in your mud.
+ 
+- Add in MUD.H (in any place):
+
+char *  num_punct        args( (  int foo ) );
+
+
+- Add in ACT_INFO.C:
+
+/**********************************************************************
+*   Function to format big numbers, so you can easy understand it.    *
+*    Added by Desden, el Chaman Tibetano (J.L.Sogorb) in Oct-1998     *
+*                Email: jose@luisso.net                     *
+*								                      * 
+**********************************************************************/
+
+char *num_punct(int foo)
+{
+int index,index_new,rest;
+char buf[16];
+static char buf_new[16];
+
+sprintf(buf,"%d",foo);
+rest = strlen(buf)%3;
+
+for (index=index_new=0;index<strlen(buf);index++,index_new++)
+  {
+   if (index!=0 && (index-rest)%3==0 )
+    {
+     buf_new[index_new]='.';
+     index_new++;
+     buf_new[index_new]=buf[index];
+    }
+  else
+  buf_new[index_new] = buf[index];
+  }
+buf_new[index_new]='\0';
+return buf_new;
+}
+
+/*************************************************************************
+*                          End of punct code                             *
+*                                                                        * 
+*************************************************************************/
+
+Do a 'make clean' and a 'make'.
+ Now you can use it in any function returning an integer ( ch->gold,
+ch->exp, etc).
+ I, for instance, have included it in bank code, and in commands like 'gold',
+'level', 'score', etc.
+
+I give you an example how to use it:
+
+>Original code:
+
+void do_gold(CHAR_DATA * ch, char *argument)
+{
+   set_char_color( AT_GOLD, ch );
+   ch_printf( ch,  "You have %d gold pieces.\n\r", ch->gold );
+   return;
+}
+
+>Using num_punct :
+
+void do_gold(CHAR_DATA * ch, char *argument)
+{
+   set_char_color( AT_GOLD, ch );
+   ch_printf( ch,  "You have %s gold pieces.\n\r", num_punct(ch->gold) );
+   return;
+}
+
+Look than '%d' must change to '%s', because num_punct returns a string, not an integer.
+
+/*IMPORTANT*/
+In an earlier version the function returned a strdup value that could bring memory leaks. The problem now is than you can't invoke it twice in the same function, so you must split it.
+An example:
+ ch_printf( ch,"You have scored %d exp, and have %d gold coins.\n\r",
+	ch->exp,  ch->gold );
+
+must be:
+  ch_printf (ch, "You have scored %s exp," ,num_punct(ch->exp);
+  ch_printf (ch, " and have %s gold coins.\n\r", num_punct(ch->gold);
+
+/***********************************************************************
+*    I'll greet you if you mail me telling you are using thi code.     *
+*       Any suggestions or problems you have, please mail me to        *
+*                    jose@luisso.net                         *
+*                                                                      *
+**************  Desden, el Chaman Tibetano  -  Nov 1998  **************/

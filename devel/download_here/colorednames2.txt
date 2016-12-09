@@ -1,0 +1,102 @@
+/* Cname "Colored Names" for who and Channels
+ * This was created by Phate. For those of
+ * you who would like to use this snippet, it
+ * should soon be on http://www.kyndig.com.
+ * This snippet should work with any Rom or
+ * rot MUD. Feel free to
+ * try it on other bases.
+ * I don't ask for any real credit for this code
+ * but if you could just drop me an email at phate@edgeod.ods.org
+ * to tell me how it worked out
+ *
+ * Phate - edgeod.ods.org 6775
+ */
+
+
+
+--[ merc.h ]--
+
+In struct pc_data add the following line:
+
+    char *              cname;
+
+Find the current #define PERS(ch, looker) and replace it with this one.
+
+#define PERS(ch, looker)        ( can_see( looker, (ch) ) ?             \
+                                ( IS_NPC(ch) ? (ch)->short_descr : ch->pcdata->cname != NULL ? ch->pcdata->cname   \
+                                : (ch)->short_descr ) : IS_IMMORTAL(ch) ?   \
+                                "An Immortal" :         \
+                                 "someone")
+
+--[save.c]--
+
+In fwrite_char, below...
+
+    if (ch->short_descr[0] != '\0')
+        fprintf( fp, "ShD  %s~\n",      ch->short_descr );
+
+Add this...
+
+    if (ch->pcdata->cname[0] != '\0')
+        fprintf( fp, "CNa  %s~\n",      ch->pcdata->cname);
+
+In fread_char, below...
+
+            KEY( "Cla",         ch->class,              fread_number( fp ) );
+
+Add this...
+
+            KEY( "CNa",         ch->pcdata->cname,      fread_string( fp ) );
+
+--[comm.c]--
+
+In comm.c in the nanny function, under...
+
+            ch->practice = 8;
+
+Add this...
+
+            ch->pcdata->cname = ch->name;
+
+--[act_info.c]--
+
+In void do_who, replace all instances of wch->name in the printing section of who with this...
+
+                wch->pcdata->cname != NULL ? wch->pcdata->cname : wch->name,
+
+--[act_wiz.c]--
+
+In the function do_string in the line...
+
+        send_to_char("    fields: name short long title who spec\n\r",ch);
+
+Replace it with:
+
+        send_to_char("    fields: name short long title who spec cname\n\r",ch);
+
+Below the part in do_string that looks like...
+
+        if ( !str_prefix( arg2, "short" ) )
+        {
+            free_string( victim->short_descr );
+            victim->short_descr = str_dup( arg3 );
+            return;
+        }
+
+Add in:
+
+        if ( !str_prefix( arg2, "cname" ) )
+        {
+            free_string( victim->pcdata->cname );
+            victim->pcdata->cname = str_dup( arg3 );
+            return;
+        }
+
+
+Clean compile your MUD and you're good to go!!!
+
+Also, unless you want to go through every pfile and add in a cname field in the pfile, I'd SUGGEST a pwipe or something.
+
+Phate
+
+

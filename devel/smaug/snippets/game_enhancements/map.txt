@@ -1,0 +1,226 @@
+Recursive Mapper By Noah Skelton, February 26, 2002
+
+Basically what this patch does is give you and your players an overhead map, and use of the map command.. example to see a 20x20 map, type map 20, and it will show you the map of 20 rooms in all directions(if they exist).. config +map gives you a 5x5 overhead map every time you look, between the room name and room description.. the symbol and color of the room on the map is based on the sector type of that room.. This patch was designed for stock smaug 1.4 so if you have added or changed sectors on your code, you may want to change them in the draw_map section of this code, it should be fairly self explainatory once you get there..
+
+Given that this is a recursive function I would imagine it could use alot of cpu, however I have no idea since on my computer I have neither quotas or a large player base to test it on.. the most rooms it will map is 2500(50x50) and that is only if you type map 50, otherwise it will be doing 25 rooms every time a person looks.. speed wise the program should be fine, its written fairly clean and straight forward however I am not a programmer so I wouldnt know :)
+
+So heres how to install it, it should be pretty easy, you may have to make some modifications to the patch if you are on a more heavily modified codebase, but Im sure you can figure it out :)
+
+First:
+
+You might want to cedit map and make it a level 1 command..
+
+In act_info.c:
+
+in function do_config find:
+
+	else if ( IS_IMMORTAL( ch )
+	     &&   !str_prefix( arg+1, "map"      ) ) bit = PLR_AUTOMAP;     /* maps */
+
+and change it to:
+
+	else if (!str_prefix( arg+1, "map"      ) ) bit = PLR_AUTOMAP;     /* maps */
+
+in function do_look find:
+
+	if ( !IS_NPC(ch) && xIS_SET(ch->act, PLR_AUTOMAP) )   /* maps */
+	{
+	    if(ch->in_room->map != NULL)
+	    {
+	       do_lookmap(ch, NULL);
+	    }
+	}
+
+And change it to look like this:
+
+	if ( !IS_NPC(ch) && xIS_SET(ch->act, PLR_AUTOMAP) )   /* maps */
+	{
+            do_lookmap(ch, "auto");
+	}
+
+In mapout.c:
+
+up at the top where the function declarations are:
+
+find: 
+
+void 		draw_map (CD * ch, RID * rm, int flag, int mode);
+
+change it to:
+
+void draw_map(CHAR_DATA *ch, byte map[50][50]);
+
+and below it paste this:
+
+void CheckRoom(ROOM_INDEX_DATA *location, int PosX, int PosY, byte map[50][50]);
+void CheckExitDir(ROOM_INDEX_DATA *location, int PosX, int PosY, int Exd, byte map[50][50]);
+int center, MapDiameter;
+
+find the function do_lookmap and delete it and paste this in its place:
+
+void do_lookmap( CHAR_DATA *ch, char *argument )
+{
+	ROOM_INDEX_DATA *location;
+	int x, y;
+	byte map[50][50];
+
+	if (!str_cmp( argument, "auto" ))
+		MapDiameter = 5;
+	else
+		MapDiameter = atoi(argument);
+
+	if ( MapDiameter < 3)
+		MapDiameter = 3;
+	else if (MapDiameter>49) 
+		MapDiameter = 49;
+
+	x = (MapDiameter/2) * 2;
+
+	if(MapDiameter==x)
+		MapDiameter--;
+	
+	center = MapDiameter/2+1;
+	location = get_room_index(ch->in_room->vnum);
+	
+	for (y=0;y<=MapDiameter;++y){for (x=0;x<=MapDiameter;++x){map[x][y]=(SECT_MAX+1);}}
+
+	CheckRoom(location, center, center, map);
+
+	map[center][center] = ch->in_room->sector_type;
+
+	draw_map(ch, map);
+	
+	return;
+}
+
+After you do that paste this in below it:
+
+void CheckRoom(ROOM_INDEX_DATA *location, int CX, int CY, byte map[50][50])
+{
+	int PosX, PosY;
+
+		PosX=CX; PosY=CY-1;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_NORTH, map);
+		PosX=CX; PosY=CY+1;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_SOUTH, map);
+		PosX=CX+1; PosY=CY;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_EAST, map);
+		PosX=CX-1; PosY=CY;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_WEST, map);
+		PosX=CX+1; PosY=CY-1;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_NORTHEAST, map);
+		PosX=CX-1; PosY=CY-1;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_NORTHWEST, map);
+		PosX=CX+1; PosY=CY+1;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_SOUTHEAST, map);
+		PosX=CX-1; PosY=CY+1;
+	if (PosX <= MapDiameter && PosY <= MapDiameter && PosX > 0 && PosY > 0)
+		CheckExitDir(location, PosX, PosY, DIR_SOUTHWEST, map);
+
+	return;
+}
+
+void CheckExitDir(ROOM_INDEX_DATA *location,int X, int Y, int ExD, byte map[50][50])
+{
+	EXIT_DATA *xit;
+
+	if(get_exit(location, ExD))
+	{
+		xit = get_exit(location, ExD);
+		if(map[X][Y]==(SECT_MAX+1) && !IS_SET(xit->exit_info, EX_CLOSED))
+		{
+			location = get_room_index(xit->vnum);
+			map[X][Y] = location->sector_type;
+			CheckRoom(location, X, Y, map);
+		}
+	}
+
+	return;
+}
+
+Now find the function draw_map, delete it and put this in its place:
+
+void draw_map(CHAR_DATA *ch, byte map[50][50])
+{
+	int x,y;
+	char *sect;
+
+	for (y=1;y<= MapDiameter;++y)
+	{
+		for (x=1;x<=MapDiameter;++x)
+		{
+			switch(map[x][y]) 
+			{
+				default:			
+					sect = "&R&r?";		
+					break;
+				case SECT_INSIDE:		
+					sect = "&z#";	
+					break;
+				case SECT_CITY:			
+					sect = "&P.";		
+					break;
+				case SECT_FIELD:		
+					sect = "&G.";		
+					break;
+				case SECT_FOREST:		
+					sect = "&G@";
+					break;
+				case SECT_HILLS:		
+					sect = "&G^^";
+					break;
+				case SECT_MOUNTAIN:		
+					sect = "&W^^";
+					break;
+				case SECT_WATER_SWIM:		
+					sect = "&B~";
+					break;
+				case SECT_WATER_NOSWIM:		
+					sect = "&B~";
+					break;
+				case SECT_UNDERWATER:		
+					sect = "&R&b-";
+					break;
+				case SECT_AIR:			
+					sect = "&W@";
+					break;
+				case SECT_DESERT:		
+					sect = "&Y.";
+					break;
+				case SECT_OCEANFLOOR:		
+					sect = "&B-";
+					break;
+				case SECT_UNDERGROUND:		
+					sect = "&z.";
+					break;
+				case SECT_LAVA:			
+					sect = "&R~";
+					break;
+				case SECT_SWAMP:		
+					sect = "&G~";	
+					break;
+				case (SECT_MAX+1):
+					sect = " ";
+					break;
+			}
+
+			if(x==center && y==center)
+				sect = "&R*";
+
+			send_to_char_color(sect, ch);
+		}
+		send_to_char("\n\r",ch);
+	}
+	return;
+}
+
+That should be it.. it should compile and work fine, I wrote this while placing it in a stock smaug mud... now I havent tested but the old mapout commands might have bugs now, but I doubt it, if they do, Im sure you can handle it
+
+Questions? Comments? Problems? Email me at Ktulu@bored.com

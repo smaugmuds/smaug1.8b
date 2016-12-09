@@ -1,0 +1,129 @@
+/*New Do_Commands by Hunter Zero of Nivean Genesis*/
+/*Does a list of commands based on type*/
+/*July 2002*/
+
+/*interp.h*/
+
+/*add to struct cmd_type*/
+ int command_type
+
+
+/*add in interp.h..before the do functions delcarations*/
+
+/*Command Types*/
+
+#define COM_IMMO		0
+#define COM_MOVE		1
+#define COM_COMB		2
+#define COM_BLDR		3
+#define COM_INFO		4
+#define COM_MISC		5
+#define COM_OTHR		6
+#define COM_CFIG		7
+#define COM_COMM		8
+#define COM_OBJM		9
+#define COM_CLAN		10
+#define COM_LEAD		11
+#define COM_PBWR		12
+#define COM_QEST		13
+
+
+#define CIM	COM_IMMO
+#define CMV	COM_MOVE
+#define CFT	COM_COMB
+#define CBR	COM_BLDR
+#define CDT	COM_INFO
+#define CMC 	COM_MISC
+#define COR	COM_OTHR
+#define CCO 	COM_COMM
+#define CFG 	COM_CFIG
+#define COJ 	COM_OBJM
+#define CCN 	COM_CLAN
+#define CLD 	COM_LEAD
+#define CPB 	COM_PBWR
+#define CQT 	COM_QEST
+
+/*end interp.h*/
+
+/*interp.c*/
+
+/*In the command table, you need to add the command type shorthand to the end of each command*/
+
+/*Function: do_command*/
+
+/* Command by Zero and mdofied by Taka 6/28/2002 */
+/*Redone by Zero 7/29/2002*/
+void do_commands( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg1[MIL];
+    int cmd;
+    int col = 0; /* do this all at once */
+    int type = 0; /* added you will see why in a moment */
+    
+    argument = one_argument( argument, arg1);
+
+		 if (!str_cmp(arg1, "immortal" ))		type = COM_IMMO;
+	else if (!str_cmp(arg1, "movement" )) 		type = COM_MOVE;
+	else if (!str_cmp(arg1, "combat"))			type = COM_COMB;
+	else if (!str_cmp(arg1, "builder"))			type = COM_BLDR;
+	else if (!str_cmp(arg1, "information"))		type = COM_INFO; 
+	else if (!str_cmp(arg1, "misc"))			type = COM_MISC;
+	else if (!str_cmp(arg1, "other"))			type = COM_OTHR;
+	else if (!str_cmp(arg1, "config"))			type = COM_CFIG;
+	else if (!str_cmp(arg1, "communication"))	type = COM_COMM;
+	else if (!str_cmp(arg1, "object"))			type = COM_OBJM;
+	else if (!str_cmp(arg1, "clan")) 			type = COM_CLAN;
+	else if (!str_cmp(arg1, "leaders"))			type = COM_LEAD;
+	else if (!str_cmp(arg1, "paintball"))		type = COM_PBWR;
+	else if	(!str_cmp(arg1, "quest"))			type = COM_QEST;
+	else										type = -1;
+/* why should imms not be able to see the commands */
+    sprintf( buf, "Command type chosen:%s\n\r", arg1);
+	send_to_char( buf, ch );
+	if ( type != -1)
+		{
+		for( cmd = 0; cmd_table[cmd].name[0] != '\0'; cmd++) /* loop and show command */
+			{
+			if ( cmd_table[cmd].level <  LEVEL_HERO &&   cmd_table[cmd].level <= get_trust( ch ) && cmd_table[cmd].show)
+				{
+				if ( col == 3 )
+					{
+					send_to_char( "\n\r", ch );
+					col = 0;
+					}
+				if (cmd_table[cmd].command_type == type)
+					{
+					sprintf( buf, "%-12s", cmd_table[cmd].name );
+					send_to_char(buf, ch);
+					col++;					
+					}	
+						
+				}
+			}	
+		return;
+		}
+	if (!str_cmp(arg1, "list")) /* list types */
+    	{
+		send_to_char( "Command Listing for Nivean Genesis:\n\r", ch );
+		send_to_char( "type {Rcommand{C<type>{x to list the commands.\n\r", ch );
+    	send_to_char( "\n\r{Rimmortal	movement	combat	builder\n\r", ch);
+		send_to_char( "{Rinformation	misc	other	config{x\n\r", ch);
+		send_to_char( "{Rcommunication	object	clan	leaders{x\n\r", ch);
+		send_to_char( "{Rpaintball	quest\n\r", ch);				
+		return;
+		}		
+	else	/*error*/
+		{
+		send_to_char( "You either chose a bad type or got the syntax wrong.\n\r", ch);
+		send_to_char( "Type {Rcommand list{x to view the list of command types.\n\r", ch);
+		return;
+		}
+		
+	return;
+}
+
+
+
+/*And of course, you can format it however*/
+/*If you add this...be sure to add Hunter Zero to the credits*/

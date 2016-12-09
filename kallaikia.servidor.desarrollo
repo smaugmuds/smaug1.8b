@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Cargar configuracion
+source kallaikia.servidor.configuracion
+
+echo
+echo "          - (( $programa $version )) -" 
+echo 
+echo "             \"$reino\""
+echo
+
+sleep 2;
+
+# Cambiar ao directorio do reino | zonas
+cd $reino
+
+# Executar o servicio
+# Os registros saen pola pantalla (devel)
+../$programa $porto
+

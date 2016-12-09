@@ -1,0 +1,732 @@
+#AREADATA
+Name Dark Goblin Cave~
+Builders None~
+VNUMs 11101 11150
+Credits 80 110} Xrakisis Goblin Hole~
+Security 1
+End
+
+
+
+#MOBILES
+#11102
+burly ogre~
+A Burly Ogre~
+A Burly Ogre is here.
+~
+~
+giant~
+ABG d -450 0
+95 95 191d31+1919 95d10+85 31d3+52 thwack
+-54 -54 -54 -35
+0 0 HI JP
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11103
+large ogre~
+A Large Ogre~
+A Large Ogre is here.
+~
+~
+giant~
+AB 0 -450 0
+100 100 201d33+2021 100d10+85 33d3+55 thwack
+-57 -57 -57 -37
+0 0 HI JP
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11104
+large ogre~
+A Large Ogre~
+A Large Ogre is here.
+~
+~
+giant~
+AB 0 -450 0
+100 100 201d33+2021 100d10+85 33d3+55 thwack
+-57 -57 -57 -37
+0 0 HI JP
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11105
+large ogre~
+A Large Ogre~
+A Large Ogre is here.
+~
+~
+giant~
+AB 0 -450 0
+100 100 201d33+2021 100d10+85 33d3+55 thwack
+-57 -57 -57 -37
+0 0 HI JP
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11106
+Ogre Shaman~
+An Ogre Shaman~
+An Ogre Shaman is here.
+~
+~
+giant~
+ABR 0 -450 0
+100 100 201d33+2021 100d10+85 33d3+55 thwack
+-57 -57 -57 -37
+0 0 HI JP
+stand stand male 8000
+AHMV ABCDEFGHIJK medium unknown
+#11107
+goblin guard~
+A Goblin Guard~
+A Goblin Guard stands here.
+~
+~
+goblin~
+AB J -800 0
+110 110 221d36+3334 110d10+85 36d3+60 beating
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11108
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11109
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11110
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11111
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11112
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11113
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11114
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11115
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11116
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11117
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11118
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11119
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11120
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11121
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#11122
+A filthy goblin~
+A Filthy Goblin~
+A Filthy Goblin is here.
+~
+~
+goblin~
+AB J 0 0
+110 110 221d36+3334 110d10+85 36d3+60 punch
+-64 -64 -64 -41
+0 0 Q C
+stand stand male 4000
+AHMV ABCDEFGHIJK medium unknown
+#0
+
+
+
+#OBJECTS
+#11106
+gauntlets of ogre strength~
+{YGauntlets of Ogre Strength{x~
+{YGauntlets of Ogre Strength{x are here. ~
+steel~
+armor ABG AH
+BEF BEF BEF BEF 0
+60 3 10000 P
+A
+1 2
+A
+19 40
+A
+18 40
+#11107
+necklace of human fingers~
+{yA Necklace of Human Fingers{x~
+{yA Necklace of Human Fingers{x is here.~
+unknown~
+armor ABG AC
+ACDF ACDF ACDF ACDF 0
+0 1 1000 P
+A
+12 1000
+A
+18 45
+A
+19 45
+#0
+
+
+
+#ROOMS
+#11101
+Outside Dark Cave~
+~
+0 0 5
+D0
+~
+~
+0 0 11102
+D2
+~
+~
+0 0 6003
+S
+#11102
+Inside Dark Cave~
+~
+0 0 0
+D0
+~
+~
+0 0 11103
+D2
+~
+~
+0 0 11101
+S
+#11103
+Bone Strewn Ogre Den~
+~
+0 0 0
+D0
+~
+~
+0 0 11106
+D1
+~
+~
+0 0 11105
+D2
+~
+~
+0 0 11102
+D3
+~
+~
+0 0 11104
+S
+#11104
+Bone Strewn Ogre Den~
+~
+0 0 0
+D1
+~
+~
+0 0 11103
+S
+#11105
+Bone Strewn Ogre Den~
+~
+0 0 0
+D3
+~
+~
+0 0 11103
+S
+#11106
+Deeper in the Cave~
+~
+0 0 0
+D2
+~
+~
+0 0 11103
+D5
+~
+~
+0 0 11107
+S
+#11107
+Entrance to a Goblin Hole~
+~
+0 0 0
+D4
+~
+~
+0 0 11106
+D5
+~
+~
+0 0 11108
+S
+#11108
+In a Goblin tunnel~
+~
+0 0 0
+D4
+~
+~
+0 0 11107
+D5
+~
+~
+0 0 11109
+S
+#11109
+In a Goblin tunnel~
+~
+0 0 0
+D4
+~
+~
+0 0 11108
+D5
+~
+~
+0 0 11110
+S
+#11110
+tunnel intersection~
+~
+0 0 0
+D0
+~
+~
+0 0 11111
+D1
+~
+~
+0 0 11122
+D4
+~
+~
+0 0 11109
+S
+#11111
+Narrow Tunnel~
+~
+0 0 0
+D0
+~
+~
+0 0 11112
+D2
+~
+~
+0 0 11110
+S
+#11112
+Narrow Tunnel~
+~
+0 0 0
+D0
+~
+~
+0 0 11113
+D2
+~
+~
+0 0 11111
+S
+#11113
+Narrow Tunnel~
+~
+0 0 0
+D1
+~
+~
+0 0 11114
+D2
+~
+~
+0 0 11112
+S
+#11114
+Narrow Tunnel~
+~
+0 0 0
+D0
+~
+~
+0 0 11115
+D3
+~
+~
+0 0 11113
+S
+#11115
+Narrow Tunnel~
+~
+0 0 0
+D1
+~
+~
+0 0 11116
+D2
+~
+~
+0 0 11114
+S
+#11116
+Narrow Tunnel~
+~
+0 0 0
+D1
+~
+~
+0 0 11117
+D3
+~
+~
+0 0 11115
+S
+#11117
+Narrow Tunnel~
+~
+0 0 0
+D2
+~
+~
+0 0 11118
+D3
+~
+~
+0 0 11116
+S
+#11118
+Narrow Tunnel~
+~
+0 0 0
+D0
+~
+~
+0 0 11117
+D1
+~
+~
+0 0 11119
+S
+#11119
+Dark Tunnel~
+~
+0 0 0
+D2
+~
+~
+0 0 11120
+D3
+~
+~
+0 0 11118
+S
+#11120
+Dark Tunnel~
+~
+0 0 0
+D0
+~
+~
+0 0 11119
+D3
+~
+~
+0 0 11121
+S
+#11121
+Dark winding tunnel~
+~
+0 0 0
+D1
+~
+~
+0 0 11120
+D2
+~
+~
+0 0 11122
+S
+#11122
+Dark winding tunnel~
+~
+0 0 0
+D0
+~
+~
+0 0 11121
+D3
+~
+~
+0 0 11110
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+M 0 11102 2 11102 2 Load A Burly Ogre
+M 0 11103 5 11103 5 Load A Large Ogre
+M 0 11103 5 11103 5 Load A Large Ogre
+M 0 11103 5 11103 5 Load A Large Ogre
+M 0 11103 5 11103 5 Load A Large Ogre
+M 0 11103 5 11103 5 Load A Large Ogre
+M 0 11104 5 11104 5 Load A Large Ogre
+M 0 11104 5 11104 5 Load A Large Ogre
+M 0 11104 5 11104 5 Load A Large Ogre
+M 0 11104 5 11104 5 Load A Large Ogre
+M 0 11104 5 11104 5 Load A Large Ogre
+M 0 11105 5 11105 5 Load A Large Ogre
+M 0 11105 5 11105 5 Load A Large Ogre
+M 0 11105 5 11105 5 Load A Large Ogre
+M 0 11105 5 11105 5 Load A Large Ogre
+M 0 11105 5 11105 5 Load A Large Ogre
+M 0 11106 1 11106 1 Load An Ogre Shaman
+E 0 11106 0 9 {ygauntlets of ogre strength{x is loaded on the hands of An Ogre Shaman
+M 0 11107 2 11107 2 Load A Goblin Guard
+E 0 11107 0 3 {ya necklace of human fingers{x is loaded around the neck (1) of A Goblin Guard
+M 0 11107 2 11107 2 Load A Goblin Guard
+E 0 11107 0 3 {ya necklace of human fingers{x is loaded around the neck (1) of A Goblin Guard
+M 0 11108 5 11108 5 Load A Filthy Goblin
+M 0 11108 5 11108 5 Load A Filthy Goblin
+M 0 11108 5 11108 5 Load A Filthy Goblin
+M 0 11108 5 11108 5 Load A Filthy Goblin
+M 0 11108 5 11108 5 Load A Filthy Goblin
+M 0 11108 5 11109 5 Load A Filthy Goblin
+M 0 11108 5 11109 5 Load A Filthy Goblin
+M 0 11108 5 11109 5 Load A Filthy Goblin
+M 0 11108 5 11109 5 Load A Filthy Goblin
+M 0 11108 5 11109 5 Load A Filthy Goblin
+M 0 11110 5 11110 5 Load A Filthy Goblin
+M 0 11110 5 11110 5 Load A Filthy Goblin
+M 0 11110 5 11110 5 Load A Filthy Goblin
+M 0 11110 5 11110 5 Load A Filthy Goblin
+M 0 11110 5 11110 5 Load A Filthy Goblin
+M 0 11111 5 11111 5 Load A Filthy Goblin
+M 0 11111 5 11111 5 Load A Filthy Goblin
+M 0 11111 5 11111 5 Load A Filthy Goblin
+M 0 11111 5 11111 5 Load A Filthy Goblin
+M 0 11111 5 11111 5 Load A Filthy Goblin
+M 0 11112 5 11112 5 Load A Filthy Goblin
+M 0 11112 5 11112 5 Load A Filthy Goblin
+M 0 11112 5 11112 5 Load A Filthy Goblin
+M 0 11112 5 11112 5 Load A Filthy Goblin
+M 0 11112 5 11112 5 Load A Filthy Goblin
+M 0 11113 5 11113 5 Load A Filthy Goblin
+M 0 11113 5 11113 5 Load A Filthy Goblin
+M 0 11113 5 11113 5 Load A Filthy Goblin
+M 0 11113 5 11113 5 Load A Filthy Goblin
+M 0 11113 5 11113 5 Load A Filthy Goblin
+M 0 11114 5 11114 5 Load A Filthy Goblin
+M 0 11114 5 11114 5 Load A Filthy Goblin
+M 0 11114 5 11114 5 Load A Filthy Goblin
+M 0 11114 5 11114 5 Load A Filthy Goblin
+M 0 11114 5 11114 5 Load A Filthy Goblin
+M 0 11115 5 11115 5 Load A Filthy Goblin
+M 0 11115 5 11115 5 Load A Filthy Goblin
+M 0 11115 5 11115 5 Load A Filthy Goblin
+M 0 11115 5 11115 5 Load A Filthy Goblin
+M 0 11115 5 11115 5 Load A Filthy Goblin
+M 0 11116 5 11116 5 Load A Filthy Goblin
+M 0 11116 5 11116 5 Load A Filthy Goblin
+M 0 11116 5 11116 5 Load A Filthy Goblin
+M 0 11116 5 11116 5 Load A Filthy Goblin
+M 0 11116 5 11116 5 Load A Filthy Goblin
+M 0 11117 5 11117 5 Load A Filthy Goblin
+M 0 11117 5 11117 5 Load A Filthy Goblin
+M 0 11117 5 11117 5 Load A Filthy Goblin
+M 0 11117 5 11117 5 Load A Filthy Goblin
+M 0 11117 5 11117 5 Load A Filthy Goblin
+M 0 11118 5 11118 5 Load A Filthy Goblin
+M 0 11118 5 11118 5 Load A Filthy Goblin
+M 0 11118 5 11118 5 Load A Filthy Goblin
+M 0 11118 5 11118 5 Load A Filthy Goblin
+M 0 11118 5 11118 5 Load A Filthy Goblin
+M 0 11119 5 11119 5 Load A Filthy Goblin
+M 0 11119 5 11119 5 Load A Filthy Goblin
+M 0 11119 5 11119 5 Load A Filthy Goblin
+M 0 11119 5 11119 5 Load A Filthy Goblin
+M 0 11119 5 11119 5 Load A Filthy Goblin
+M 0 11120 5 11120 5 Load A Filthy Goblin
+M 0 11120 5 11120 5 Load A Filthy Goblin
+M 0 11120 5 11120 5 Load A Filthy Goblin
+M 0 11120 5 11120 5 Load A Filthy Goblin
+M 0 11120 5 11120 5 Load A Filthy Goblin
+M 0 11121 5 11121 5 Load A Filthy Goblin
+M 0 11121 5 11121 5 Load A Filthy Goblin
+M 0 11121 5 11121 5 Load A Filthy Goblin
+M 0 11121 5 11121 5 Load A Filthy Goblin
+M 0 11121 5 11121 5 Load A Filthy Goblin
+M 0 11122 5 11122 5 Load A Filthy Goblin
+M 0 11122 5 11122 5 Load A Filthy Goblin
+M 0 11122 5 11122 5 Load A Filthy Goblin
+M 0 11122 5 11122 5 Load A Filthy Goblin
+M 0 11122 5 11122 5 Load A Filthy Goblin
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MOBPROGS
+#0
+
+#$

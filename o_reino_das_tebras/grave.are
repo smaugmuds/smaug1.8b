@@ -1,0 +1,946 @@
+#AREA O cemiterio~
+
+#AUTHOR Alfa~
+
+#RANGES
+5 10 0 60
+$
+
+#RESETMSG ~
+
+#FLAGS
+0 0
+
+#ECONOMY 0 9999180
+
+#MOBILES
+#3600
+fenry enterrador~
+Fenry o Enterrador~
+Fenry o Enterrador esta sentado aqui, parece algo borracho.
+~
+He is a tall but bulky man in his late fifties.  His features are worn with
+decades of hard work and his somewhat crouched expression is one of deep
+sorrow and depression.  He is haunted by a memory of a lost paradise.
+~
+65 0 350 C
+4 15 8 1d12+48 1d6+1
+10 800
+6 6 1
+13 13 13 13 13 13 13
+0 0 0 0 0
+0 3 0 0 1 1 1
+0 0 1775 0 0 0 16 2
+#3601
+zombie~
+the rotting zombie~
+A rotting zombie is staggering towards you with outstretched hands.
+~
+Maggots crawl all over its decaying body.
+~
+35 512 -750 C
+4 16 5 2d6+60 1d8+2
+0 800
+8 8 1
+13 13 13 13 13 13 13
+0 0 0 0 0
+67 3 0 0 1 1 1
+0 0 1775 0 0 0 16 2
+#3602
+ghoul~
+the ghastly ghoul~
+A ghastly ghoul is here.
+~
+It is a walking corpse with long fangs and long, sharp nails that most of
+resemble claws.  Its eyes are a dark yellow colour and glare hungrily at you.
+~
+35 512 -750 C
+6 15 4 2d6+72 1d10+2
+20 1500
+8 8 1
+13 13 13 13 13 13 13
+0 0 0 0 0
+67 3 0 0 1 1 1
+0 0 1769 0 0 0 4096 524290
+#3603
+skeleton~
+a dusty skeleton~
+A dusty skeleton lies here.
+~
+The dusty bones are almost brown.  It must have been buried for a very long
+time.
+~
+1073741859 512 -750 C
+3 17 7 1d12+36 1d6+2
+10 600
+8 8 1
+13 13 13 13 13 13 13
+0 0 0 0 0
+67 3 0 0 1 1 1
+0 0 263 96 0 16 16 2
+#3604
+skeleton~
+a dusty skeleton~
+A dusty skeleton lies here.
+~
+The dusty bones are almost brown.  It must have been buried for a very long
+time.
+~
+97 512 -750 C
+3 17 7 1d12+36 1d6+2
+10 600
+8 8 1
+13 13 13 13 13 13 13
+0 0 0 0 0
+67 3 0 0 370945 370945 1
+0 0 71 96 0 16 16 2
+#3605
+zombie~
+the rotting zombie~
+A rotting zombie is staggering towards you with outstretched hands.
+~
+Maggots crawl all over its decaying body.
+~
+1073741857 512 -750 C
+4 16 5 2d6+60 1d8+2
+100 800
+8 8 1
+13 13 13 13 13 13 13
+0 0 0 0 0
+67 3 0 0 370945 370945 1
+0 0 1775 0 0 0 16 2
+#0
+
+#OBJECTS
+#3600
+candlestick~
+a candlestick~
+A pewter candlestick is standing here.~
+~
+1 0 16385 0
+0 0 24 0
+5 150 15
+E
+candlestick~
+It is a rather old-looking three-armed candlestick made from pewter.  Its
+candles are a yellowish white colour.
+~
+#3601
+brandy bottle~
+a brandy bottle~
+A brandy bottle is lying here.~
+~
+17 0 1 0
+10 10 5 0
+2 50 5
+E
+brandy bottle~
+The bottle is a special 'Dragon Blood' brandy bottle.  Its neck is shaped
+like a small dragon's head.  Bottles like these are often worth a small
+amount money, even when empty.
+~
+#3602
+brandy bottle~
+a brandy bottle~
+A brandy bottle is lying here.~
+~
+17 0 1 0
+10 0 5 0
+2 50 5
+E
+brandy bottle~
+The bottle is a special 'Dragon Blood' brandy bottle.  Its neck is shaped
+like a small dragon's head.  Bottles like these are often worth some money,
+even when empty.
+~
+#3603
+wheelbarrow~
+a wheelbarrow~
+A green-painted wheelbarrow is standing here.~
+~
+22 0 1 0
+0 0 0 0
+100 100 10
+E
+wheelbarrow~
+It is a heavy wheelbarrow made from solid oaken planks that have been painted
+a dark, green colour.
+~
+#3604
+shovel~
+a shovel~
+A shovel is lying here.~
+~
+59 0 8193 0
+0 1 5 7
+8 30 3
+E
+shovel~
+It is a large metal shovel with a solid wooden handle.
+~
+#3605
+rake~
+a rake~
+A rake is lying here.~
+~
+5 0 8193 0
+0 1 4 5
+8 30 3
+E
+rake~
+It is a large metal rake with a solid wooden handle.
+~
+#3606
+maggot edible~
+an edible maggot~
+An ugly little maggot crawls along here.~
+~
+26 0 16385 0
+6 15 -1 -1
+1 250 25
+#3610
+skeleton~
+a dusty skeleton~
+A dusty skeleton lies here.~
+~
+12 0 1 0
+0 0 0 0
+15 0 0
+E
+skeleton~
+The dusty bones are almost brown.  It must have been buried for a very long
+time.
+A dusty skeleton is in an excellent condition.
+~
+#3611
+amethyst gem~
+a amethyst~
+A large, beautifully polished amethyst has been left here.~
+~
+8 0 16385 0
+0 0 0 0
+1 3000 300
+E
+amethyst~
+It has a very deep purple colour.
+~
+#3612
+pendant silver~
+a silver pendant~
+A silver pendant has been left here.~
+~
+9 0 5 0
+4 0 0 0
+1 400 40
+E
+pendant silver~
+It resembles Thor's hammer and appears to be made of solid silver.
+~
+#3613
+dagger silver~
+a silver dagger~
+A long silver dagger is lying here.~
+pierce~
+5 0 8193 0
+0 2 4 11
+1 100 10
+E
+dagger silver~
+It has a long, sharp blade that is made entirely from silver.  A small rune
+has been engraved on the blade next to the hilt.
+~
+A
+19 1
+#0
+
+#ROOMS
+#3600
+A Gravel Road on the Graveyard~
+You are on a well-kept gravel road that leads north-south through the
+graveyard.  On both sides of the road grow dark evergreen trees.  An iron
+gate stands to the north and narrow gravel paths lead east and west.
+~
+0 0 2 0 0 0
+D0
+Back into the city...
+~
+gate~
+1 -1 21293 0
+D1
+The gravel path leads eastwards between the dark evergreen trees.
+~
+~
+0 -1 3650 0
+D2
+The gravel road continues southwards.
+~
+~
+0 -1 3601 0
+D3
+The gravel path leads westwards between the dark evergreen trees.
+~
+~
+0 -1 3606 0
+S
+#3601
+A Gravel Road on the Graveyard~
+You are on a well-kept gravel road that leads north-south through the
+graveyard.  On both sides of the road grow dark evergreen trees.
+~
+0 0 2 0 0 0
+D0
+The gravel road continues northwards.
+~
+~
+0 -1 3600 0
+D2
+The gravel road continues southwards.
+~
+~
+0 -1 3602 0
+S
+#3602
+A Gravel Road on the Graveyard~
+You are on a well-kept gravel road that leads north-south through the
+graveyard.  On both sides of the road grow dark evergreen trees.
+~
+0 0 2 0 0 0
+D0
+The gravel road continues northwards.
+~
+~
+0 -1 3601 0
+D2
+The gravel road continues southwards.
+~
+~
+0 -1 3603 0
+S
+#3603
+A Gravel Road on the Graveyard~
+You are on a well-kept gravel road that leads north-south through the
+graveyard.  On both sides of the road grow dark evergreen trees.
+~
+0 0 2 0 0 0
+D0
+The gravel road continues northwards.
+~
+~
+0 -1 3602 0
+D2
+The gravel road continues southwards to an open space before a small
+building.
+~
+~
+0 -1 3604 0
+S
+#3604
+In front of the Chapel~
+You are on an open space before a small chapel.  A gravel road leads north
+through the graveyard and the chapel entrance is to the south.
+~
+0 0 2 0 0 0
+D0
+The gravel road continues northwards.
+~
+~
+0 -1 3603 0
+D1
+The gravel path leads eastwards between the dark evergreen trees.
+~
+~
+0 -1 3638 0
+D3
+The gravel path leads westwards between the dark evergreen trees.
+~
+~
+0 -1 3618 0
+S
+#3606
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  An old tomb is here.
+~
+0 0 2 0 0 0
+D1
+The gravel path continues eastwards towards a gravel road.
+~
+~
+0 -1 3600 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3608 0
+D5
+~
+tomb stone~
+3 -1 3607 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3607
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3606 0
+S
+#3608
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and west.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3606 0
+D3
+The gravel path continues westwards.
+~
+~
+0 -1 3610 0
+D5
+~
+tomb stone~
+3 -1 3609 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3609
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3608 0
+S
+#3610
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads east and south.  An old tomb is here.
+~
+0 0 2 0 0 0
+D1
+The gravel path continues eastwards.
+~
+~
+0 -1 3608 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3612 0
+D5
+~
+tomb stone~
+3 -1 3611 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3611
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3610 0
+S
+#3612
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and east.  A small shed is to the west.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3610 0
+D1
+The gravel path continues eastwards.
+~
+~
+0 -1 3614 0
+D3
+It is a small black-painted shed with a wooden door.
+~
+door~
+3 -1 3613 0
+S
+#3613
+In a shed on the Graveyard~
+You are in a small shed that looks as if it is used to store all sorts of
+gardening equipment.  The only exit appears to be through a door to the east.
+~
+0 8 1 0 0 0
+D1
+~
+door~
+3 -1 3612 0
+S
+#3614
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads south and west.  An old tomb is here.
+~
+0 0 2 0 0 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3616 0
+D3
+The gravel path continues westwards.
+~
+~
+0 -1 3612 0
+D5
+~
+tomb stone~
+3 -1 3615 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3615
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3614 0
+S
+#3616
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and south.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3614 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3618 0
+D5
+~
+tomb stone~
+3 -1 3617 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3617
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3616 0
+S
+#3618
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and east.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3616 0
+D1
+The gravel path continues eastwards towards a building of some sort.
+~
+~
+0 -1 3604 0
+D5
+~
+tomb stone~
+3 -1 3619 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3619
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3618 0
+S
+#3638
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and west.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3640 0
+D3
+The gravel path continues westwards towards a building of some sort.
+~
+~
+0 -1 3604 0
+D5
+~
+tomb stone~
+3 -1 3639 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3639
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3638 0
+S
+#3640
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and south.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3642 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3638 0
+D5
+~
+tomb stone~
+3 -1 3641 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3641
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3640 0
+S
+#3642
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads east and south.  An old tomb is here.
+~
+0 0 2 0 0 0
+D1
+The gravel path continues eastwards.
+~
+~
+0 -1 3644 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3640 0
+D5
+~
+tomb stone~
+3 -1 3643 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3643
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3642 0
+S
+#3644
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and west.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3646 0
+D3
+The gravel path continues westwards.
+~
+~
+0 -1 3642 0
+D5
+~
+tomb stone~
+3 -1 3645 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3645
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3644 0
+S
+#3646
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads south and west.  An old tomb is here.
+~
+0 0 2 0 0 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3644 0
+D3
+The gravel path continues westwards.
+~
+~
+0 -1 3648 0
+D5
+~
+tomb stone~
+3 -1 3647 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3647
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3646 0
+S
+#3648
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads north and east.  An old tomb is here.
+~
+0 0 2 0 0 0
+D0
+The gravel path continues northwards.
+~
+~
+0 -1 3650 0
+D1
+The gravel path continues eastwards.
+~
+~
+0 -1 3646 0
+D5
+~
+tomb stone~
+3 -1 3649 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3649
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3648 0
+S
+#3650
+A Gravel Path on the Graveyard~
+You are on a gravel path winding its way between dark evergreen trees on
+the graveyard.  The path leads south and west.  An old tomb is here.
+~
+0 0 2 0 0 0
+D2
+The gravel path continues southwards.
+~
+~
+0 -1 3648 0
+D3
+The gravel path continues westwards towards a gravel road.
+~
+~
+0 -1 3600 0
+D5
+~
+tomb stone~
+3 -1 3651 0
+E
+tomb stone~
+It is a large rectangular slab of dark grey stone that has been placed face
+up in the ground.  The name has been erased by the ravages of time.
+~
+S
+#3651
+In a dusty Tomb~
+You are in a dark burial chamber beneath a large tomb stone.
+The only exit appears to be up.
+~
+0 9 1 0 0 0
+D4
+~
+tomb stone~
+3 -1 3650 0
+S
+#0
+
+#RESETS
+D 0 3606 5 1  ; Door: #3606 A Gravel Path on the Graveyard/Down => closed
+D 0 3607 4 1  ; Door: #3607 In a dusty Tomb/Up => closed
+O 0 3610 13 3607  ; Object: #3610 a dusty skeleton => #3607 In a dusty Tomb
+D 0 3608 5 1  ; Door: #3608 A Gravel Path on the Graveyard/Down => closed
+D 0 3609 4 1  ; Door: #3609 In a dusty Tomb/Up => closed
+M 0 3603 5 3609  ; Mob: #3603 a dusty skeleton => #3609 In a dusty Tomb
+D 0 3610 5 1  ; Door: #3610 A Gravel Path on the Graveyard/Down => closed
+D 0 3611 4 1  ; Door: #3611 In a dusty Tomb/Up => closed
+M 0 3603 5 3611  ; Mob: #3603 a dusty skeleton => #3611 In a dusty Tomb
+O 0 3613 10 3611  ; Object: #3613 a silver dagger => #3611 In a dusty Tomb
+D 0 3612 3 1  ; Door: #3612 A Gravel Path on the Graveyard/West => closed
+D 0 3613 1 1  ; Door: #3613 In a shed on the Graveyard/East => closed
+M 0 3600 1 3613  ; Mob: #3600 Fenry o Enterrador => #3613 In a shed on the Graveyard
+G 1 3601 1000 ; -- Give:  #3601 a brandy bottle
+O 0 3602 1000 3613  ; Object: #3602 a brandy bottle => #3613 In a shed on the Graveyard
+O 0 3603 1 3613  ; Object: #3603 a wheelbarrow => #3613 In a shed on the Graveyard
+O 0 3604 1000 3613  ; Object: #3604 a shovel => #3613 In a shed on the Graveyard
+O 0 3605 1000 3613  ; Object: #3605 a rake => #3613 In a shed on the Graveyard
+D 0 3614 5 1  ; Door: #3614 A Gravel Path on the Graveyard/Down => closed
+D 0 3615 4 1  ; Door: #3615 In a dusty Tomb/Up => closed
+O 0 3610 13 3615  ; Object: #3610 a dusty skeleton => #3615 In a dusty Tomb
+D 0 3616 5 1  ; Door: #3616 A Gravel Path on the Graveyard/Down => closed
+D 0 3617 4 1  ; Door: #3617 In a dusty Tomb/Up => closed
+M 0 3602 1 3617  ; Mob: #3602 the ghastly ghoul => #3617 In a dusty Tomb
+G 1 3612 1000 ; -- Give:  #3612 a silver pendant
+D 0 3618 5 1  ; Door: #3618 A Gravel Path on the Graveyard/Down => closed
+D 0 3619 4 1  ; Door: #3619 In a dusty Tomb/Up => closed
+O 0 3610 13 3619  ; Object: #3610 a dusty skeleton => #3619 In a dusty Tomb
+D 0 3638 5 1  ; Door: #3638 A Gravel Path on the Graveyard/Down => closed
+D 0 3639 4 1  ; Door: #3639 In a dusty Tomb/Up => closed
+M 0 3603 5 3639  ; Mob: #3603 a dusty skeleton => #3639 In a dusty Tomb
+D 0 3640 5 1  ; Door: #3640 A Gravel Path on the Graveyard/Down => closed
+D 0 3641 4 1  ; Door: #3641 In a dusty Tomb/Up => closed
+O 0 3610 13 3641  ; Object: #3610 a dusty skeleton => #3641 In a dusty Tomb
+D 0 3642 5 1  ; Door: #3642 A Gravel Path on the Graveyard/Down => closed
+D 0 3643 4 1  ; Door: #3643 In a dusty Tomb/Up => closed
+O 0 3603 5 3643  ; Object: #3603 a wheelbarrow => #3643 In a dusty Tomb
+D 0 3644 5 1  ; Door: #3644 A Gravel Path on the Graveyard/Down => closed
+D 0 3645 4 1  ; Door: #3645 In a dusty Tomb/Up => closed
+M 0 3601 1 3645  ; Mob: #3601 the rotting zombie => #3645 In a dusty Tomb
+G 1 3606 1 ; -- Give:  #3606 an edible maggot
+G 1 3611 1000 ; -- Give:  #3611 a amethyst
+D 0 3646 5 1  ; Door: #3646 A Gravel Path on the Graveyard/Down => closed
+D 0 3647 4 1  ; Door: #3647 In a dusty Tomb/Up => closed
+O 0 3610 13 3647  ; Object: #3610 a dusty skeleton => #3647 In a dusty Tomb
+D 0 3648 5 1  ; Door: #3648 A Gravel Path on the Graveyard/Down => closed
+D 0 3649 4 1  ; Door: #3649 In a dusty Tomb/Up => closed
+M 0 3603 5 3649  ; Mob: #3603 a dusty skeleton => #3649 In a dusty Tomb
+D 0 3650 5 1  ; Door: #3650 A Gravel Path on the Graveyard/Down => closed
+D 0 3651 4 1  ; Door: #3651 In a dusty Tomb/Up => closed
+M 0 3604 4 3606  ; Mob: #3604 a dusty skeleton => #3606 A Gravel Path on the Graveyard
+M 0 3604 4 3604  ; Mob: #3604 a dusty skeleton => #3604 In front of the Chapel
+M 0 3604 4 3612  ; Mob: #3604 a dusty skeleton => #3612 A Gravel Path on the Graveyard
+M 0 3604 4 3640  ; Mob: #3604 a dusty skeleton => #3640 A Gravel Path on the Graveyard
+M 0 3605 3 3651  ; Mob: #3605 the rotting zombie => #3651 In a dusty Tomb
+G 1 3606 1 ; -- Give:  #3606 an edible maggot
+M 0 3605 3 3644  ; Mob: #3605 the rotting zombie => #3644 A Gravel Path on the Graveyard
+G 1 3606 1 ; -- Give:  #3606 an edible maggot
+M 0 3605 3 3638  ; Mob: #3605 the rotting zombie => #3638 A Gravel Path on the Graveyard
+G 1 3606 1 ; -- Give:  #3606 an edible maggot
+S
+
+#SPECIALS
+M 3601 spec_cast_undead   ; the rotting zombie
+M 3602 spec_cast_undead   ; the ghastly ghoul
+M 3603 spec_cast_undead   ; a dusty skeleton
+M 3604 spec_cast_undead   ; a dusty skeleton
+M 3605 spec_cast_undead   ; the rotting zombie
+S
+
+#$

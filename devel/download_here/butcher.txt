@@ -1,0 +1,127 @@
+/* 
+ * Butcher Skill By TAKA     
+ * I like the idea of steaks i saw this idea possibly in a snippet
+ * released by someone else!
+ */
+void do_butcher(CHAR_DATA *ch, char *argument)
+{
+
+    /* If you have an interest in this skill, feel free */
+    /* to use it in your mud if you so desire. */
+
+    char buf[MSL];
+    char arg1[MSL];
+    int number_of_steaks = 0, sLoop;
+    OBJ_DATA *steak, *obj, *t_obj, *next_obj;
+
+	/* Check if they have the skill butcher */
+    if(!get_skill(ch,gsn_butcher))
+    {
+       printf_to_char(ch, "{RYou do not know how to butcher things!{x\n\r");
+       return;
+    }
+
+    one_argument(argument, arg1);
+
+	/* check if they entered something to butcher */
+    if(arg1[0]=='\0')
+    {
+       printf_to_char(ch, "{RWhat would you like to butcher?{x\n\r");
+       return;
+    }
+
+	/* check if the corpse is in the room */
+    obj = get_obj_list( ch, arg1, ch->in_room->contents );
+
+	/* If no corpse found */
+    if ( obj == NULL )
+    {
+        printf_to_char(ch, "{RYou do not see that in this room.{x\n\r");
+        return;
+    }
+
+	/* check item types for corpse PC and disallow it */
+    if(obj->item_type == ITEM_CORPSE_PC)
+    {
+        send_to_char( "{RThe gods would NOT approve.{x\n\r", ch );
+        return;
+    }
+
+	/* check item types for corpse NPC */
+    if(obj->item_type != ITEM_CORPSE_NPC)
+    {
+        send_to_char( "{RYou can only butcher corpses of NPCs.{x\n\r", ch );
+        return;
+    }
+
+    steak = create_object( get_obj_index(OBJ_VNUM_STEAK), 0 );
+
+    steak->value[0] = ch->level / 2;
+    steak->value[1] = ch->level;
+
+    /* Check the skill roll. */
+    if(number_percent( ) < get_skill(ch,gsn_butcher))
+    {
+		/* Allow 1 to 6 Steaks */
+		number_of_steaks = dice(1,6);
+		for(sLoop = 0; sLoop < number_of_steaks; sLoop++)
+		{
+			/* Create the steak and place it in the room */
+			steak = create_object( get_obj_index( OBJ_VNUM_STEAK ), 0 );
+			obj_to_room( steak, ch->in_room );
+		}
+		
+		/* build message to room */
+		buf[0]='\0';
+		strcat(buf, "$n expertly butchers a corpse and creates ");
+		if(number_of_steaks < 2)
+			strcat(buf, "a steak");
+		else
+			strcat(buf, "some steaks");
+        act( buf, ch, NULL, NULL, TO_ROOM );
+       
+		/* message to butcher */
+		printf_to_char(ch, "You butcher the corpse and create %s %s\n\r", 
+			number_of_steaks == 1 ? "a" : number_of_steaks == 2 ? "two" : number_of_steaks == 3 ? "three" :
+			number_of_steaks == 4 ? "four" : number_of_steaks == 5 ? "five" : "six", 
+			number_of_steaks < 2 ? "steak" : "steaks");
+
+    }
+    else
+    {
+		/* if failed */
+		act( "$n destroys a corpse with $s knife.", ch, NULL, NULL, TO_ROOM );
+		printf_to_char(ch, "You fail to butcher the corpse!");
+    }
+
+	/* check improvement here */
+	check_improve(ch,gsn_butcher,TRUE,1);
+    
+	
+	/* dump items caried */
+    /* Taken from the original ROM code update.c */
+
+    for (t_obj = obj->contains; t_obj != NULL; t_obj = next_obj)
+    {
+		next_obj = t_obj->next_content;
+		obj_from_obj(t_obj);
+		if (obj->in_obj) /* in another object */
+			obj_to_obj(t_obj,obj->in_obj);
+		else if (obj->carried_by) /* carried */
+			if (obj->wear_loc == WEAR_FLOAT)
+				if (obj->carried_by->in_room == NULL)
+					extract_obj(t_obj);
+				else
+					obj_to_room(t_obj,obj->carried_by->in_room);
+			else
+				obj_to_char(t_obj,obj->carried_by);
+		else if (obj->in_room == NULL) /* destroy it */
+			extract_obj(t_obj);
+		else /* to a room */
+			obj_to_room(t_obj,obj->in_room);
+	}
+
+    /* Now remove the corpse */
+    extract_obj(obj);
+    return;
+}

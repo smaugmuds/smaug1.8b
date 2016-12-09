@@ -1,0 +1,40 @@
+/* this part of the code is for a skill bandage to help slow or stop the bleeding. */
+/* add to mud.h with all the other gsn's */
+extern  sh_int  gsn_bleeding;
+
+/* add to db.c to the apropriate places */
+sh_int                  gsn_bleeding;        
+ASSIGN_GSN( gsn_bleeding,       "bandage" );
+
+/*add this to skills.c*/
+void do_bandage(CHAR_DATA *ch, char *argument)
+{
+ if(ch->pcdata->condition[COND_BLEEDING] > 0)
+{
+ if(can_use_skill(ch, number_percent(), gsn_bleeding))
+{
+gain_condition(ch, COND_BLEEDING, -1);
+act(AT_BLOOD, "You place a bandage over your skin to stop the bleeding.", ch, NULL, NULL, TO_CHAR);
+act(AT_BLOOD, "$n places a bandage over $s skin, to help stop the bleeding.", ch, NULL, NULL, TO_ROOM);
+learn_from_success( ch, gsn_bleeding );
+return;
+}
+  else
+return;
+}
+ else
+send_to_char("You have no wounds to bandage\n\r", ch);
+learn_from_failure( ch, gsn_bleeding );
+return;
+}
+
+/* add the appropriate to tables.c */
+if ( !str_cmp( name, "do_bandage" ))            return do_bandage;
+if ( skill == do_bandage )          return "do_bandage";
+
+/* add the appropriate to mud.h with the other declares /*
+DECLARE_DO_FUN( do_bandage      );
+
+make clean and then compile reboot the mud and create the skill Bandage
+
+any questions feel free to email me at Badastaz@hotmail.com

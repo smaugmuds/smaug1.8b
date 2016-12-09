@@ -1,0 +1,148 @@
+#PLAYER
+Version      3
+Name         Xermon~
+Sex          1
+Class        11
+Race         0
+Languages    -1 1
+Level        65
+Played       827866
+Room         21187
+HpManaMove   1000 1000 1000 1000 1000 1000
+Stance       0
+Stances      0 0 0 0 0 0 0 0 0 0 0 0
+Gold         1410056916
+Exp          1410065407
+Height          66
+Weight          147
+Act          704644682&1024
+Position     112
+Style     2
+Practice     9936
+Alignment    62
+SavingThrows 0 0 0 0 0
+Favor	       0
+Glory        -11467
+MGlory       13245
+Honour       145124
+Hitroll      35
+Damroll      45
+Armor        2000
+Wimpy        500
+Mentalstate  999
+Password     594eb7126fbf3900b1bf907010b738e918db6f90bbdfabf6893891f7fbb92fb7~
+Rank         A Escuridade~
+Title        ___ O Mestre Das Tebras ___~
+Pagerlen     20
+Bamfin       aparece da escuridade mais tebrosa!!~
+Bamfout      desaparece nunha neboa tebrosa ... .. .~
+WizInvis     65
+Flags        8421384
+PKills       87
+PDeaths      3
+MKills       49
+MDeaths      1
+IllegalPK    0
+AttrPerm     13 14 14 12 15 15 12
+AttrMod      0 0 0 0 0 0 0
+Condition    0 47 47 10
+Site         localhost
+Spell        19 'acid blast'
+Spell        19 'animate dead'
+Spell        19 'bless'
+Spell        19 'cause critical'
+Spell        19 'create food'
+Spell        19 'cure light'
+Spell        19 'curse'
+Spell        19 'death'
+Spell        19 'demonskin'
+Spell        19 'detect poison'
+Spell        19 'enchant armor'
+Spell        19 'fireball'
+Spell        19 'flare'
+Spell        19 'fly'
+Spell        19 'gate'
+Spell        19 'hand of chaos'
+Spell        19 'heal'
+Spell        19 'infernal node'
+Spell        19 'lightning bolt'
+Spell        19 'magic missile'
+Spell        19 'portal'
+Spell        19 'remove invis'
+Spell        19 'restore mana'
+Spell        19 'shield'
+Spell        19 'spiral blast'
+Spell        19 'swordbait'
+Spell        19 'teleport'
+Skill        19 'aggressive style'
+Skill        19 'aid'
+Skill        19 'assassinate'
+Skill        19 'cook'
+Skill        19 'disarm'
+Skill        19 'dobre empuñadura'
+Skill        26 'enhanced damage'
+Skill        19 'feed'
+Skill        19 'grasp suspiria'
+Skill        19 'hide'
+Skill        19 'kick'
+Skill        19 'meditate'
+Skill        19 'mistform'
+Skill        82 'mount'
+Skill        19 'parry'
+Skill        19 'pelt'
+Skill        19 'punch'
+Skill        19 'punt'
+Skill        19 'rescue'
+Skill        19 'scan'
+Skill        19 'search'
+Skill        87 'seventh attack'
+Skill        19 'shoulder'
+Skill        19 'steal'
+Skill        19 'strike'
+Skill        19 'swipe'
+Skill        19 'tail'
+Skill        19 'tend'
+Skill        19 'track'
+Skill        19 'trance'
+Skill        19 'uppercut'
+Skill        19 'vault'
+Skill        19 'visual defiance'
+Weapon       19 'flexible arms'
+Weapon       19 'long blades'
+Weapon       19 'missile weapons'
+Weapon       19 'pugilism'
+Weapon       19 'short blades'
+Tongue       100 'common'
+Killed       3605 1
+Killed       21055 1
+Killed       21045 1
+End
+
+#OBJECT
+Vnum         21069
+Level        7
+Values       10 4 10 3 0 0
+End
+
+#OBJECT
+Vnum         21081
+Level        17
+Values       12 5 19 11 0 0
+End
+
+#OBJECT
+Vnum         21025
+End
+
+#MOBILE
+Vnum	21058
+Room	21187
+Description The black steed snorts as you examine him.  His fine black coat shines
+brightly regardless of light and the warhorse seems as though it could
+run tirelessly for days.
+A neck tag says 'I belong to Xermon'.
+~
+Position 12
+Flags 262403
+EndMobile
+#END

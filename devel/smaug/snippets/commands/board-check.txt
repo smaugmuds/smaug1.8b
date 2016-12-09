@@ -1,0 +1,177 @@
+      ********* Global Board Check for Unread Notes Snippet **********
+
+******************************************************************************
+* This snip is from the mud Beyond Reality @ virtualworldz.net port 7000     *
+* It was coded by Dantus.  It is basically an easy way of checking notes     *
+* instead of running around to every board when you get on the mud. It       *
+* has two minor flaws, when you read or write any notes your last_read       *
+* is reset, which makes it impossible to type note check again to see        *
+* what other notes you need to go read.  However note check was just         *
+* a little addition i thought would be cool so you could check to see        *
+* if anyone wrote a note before you got off the mud... i don't know?         *
+* and number two, when you first add this code in, everyone who doesn't      *
+* have a last_read will not see any new notes until they read or write       *
+* a note.. thats not really a big deal though so i didn't bother trying      *
+* to play around with it and make it work, i'm sure it could be done...      *
+* Anyway, when you log on with this code in, you will see a message          *
+* that tells you what board(s) contain how ever many unread note(s)...       *
+* and that's just about it, you can also use note check, as explained above..*
+* Thanks for using my code, if you got questions or comments email me at     *
+*                          jbishop@ctnet.net                                 *
+******************************************************************************
+
+
+TO INSTALL:
+----------
+
+Edit mud.h and add the following lines:
+--------------------------------------
+    [1]. Somewhere in struct pc_data add:
+
+    time_t              last_read; /* Last time a player read or wrote a note */
+
+    [2]. Somewhere in struct board_data add:
+
+    char *       name;                  /* Name of board, used for gboards */
+
+Edit boards.c and add the following lines:
+-----------------------------------------
+    [1]. Somewhere at the top of the file add:
+
+void    chk_unread      args( ( CHAR_DATA *ch ) );
+
+    [2]. In do_note you need to add this after
+    the arg check for "post" it's easier to
+    find by looking for the check for "remove".
+    So right above "remove" add this:
+
+    if ( !str_cmp( arg, "check") )
+    {
+        chk_unread( ch );
+        return;
+    }
+
+    [3]. Search for "$n reads a note." Right underneath that line
+    add this line of code:
+
+                    ch->pcdata->last_read = current_time;
+
+    [4]. Search for "$n posts a note." Right underneath that line
+    add this line of code:
+
+                    ch->pcdata->last_read = current_time;
+
+    [6]. In the function write_boards_txt, you need to add this, i put it
+    under filename...:
+
+        fprintf( fpout, "Name              %s~\n", tboard->name             );
+
+    [7]. In the function do_bset, you need to add somewhere an if check
+    for the argument "Name", i put it under filename again, but it doesn't much matter.
+
+    if ( !str_cmp( arg2, "name" ) )
+    {
+        if ( !argument || argument[0] == '\0' )
+        {
+            send_to_char( "Please give the board a name.\n\r", ch );
+            return;
+        }
+	if ( board->name != NULL )
+            STRFREE( board->name );
+        board->name = STRALLOC( argument );
+        write_boards_txt( );
+        send_to_char( "Done.  (Board's name set.)\n\r", ch );
+        return;
+    } 
+
+    [5]. Further down, towards the bottom, you need to create
+    a new function.. add this code to do so:
+
+void chk_unread( CHAR_DATA *ch )
+{
+    BOARD_DATA *board;
+    NOTE_DATA *newnote;
+    sh_int unread = 0;
+    char buf[MAX_INPUT_LENGTH];
+    struct stat fst;
+    sh_int count = 0;
+
+    sprintf( buf, "%s%c/%s", PLAYER_DIR, tolower(ch->name[0]), ch->name );
+    if ( stat( buf, &fst ) != -1 )
+    {
+      sprintf( buf, "You were last on: %s\r", ctime( &fst.st_mtime ) );
+      send_to_char( buf, ch );
+    }
+    else
+    {
+      send_to_char( "For some reason, you weren't found in the player database.\n\r", ch );
+      return;
+    }
+
+    for ( board = first_board; board; board = board->next )
+    {
+        if ( board->num_posts == 0
+        || board->min_read_level > ch->level
+        || board->type != BOARD_NOTE )
+            continue;
+
+        for ( newnote = board->first_note; newnote; newnote = newnote->next )
+        {
+            if ( newnote->time > ch->pcdata->last_read )
+                unread += 1;
+        }
+
+        if ( unread != 0 )
+        {
+            sprintf( buf, "You have not yet read %d note%s on the %s.\n\r",
+            unread, unread == 1 ? "" : "s", board->name );
+            send_to_char( buf, ch );
+            unread = 0;
+            count += 1;
+        }
+    }
+    if ( count == 0 )
+        send_to_char( "You have no new messages on ANY boards.\n\r", ch );
+    return;
+}
+
+NOTE:  You may not need the line above that says || board->type != BOARD_NOTE )  The only
+reason i added that is because on my mud we have mail as well as notes, so there are
+BOARD_NOTE's and BOARD_MAIL's, didn't want anyone to get confused about that, if you
+don't have mail, take out that line but don't forget to add the ) back on the end of the line
+above it....
+
+Moving on to save.c:
+-------------------
+
+    [1]. Ok, you can put this anywhere in fwrite_char, i personally put it under weight, i'm
+    not sure why, but regardless add this:
+
+    fprintf( fp, "LastRead        %ld\n",       ch->pcdata->last_read );
+
+    [2]. In fread_char, under case 'L':  copy the following code.
+
+            KEY( "LastRead",    ch->pcdata->last_read, fread_number( fp ) );    
+
+
+In the file comm.c:
+------------------
+
+    [1]. Add this at the top of the file with the rest of them like it..
+
+void    chk_unread                              args( ( CHAR_DATA *ch ) );
+
+    [2]. --Search for a line that looks like this:
+        tax_player(ch);  /* Here we go, let's tax players to lower the gold
+         --And after that line add this:
+        chk_unread(ch);
+
+I'm pretty sure that is it for coding. Now:
+[1]. Make clean
+[2]. Make
+[3]. go on your mud and bset all your boards with names.
+[4]. reboot and start writing notes?
+
+That should do it, if you have any problems with the code or any comments, you can email me at
+jbishop@ctnet.net.  If it's mean i'll cry and probably not ever respond to you.  If it's nice
+I will probably cry and not ever respond to you. j/k  Who knows what'll happen.

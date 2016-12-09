@@ -1,0 +1,213 @@
+/* ------------------------------------------------
+ * Varen's Deathgrip, revision 1.01 ... 3/27/98
+ * This is the first actual release of this, so
+ * there may be some typos (though I tried to
+ * copy and paste all the code) or bugs .......
+ *
+ * deathgrip is a skill that adds a damroll
+ * affect to the player, and sets any weapon
+ * they are wielding to a death weapon,
+ * _while it is wielded_ .. when they remove it
+ * it is no longer this type of weapon. As they
+ * wield other weapons they become death weapons
+ * too. The death flag does a bit of extra damage
+ * to good aligned chars, and lowers their alignment
+ * if they are PCs.
+ *
+ * If you choose to use this skill on your mud,
+ * feel free to do so, but please send me an email
+ * telling me, so I know if this is actually
+ * a waste of time or not. Also please mail me with
+ * any bugs or suggestions at: [bribe@erols.com]
+ *
+ * Brian Babey (aka Varen)
+ * ------------------------------------------------ */
+
+
+/* ---------------------------------------------
+ * Add in const.c, in the skills/spells table */
+
+    {
+        "deathgrip",            { 53, 53, 40, 25 },     { 0, 0, 5, 3},
+        spell_null,             TAR_IGNORE,             POS_RESTING,
+        NULL,                   SLOT( 0),       0,      12,
+        "",                     "The dark shroud leaves your hands.",   ""
+    },
+
+
+
+/* -----------------------------------------------
+ * Add in merc.h, in extra flags for objects */
+
+#define ITEM_DEATH                  (aa)
+
+
+
+/* -----------------------------------------------
+ * In merc.h, under Game Parameters, increment
+ * MAX_SKILL by 1. */
+
+
+
+/* -----------------------------------------------
+ * In merc.h, under bits for 'affected_by' add
+ * this line to the end of the list */
+
+#define AFF_DEATHGRIP           (ee)  /* using an appropriate letter value */
+
+
+
+/* ----------------------------------------------
+ * In tables.c, under the affect_flags section,
+ * add this line, making sure the letter code
+ * is the same as the AFF_DEATHGRIP you defined
+ * in merc.h                    */
+
+{   "deathgrip",            ee,     TRUE    },
+
+
+
+
+/* -----------------------------------------------
+ * Add in interp.h, in the command function section */
+
+DECLARE_DO_FUN( do_deathgrip    );
+
+
+
+
+/* -----------------------------------------------
+ * Add in interp.c, to the command table under
+ * Object Manipulation Commands */
+
+    { "deathgrip",      do_deathgrip,   POS_RESTING,     0,  LOG_NORMAL, 1 },
+
+
+
+/* -----------------------------------------------
+ * Now for the code: place this function inside
+ * fight.c, preferable in correct alphabetical
+ * based on the other fight actions */
+
+void do_deathgrip( CHAR_DATA *ch, char *argument )
+{
+        int sn;
+        OBJ_DATA *obj;
+        AFFECT_DATA af;
+
+        sn = skill_lookup("deathgrip");
+
+        if ( IS_AFFECTED(ch,AFF_DEATHGRIP) )
+        {
+                send_to_char("You already have a grip of death.\n\r",ch);
+                return;
+        }
+
+        if ( get_skill(ch,sn) < 1 )
+        {
+                send_to_char("What's that?\n\r",ch);
+                return;
+        }
+
+        if (  get_skill(ch,sn)  <  (number_range(0, 100))  )
+        {
+                send_to_char("You failed to create a grip of death.\n",ch);
+                check_improve(ch,sn,FALSE,1);
+                return;
+        }
+
+        obj = get_eq_char(ch,WEAR_WIELD);
+
+        if ( (obj != NULL) && !IS_OBJ_STAT(obj,ITEM_DEATH) )
+        {
+                SET_BIT( obj->extra_flags, ITEM_DEATH);
+                act("$p flickers with dark power.",ch,obj,NULL,TO_ALL);
+        }
+
+        /* Now for adding the affect to the player */
+
+        af.where        = TO_AFFECTS;
+        af.type         = sn;          
+        af.level        = ch->level;
+        af.duration     = ch->level / 3;
+        af.location     = APPLY_DAMROLL;
+        af.modifier     = ch->level / 8;
+        af.bitvector    = AFF_DEATHGRIP;
+
+        affect_to_char(ch, &af);
+
+        act("$n's hands are shrouded with a black mist.",ch,NULL,NULL,TO_ROOM);
+        send_to_char("Your hands are shrouded with a black mist.\n",ch);
+
+        check_improve(ch,sn,TRUE,1);
+}
+
+
+
+/* ----------------------------------------------
+ * Now in act_obj.c, inside the function wear_obj,
+ * find the section on weapons that begins
+ * if ( CAN_WEAR( obj, ITEM_WIELD ) )
+ * and insert this code just after the line
+ * equip_char( ch, obj, WEAR_WIELD );  */
+
+        if ( IS_AFFECTED(ch,AFF_DEATHGRIP) &&
+                !IS_OBJ_STAT(obj,ITEM_DEATH) )
+        {
+                SET_BIT( obj->extra_flags, ITEM_DEATH);
+                act("$p flickers with dark power.",ch,obj,NULL,TO_ALL);
+        }
+
+        if ( !IS_AFFECTED(ch,AFF_DEATHGRIP) &&
+                IS_OBJ_STAT(obj,ITEM_DEATH) )
+        {
+                REMOVE_BIT(obj->extra_flags, ITEM_DEATH);
+        }
+
+
+
+/* ----------------------------------------------
+ * In act_obj.c, inside the function remove_obj,
+ * insert this code before the line reading:
+ * unequip_char( ch, obj );                     */
+
+    if ( (obj->item_type == ITEM_WEAPON) && IS_OBJ_STAT(obj,ITEM_DEATH) )
+    {
+        act( "The black mist around $p fades away.",ch,obj,NULL,TO_ALL);
+        REMOVE_BIT(obj->extra_flags,ITEM_DEATH);
+    }
+
+
+
+/* ----------------------------------------------
+ * In fight.c, inside the one_hit function, you will
+ * need to insert this code after the shocking weapon
+ * effects, which is near the very end of the function */
+
+        if (ch->fighting == victim && IS_OBJ_STAT(wield,ITEM_DEATH))
+	{
+            dam = number_range(3,wield->level / 4 + 4);
+            act("The evil power of $p torments $n.",victim,wield,NULL,TO_ROOM);
+            act("The evil power of $p torments you.",victim,wield,NULL,TO_CHAR);
+            damage(ch,victim,dam,0,DAM_NEGATIVE,FALSE);
+
+            if ( !IS_NPC(victim) && ( victim->alignment > 0 )  )
+                victim->alignment -= 1;
+	}
+
+
+/* ----------------------------------------------
+ * In fight.c, in the bonuses section of one_hit
+ * (where enhanced damage is figured in) add in
+ * this code after the enhanced damage mods   */
+
+    if ( wield != NULL   &&   IS_OBJ_STAT(wield,ITEM_DEATH) )
+    {
+        if (victim->alignment > 700)
+                dam = (110 * dam) / 100;
+
+        else if (victim->alignment > 350)
+                dam = (105*dam) / 100;
+
+        else dam = (102*dam) / 100;
+    }

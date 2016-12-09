@@ -1,0 +1,32 @@
+
+ C R I T I C A L  S T R I K E
+      By Josh Jenks ( Haelyn/Staerfeldt )
+        For Smaug 1.4a(probably should work with earlier smaugs)
+
+Intro : This one is really easy. Basically it simulates an
+AD&D style type "critical hit". It's very simple and is easily
+expandable. One in every twenty swings will result in a critical
+hit which results in double damage. 
+
+1.) Open fight.c
+2.) Find the following code:
+    if ( !wield )       /* bare hand dice formula fixed by Thoric */
+	dam = number_range( ch->barenumdie, ch->baresizedie * ch->barenumdie );
+    else
+	dam = number_range( wield->value[1], wield->value[2] );
+And directly after that paste :
+
+/* 
+ * Critical Hit Snippet
+ *   By Josh Jenks [ Haelyn ]
+ */
+if ( diceroll == 19 )
+{
+    act( AT_FIRE, "You critically hit $N!",  ch, NULL, victim, TO_CHAR    );
+    act( AT_FIRE, "$n critically hits you!", ch, NULL, victim, TO_VICT    );
+    act( AT_FIRE, "$n critically hits $N!",  ch, NULL, victim, TO_NOTVICT );
+    dam = dam*2;
+}
+
+3.) Now simply recompile, reboot and you're all done. This is, like I said, very simple
+but does add a little spice to combat.

@@ -1,0 +1,164 @@
+On my mud, there were occasions (rarely) where victims of a DT would be partially re-imbursed. Problem was, we
+started getting players that abused this generosity by claiming they lost eq that never really had. So....I wrote
+this up real quickly to help me combat that. This code will record in a file (in ../system/deathtrap.log) exactly
+what the player was wearing, when they hit the DT. It does NOT record what they were carrying in their inventories, 
+nor does it record what is in any containers. Prolly could use a lot of extra stuff (for example - now that I think
+of it - probably should put a timestamp on it). Anyway, I may beef it up, if there proves to be a demand for it, but
+Here is what I have now. Enjoy.
+
+Sadiq
+
+ 
+**************************************** Begin Snippet ****************************************
+
+[mud.h]
+
+Just under the line:
+
+#define RACEDIR 	"../races/"
+
+Add this line:
+
+#define DT_FILE		SYSTEM_DIR "deathtrap.log" /* Record who died, and what they were wearing -Sadiq  */
+
+
+
+Then, down where the function declarations are seperated by the file they are in, find this line 
+(In the act_info.c section):
+
+void	show_race_line	args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+
+Immediately after that, add this line:
+
+void	record_death_trap args( (CHAR_DATA *ch ) );
+
+
+
+
+[act_info.c]
+
+Add this to the bottom of the file:
+
+
+/* Trying to make a way to easily see what a character had, eq-wise, when they hit a DT.
+ * This function MUST be called, BEFORE the character is extracted!  -Sadiq
+ */
+void record_death_trap( CHAR_DATA *ch )
+{
+    OBJ_DATA *obj;
+    int iWear;
+
+	FILE *fp = fopen( DT_FILE, "a"); 
+        fprintf(fp, "%s hit a DT in room %d.\n", ch->name, ch->in_room->vnum);
+	fprintf(fp, "They lost the following eq:\n\n");
+
+    for ( iWear = 0; iWear < MAX_WEAR; iWear++ )
+    {
+        if ( ( obj = get_eq_char( ch, iWear ) ) != NULL )
+        {
+
+            if( (!IS_NPC(ch)) && (ch->race>0) && (ch->race<MAX_PC_RACE))
+	    {
+            fprintf(fp, "     %s", race_table[ch->race]->where_name[iWear]);
+	    }
+            else
+	    {
+            fprintf(fp, "     %s", where_name[iWear] );
+	    }
+
+            fprintf(fp, "     %-10d   %s\n", obj->pIndexData->vnum, obj->name);
+	}
+      }
+
+    fprintf(fp, "\n\n");
+    fclose (fp);
+    return;
+}
+
+
+
+[act_move.c]
+
+in function ch_ret move_char() near the bottom, find this bit of code:
+
+    /*
+     * Put good-old EQ-munching death traps back in!		-Thoric
+     */
+    if ( IS_SET( ch->in_room->room_flags, ROOM_DEATH ) && !IS_IMMORTAL( ch ) )
+    {
+       act( AT_DEAD, "$n falls prey to a terrible death!", ch, NULL, NULL, TO_ROOM );
+       set_char_color( AT_DEAD, ch );
+       send_to_char( "Oopsie... you're dead!\n\r", ch );
+       sprintf(buf, "%s hit a DEATH TRAP in room %d!",
+		     ch->name, ch->in_room->vnum );
+       log_string( buf );
+       to_channel( buf, CHANNEL_MONITOR, "Monitor", LEVEL_IMMORTAL );
+       sprintf( buf, "%s falls victim to a horrible death!\n\r", ch->name );
+       extract_char( ch, FALSE );
+       return rCHAR_DIED;
+    }
+
+
+
+right BEFORE extract_char(), add a call to record_death_trap()....make it look like this:
+
+    /*
+     * Put good-old EQ-munching death traps back in!		-Thoric
+     */
+    if ( IS_SET( ch->in_room->room_flags, ROOM_DEATH ) && !IS_IMMORTAL( ch ) )
+    {
+       act( AT_DEAD, "$n falls prey to a terrible death!", ch, NULL, NULL, TO_ROOM );
+       set_char_color( AT_DEAD, ch );
+       send_to_char( "Oopsie... you're dead!\n\r", ch );
+       sprintf(buf, "%s hit a DEATH TRAP in room %d!",
+		     ch->name, ch->in_room->vnum );
+       log_string( buf );
+       to_channel( buf, CHANNEL_MONITOR, "Monitor", LEVEL_IMMORTAL );
+       sprintf( buf, "%s falls victim to a horrible death!\n\r", ch->name );
+       record_death_trap(ch);  /* <--- What were they wearing, when they died?   */
+       extract_char( ch, FALSE );
+       return rCHAR_DIED;
+    }
+
+
+
+Now, find the function teleportch().   Do the same thing here. Add a call to record_death_trap right BEFORE
+extract_char....thus:
+
+
+       act( AT_DEAD, "$n falls prey to a terrible death!", ch, NULL, NULL, TO_ROOM );
+       set_char_color( AT_DEAD, ch );
+       send_to_char( "Oopsie... you're dead!\n\r", ch );
+       sprintf(buf, "%s hit a DEATH TRAP in room %d!",
+		     ch->name, ch->in_room->vnum );
+       log_string( buf );
+       to_channel( buf, CHANNEL_MONITOR, "Monitor", LEVEL_IMMORTAL );
+       record_death_trap(ch);  /* <------ What were they wearing, when they died?   */
+       extract_char( ch, FALSE );
+
+
+
+
+[act_wiz.c]
+
+In the function do_fshow(), right after the ifcheck for "plevel", add this:
+
+  if ( !str_cmp( arg, "death" ) )
+  {
+    set_char_color(AT_WHITE, ch );
+    show_file( ch, DT_FILE );
+    return;
+  }
+
+
+(This allows you to view the 'death trap file' online. You might want to add 'death' to the options in the
+ line that sends the syntax to the player.)
+
+**************************************** End Snippet ****************************************
+
+Now make clean and recompile. This will allow you to check and see who hit's the DT's, what room vnum it was in, and the eq they were wearing, at the time.  NOTE: This simple function was written in about 10-15 minutes and is very basic...I needed something quick.
+
+Enjoy,
+
+Sadiq
+

@@ -1,0 +1,63 @@
+        Thank you for chosing to build for Realms of Despair!
+        -----------------------------------------------------
+
+These files are here for you to use when building areas for our mud.
+Please make sure your area doesn't use affects, or applies, or flags
+that are not a part of our mud.  Areas that you may aquire and modify
+are likely filled with codes ment for modified muds... as our mud is
+highly modified... it has different spells, affects, applies.. etc
+thank other muds, and than original Merc and Diku muds.  Please examine
+all the files... especially aff.txt, and it is suggested that you print
+them out.
+
+------------------------------------------------------------------------
+
+          Guidelines for area themes.... *** IMPORTANT ***
+          ------------------------------------------------
+
+We want to slowly replace the old areas with new ones here on Realms
+of Despair... and the new areas should fall into the following criteria:
+
+ - Areas *MUST* fit into a medieval theme!
+    - nothing futuristic or even close to modern day
+    - nothing too silly or ridiculous or corny
+
+ - Make sure mobiles are sufficiently difficult depending on the
+   area's level range, and the equipment that the mobile is carrying.
+
+ - Make sure precious items & keys are HELD/WORN, not carried by mobiles
+   for TWO reasons:
+      - non-held/worn items can be STOLEN
+      - held/worn items can be damaged or destroyed
+
+ - Make the area interesting and exciting to play...
+      - secret doors...
+      - traps, hidden objects, teleports
+      - interesting extra descriptions
+      - clues, hints etc...
+
+ - We have mobprograms... (see mobprog.txt) which can be used to
+   make your area much more interesting...
+      - use them if you like... but do not OVER use them
+        (ie: don't make too many!)
+
+- We use ONLINE BUILDING.  Areas will not be taken in file form.
+  Too much time and effort is wasted debugging mistakes in area
+  files.  (Exceptions may be made for areas already debugged.)
+--------------------------------------------------------------------
+
+              **** POST A NOTE FOR A VNUM ASSIGNMENT! ****
+
+ Post a note stating the THEME for your area, a brief description,
+ what level range it is for, and about how many rooms you will need.
+ A VNUM range will be provided for you to use for rooms, objects and
+ mobiles.
+
+--------------------------------------------------------------------
+  If you aren't on the mailing list (despair@game.org)
+  send an email message to despair-request@game.org with the
+  word "subscribe" in the message body.
+--------------------------------------------------------------------
+
+-Thoric
+thoric@realms.game.org

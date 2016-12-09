@@ -1,0 +1,1244 @@
+#AREA Airports~
+
+#VERSION 1
+
+#CLIMATE 2 2 2
+
+#AUTHOR Shade~
+
+#RANGES
+0 65 0 65
+$
+
+#RESETMSG Over the loudspeaker you hear, "Keep moving and make sure your belongings are secured"~
+
+#FLAGS
+0 30
+
+#ECONOMY 0 51199603
+
+#MOBILES
+#10000
+guard nlg1 security officer~
+a Northline security officer~
+A Northline security officer is standing here.
+~
+The security officer is wearing a blue Northline uniform and looks very
+serious about his job.
+~
+131139 32 0 C
+40 10 -50 3000d1+0 1d10+2
+3 15000
+112 112 1
+17 13 13 16 14 13 13
+0 0 0 0 0
+0 2 0 0 1 1 4
+2 0 2047 16 1024 0 176 524290
+> rand_prog 10~
+if inroom($i) == 10004
+  say Tickets please.
+  mpsleep 8
+  say Tickets?
+endif
+if inroom($i) == 10014
+  say Tickets please.
+  mpsleep 8
+  say Tickets?
+endif
+if inroom($i) == 10024
+  say Tickets please.
+  mpsleep 8
+  say Tickets?
+endif
+if inroom($i) == 10034
+  say Tickets please.
+  mpsleep 8
+  say Tickets?
+endif
+if inroom($i) == 10044
+  say Tickets please.
+  mpsleep 8
+  say Tickets?
+endif~
+> act_prog 'gives you'~
+if ovnuminv(10000) == 1
+  mpechoat $n The officer checks your ticket.
+  mpsleep 8
+  say Welcome aboard.
+  emote smiles.
+  mptransfer $n 10000
+  mpjunk all.ticket
+mpat $n mpechoat $n You have been ushered onto the shuttle.
+else
+  say What's this?  Thanks.. I guess...
+endif~
+> time_prog 9~
+mptransfer nlg1 10000~
+> time_prog 15~
+mptransfer nlg1 10000~
+> time_prog 19~
+mptransfer nlg1 10000~
+> time_prog 1~
+mptransfer nlg1 10000~
+> time_prog 5~
+mptransfer nlg1 10000~
+|
+#10001
+northline stewardess~
+a Northline stewardess~
+A pretty young Northline stewardess is here.
+~
+She's pretty... a little too cheerful...
+~
+131139 0 0 C
+5 10 69 63d1+0 1d6+0
+0 400
+112 112 2
+11 13 13 15 13 17 13
+0 0 0 0 0
+0 2 0 0 1 1 1
+0 0 2031 0 0 0 0 0
+> time_prog 9~
+say If anyone needs a refreshment or a snack just speak up and say "peanuts" or "soda".~
+> time_prog 15~
+say If anyone needs a refreshment or a snack just speak up and say "peanuts" or "soda".~
+> time_prog 19~
+say If anyone needs a refreshment or a snack just speak up and say "peanuts" or "soda".~
+> time_prog 1~
+say If anyone needs a refreshment or a snack just speak up and say "peanuts" or "soda".~
+> time_prog 5~
+say If anyone needs a refreshment or a snack just speak up and say "peanuts" or "soda".~
+> speech_prog peanuts~
+if ispc($n)
+  mpoload 10001 0
+  say Here you go.
+  give peanuts $n
+  smile $n
+endif~
+> rand_prog 1~
+if ispc($r)
+  mpoload 10001 0
+  say Here's something to hold you over during our flight.
+  give peanuts $r
+  smile $r
+endif~
+> rand_prog 1~
+if ispc($r)
+  mpoload 10002 0
+  say Here's something to hold you over during our flight.
+  give soda $r
+  smile $r
+endif~
+> speech_prog soda~
+if ispc($n)
+  mpoload 10002 0
+  say Here you are.
+  give soda $n
+  smile $n
+endif~
+|
+#10002
+liza attendant~
+Liza~
+Liza, the Airport Attendant stands here.
+~
+Lizas' job is to greet those departing their airplanes, and to direct those
+boarding.  Though, it doesn't seem she's doing it too well.  Dressed in a
+white shirt and black pants, she idly gazes down to a book on her counter top.
+~
+131139 0 0 C
+1 0 0 8d1+0 0d0+0
+0 0
+112 112 2
+13 13 13 13 13 13 13
+0 0 0 0 0
+0 2 0 0 1 1 0
+0 0 2015 0 0 0 0 0
+> greet_prog 10~
+emote mutters, 'Damned foreigners.'~
+> greet_prog 10~
+emote looks up from her book and dully says, 'Welcome to Paris.'
+sigh~
+|
+#10003
+android robot~
+a ticket-selling android~
+An android is stationed here, selling shuttle tickets.
+~
+A shiny new android has been posted here.  Not much on the brainy side, it
+does it's job VERY well... and nothing else.
+~
+131139 544 0 C
+40 5 -150 1278d1+0 4d8+8
+0 10000
+112 112 0
+18 10 13 13 14 13 13
+0 0 0 0 0
+1 2 0 0 65537 1 3
+2 0 1991 82 2100224 12 0 0
+#10004
+security guard~
+a security guard~
+An airport security guard is standing here.
+~
+Dressed in blue and black, mostly black, he scans the crowd constantly trying
+to spot trouble before it happens.
+~
+65 0 0 C
+30 0 -47 803d1+0 1d10+0
+5 10000
+112 112 1
+15 13 13 14 14 13 13
+0 0 0 0 0
+0 2 0 0 1 1 2
+1 0 2047 1024 0 0 176 524290
+#10005
+man ~
+a man~
+A man is standing here waiting for his flight.
+~
+This man looks rather impatient as he checks his watch every other minute.
+~
+16777409 0 0 C
+7 10 100 76d1+0 1d8+1
+0 500
+8 8 1
+14 13 13 13 13 13 13
+0 0 0 0 0
+0 2 0 0 1 1 1
+0 0 2047 0 0 0 0 0
+#10006
+woman~
+a woman~
+A woman is here waiting for her flight.
+~
+She seems to be in a hurry.
+~
+16777409 0 0 C
+5 10 100 53d1+0 1d6+1
+0 400
+8 8 2
+13 13 13 13 13 13 13
+0 0 0 0 0
+0 2 0 0 1 1 1
+0 0 2047 0 0 0 0 0
+#10099
+placeholder~
+placeholder~
+A newly created mob is standing here
+~
+Someone has abandoned a new mob here
+~
+1 0 0 C
+1 0 0 8d1+0 0d0+0
+0 0
+112 112 0
+13 13 13 13 13 13 13
+0 0 0 0 0
+0 0 0 0 1 1 0
+0 0 0 0 0 0 0 0
+#0
+
+#OBJECTS
+#10000
+northline ticket~
+a northline ticket~
+An airline ticket is here on the floor.
+~
+
+~
+35 0 1 0
+0 0 0 0
+1 200 20
+E
+northline ticket~
+It's a ticket for the Northline shuttle line.  Currently servicing...
+
+Boston->Paris->Cairo->New York->Montreal
+
+Present this ticket to the appropriate airshuttle security officer and please
+note that
+once on the shuttle, if at any time you leave, you must buy another ticket to
+get back on.
+~
+#10001
+peanuts bag nuts~
+a bag of peanuts~
+A small bag of peanuts is here on the floor.
+~
+
+~
+19 0 1 0
+5 0 0 0
+1 2 0
+E
+peanuts nuts bag~
+It's a vacuum sealed bag of salted peanuts, perfect for a long flight.
+~
+#10002
+soda cup~
+a cup~
+Someone has set down a small cup of soda here.~
+~
+17 0 1 0
+2 2 15 0
+1 2 0
+E
+cup soda~
+This little paper cup filled with about half a can of soda really won't help
+much.  Better ask for another one.
+~
+#10003
+armor black body~
+some black body armor~
+Some black civillian issue body armor is here on the floor.
+~
+
+~
+9 16384 9 0
+10 10 0 0
+20 500 50
+E
+armor black body~
+Made of Kevlar III, this lightweight chest piece can stop most bullets from
+penetrating and can even take some of the punch out of large slugs and energy
+weapons.  It's black with "TetrX" printed across the back and security guard
+insignia etched into the front.
+~
+#10004
+smg machine gun rifle~
+a sub-machinegun~
+A black automatic rifle is here on the floor.
+~
+
+~
+5 16384 8193 0
+13 3 8 6
+10 400 40
+E
+smg rifle gun~
+It's a black civilian model submachine gun.. with a compass in the stock!  The
+word "TetrX" is etched into the side of the trigger housing assembly.  This
+would be the perfect weapon for a light assault.
+~
+#10005
+bench seat~
+a bench~
+An uncomfortable looking bench is here.~
+~
+12 0 0 0
+0 0 585 0
+30 0 0
+E
+bench seat~
+It's a rather uncomfortable looking airport chair.  Seemingly made of plastic
+or some other manufactured material, it looks like your wait here will be a
+long one.
+~
+#10099
+Object name~
+placeholder~
+A newly created object sits here.
+~
+
+~
+13 0 0 0
+0 0 0 0
+1 0 0
+#0
+
+#ROOMS
+#10000
+The northline shuttle~
+You are in a large shuttle with tiny portholes on the sides allowing you to
+see just how small things look from here.  Of course you might want to remain
+seated during the flight.
+~
+0 12 0 0 0 0
+D2
+~
+~
+4096 -1 10044 0
+> time_prog 7~
+mpecho The shuttle begins to decend.
+mpsleep 16
+mpecho The jets are powered off and the shuttle makes it's landing.
+mpsleep 8
+mpecho "We have arrived in Boston.  Thank you for flying Northline."
+mpsleep 8
+mpopenpassage 10000 10014 2
+mpecho The shuttle doors open to the south.
+mpforce nlg1 s~
+> time_prog 9~
+mpclosepassage 10014 0
+mpclosepassage 10000 2
+mpecho The shuttle doors close.
+mpsleep 8
+mpecho "We are now leaving Boston and will arrive in Paris in approximately
+mpecho 4 hours."
+mpsleep 8
+mpecho With a loud roar the shuttle quickly takes to the air.
+~
+> time_prog 13~
+mpecho The shuttle begins to decend.
+mpsleep 16
+mpecho The jets are powered off and the shuttle makes it's landing.
+mpsleep 8
+mpecho "We have arrived in Paris.  Thank you for flying Northline."
+mpsleep 8
+mpopenpassage 10000 10004 2
+mpecho The shuttle doors open to the south.
+mpforce nlg1 s~
+> time_prog 15~
+mpclosepassage 10004 0
+mpclosepassage 10000 2
+mpecho The shuttle doors close.
+mpsleep 8
+mpecho "We are now leaving Paris and will arrive in Cairo in approximately
+mpecho 2 hours."
+mpsleep 8
+mpecho With a loud roar the shuttle quickly takes to the air.
+~
+> time_prog 17~
+mpecho The shuttle begins to decend.
+mpsleep 16
+mpecho The jets are powered off and the shuttle makes it's landing.
+mpsleep 8
+mpecho "We have arrived in Cairo.  Thank you for flying Northline."
+mpsleep 8
+mpopenpassage 10000 10024 2
+mpecho The shuttle doors open to the south.
+mpforce nlg1 s~
+> time_prog 19~
+mpclosepassage 10024 0
+mpclosepassage 10000 2
+mpecho The shuttle doors close.
+mpsleep 8
+mpecho "We are now leaving Cairo and will arrive in New York in approximately
+mpecho 4 hours."
+mpsleep 8
+mpecho With a loud roar the shuttle quickly takes to the air.
+~
+> time_prog 23~
+mpecho The shuttle begins to decend.
+mpsleep 16
+mpecho The jets are powered off and the shuttle makes it's landing.
+mpsleep 8
+mpecho "We have arrived in New York.  Thank you for flying Northline."
+mpsleep 8
+mpopenpassage 10000 10034 2
+mpecho The shuttle doors open to the south.
+mpforce nlg1 s~
+> time_prog 1~
+mpclosepassage 10034 0
+mpclosepassage 10000 2
+mpecho The shuttle doors close.
+mpsleep 8
+mpecho "We are now leaving New York and will arrive in Montreal in approximately
+mpecho 2 hours."
+mpsleep 8
+mpecho With a loud roar the shuttle quickly takes to the air.
+~
+> time_prog 3~
+mpecho The shuttle begins to decend.
+mpsleep 16
+mpecho The jets are powered off and the shuttle makes it's landing.
+mpsleep 8
+mpecho "We have arrived in Montreal.  Thank you for flying Northline."
+mpsleep 8
+mpopenpassage 10000 10044 2
+mpecho The shuttle doors open to the south.
+mpforce nlg1 s~
+> time_prog 5~
+mpclosepassage 10044 0
+mpclosepassage 10000 2
+mpecho The shuttle doors close.
+mpsleep 8
+mpecho "We are now leaving Montreal and will arrive in Boston in approximately
+mpecho 2 hours."
+mpsleep 8
+mpecho With a loud roar the shuttle quickly takes to the air.
+~
+|
+S
+#10001
+Paris International Airport Main Entrance~
+This is the Paris International Airport...or what's left of it.  Strange as 
+the French may be, they decided to try to rebuild on what was left over from 
+the nuclear holocaust.  A large door is set at the front with a strange 
+looking man standing by it dressed in a rather strange uniform. 
+~
+0 8 0 0 0 0
+D1
+Exit description
+~
+~
+0 -1 10002 0
+> time_prog 12~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 13~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 14~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10002
+Airport Hallway (Paris)~
+Although equally as disgusting as the rest of the airport, the air smells a
+little cleaner here, and, even though the lights above are dimming, your
+vision seems unaffected.  The exit must be near.  A sign has been posted with 
+critical flight information recorded on it.
+~
+0 8 0 0 0 0
+D1
+Exit description
+~
+~
+0 -1 10003 0
+D3
+Exit description
+~
+~
+0 -1 10001 0
+E
+sign information~
+Northline
+Arrival    - 1pm from Boston
+Departure  - 3pm to Cairo
+~
+> time_prog 12~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 13~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 14~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10003
+Airport Hallway (Paris)~
+This long hallway smells of various fungi, left along the ceiling, perhaps,  
+for years.  The once lush red carpet is now faded and decorated with large  
+black spots.  A line of telephones is attached to the wall, an overturned  
+trash can at the end of them. You see a sign has been posted with critical 
+flight information recorded on it.  
+~
+0 8 0 0 0 0
+D1
+The condition of the hallways is not much better than that of the Terminal.
+The occasional rat scuttles by your feet, and the lights above you phase
+on
+and off.  However, the air smells sweet and clean.
+~
+~
+0 -1 10004 0
+D3
+Exit description
+~
+~
+0 -1 10002 0
+E
+sign information~
+Northline
+Arrival    - 1pm from Boston
+Departure  - 3pm to Cairo
+~
+E
+fungus fungi mold~
+Disgusting mold...don't touch it.
+~
+E
+telephone phone~
+Outdated pieces of garbage...there is no use for this.
+~
+> time_prog 12~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 13~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 14~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10004
+Terminal 1 (Northline - Paris)~
+Though most of the Airport has been destroyed, this terminal has managed to 
+survive the wear and tear of the ages.  The walls, although cleaned, are still 
+stained with grime and mold and the carpet shifts under your feet.  A rather 
+depressed looking woman stands behind a counter, staring down at a book.  A 
+sign with flight information has been posted.
+~
+0 8 0 0 0 0
+D3
+You see a well lit hallway.
+~
+~
+0 -1 10003 0
+E
+sign information~
+Northline
+Arrival    - 1pm from Boston
+Departure  - 3pm to Cairo
+~
+> time_prog 12~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 13~
+mpecho A shuttle has docked at this terminal and tickets are now being accepted.
+mpsleep 8
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."
+~
+> time_prog 14~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+> time_prog 15~
+mpecho The security officer leaves north and seals the passage behind him.
+mpsleep 8
+mpecho Through the windows you see the shuttle lift upward slowly, turn, and
+mpecho then roar off into the sky.~
+|
+S
+#10011
+Boston International Airport Main Entrance~
+The sheer volume of traffic in this place is astounding.  People from all
+walks of life have converged here, traveling from one destination to
+another, crowding in lines and hauling baggage of every sort.  The noise
+of hundreds of people all talking at once makes hearing one specific
+person all but impossible.
+~
+0 8 0 0 0 0
+D3
+Exit description
+~
+~
+0 -1 10012 0
+> time_prog 6~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 7~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 8~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10012
+Airport Hallway (Boston)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+
+~
+0 8 0 0 0 0
+D1
+Exit description
+~
+~
+0 -1 10011 0
+D3
+Exit description
+~
+~
+0 -1 10013 0
+E
+sign information~
+Northline
+Arrival    - 7am from Montreal
+Departure  - 9am to Paris
+~
+> time_prog 6~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 7~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 8~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10013
+Airport Hallway (Boston)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+
+~
+0 8 0 0 0 0
+D0
+Exit description
+~
+~
+0 -1 10014 0
+D1
+Exit description
+~
+~
+0 -1 10012 0
+E
+sign information~
+Northline
+Arrival    - 7am from Montreal
+Departure  - 9am to Paris
+~
+> time_prog 6~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 7~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 8~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10014
+Terminal 1 (Northline - Boston)~
+The noise from the hallways echos in the distance but this area is relatively 
+quiet in comparison.  This is where the Northline shuttle docks and a sign 
+with flight information has been posted.
+~
+0 8 0 0 0 0
+D2
+Exit description
+~
+~
+0 -1 10013 0
+E
+sign information~
+Northline
+Arrival    - 7am from Montreal
+Departure  - 9am to Paris
+~
+> time_prog 6~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 7~
+mpecho A shuttle has docked at this terminal and tickets are now being accepted.
+mpsleep 8
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 8~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+> time_prog 9~
+mpecho The security officer leaves north and seals the passage behind him.
+mpsleep 8
+mpecho Through the windows you see the shuttle lift upward slowly, turn, and
+mpecho then roar off into the sky.~
+|
+S
+#10021
+Cairo International Airport Main Entrance~
+The sheer volume of traffic in this place is astounding.  People from all
+walks of life have converged here, traveling from one destination to
+another, crowding in lines and hauling baggage of every sort.  The noise
+of hundreds of people all talking at once makes hearing one specific
+person all but impossible.
+~
+0 8 0 0 0 0
+D3
+Exit description
+~
+~
+0 -1 10022 0
+> time_prog 16~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 17~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 18~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10022
+Airport Hallway (Cairo)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+
+~
+0 8 0 0 0 0
+D1
+Exit description
+~
+~
+0 -1 10021 0
+D3
+Exit description
+~
+~
+0 -1 10023 0
+E
+sign information~
+Northline
+Arrival    - 5pm from Paris
+Departure  - 7pm to New York
+~
+> time_prog 16~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 17~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 18~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10023
+Airport Hallway (Cairo)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+
+~
+0 8 0 0 0 0
+D0
+Exit description
+~
+~
+0 -1 10024 0
+D1
+Exit description
+~
+~
+0 -1 10022 0
+E
+sign information~
+Northline
+Arrival    - 5pm from Paris
+Departure  - 7pm to New York
+~
+> time_prog 16~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 17~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 18~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10024
+Terminal 1 (Northline - Cairo)~
+The noise from the hallways echos in the distance but this area is relatively 
+quiet in comparison.  This is where the Northline shuttle docks and a sign 
+with flight information has been posted.
+~
+0 8 0 0 0 0
+D2
+Exit description
+~
+~
+0 -1 10023 0
+E
+sign information~
+Northline
+Arrival    - 5pm from Paris
+Departure  - 7pm to New York
+~
+> time_prog 16~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 17~
+mpecho A shuttle has docked at this terminal and tickets are now being accepted.
+mpsleep 8
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 18~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+> time_prog 19~
+mpecho The security officer leaves north and seals the passage behind him.
+mpsleep 8
+mpecho Through the windows you see the shuttle lift upward slowly, turn, and then
+mpecho roar off into the sky.~
+|
+S
+#10031
+New York International Airport Main Entrance~
+The sheer volume of traffic in this place is astounding.  People from all
+walks of life have converged here, traveling from one destination to
+another, crowding in lines and hauling baggage of every sort.  The noise
+of hundreds of people all talking at once makes hearing one specific
+person all but impossible.
+~
+0 12 0 0 0 0
+D1
+~
+door~
+35 -1 10200 0
+D3
+Exit description
+~
+~
+0 -1 10032 0
+> time_prog 22~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 23~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 0~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10032
+Airport Hallway (New York)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+~
+0 8 0 0 0 0
+D1
+Exit description
+~
+~
+0 -1 10031 0
+D3
+Exit description
+~
+~
+0 -1 10033 0
+E
+sign information~
+Northline
+Arrival    - 11pm from Cairo
+Departure  - 1am to Montreal
+~
+> time_prog 22~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 23~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 0~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10033
+Airport Hallway (New York)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+~
+0 8 0 0 0 0
+D0
+Exit description
+~
+~
+0 -1 10034 0
+D1
+Exit description
+~
+~
+0 -1 10032 0
+E
+sign information~
+Northline
+Arrival    - 11pm from Cairo
+Departure  - 1am to Montreal
+~
+> time_prog 22~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 23~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 0~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10034
+Terminal 1 (Northline - New York)~
+The noise from the hallways echos in the distance but this area is relatively 
+quiet in comparison.  This is where the Northline shuttle docks and a sign 
+with flight information has been posted.
+~
+0 8 0 0 0 0
+D2
+Exit description
+~
+~
+0 -1 10033 0
+E
+sign information~
+Northline
+Arrival    - 11pm from Cairo
+Departure  - 1am to Montreal
+~
+> time_prog 22~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 23~
+mpecho A shuttle has docked at this terminal and tickets are now being accepted.
+mpsleep 8
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 0~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+> time_prog 1~
+mpecho The security officer leaves north and seals the passage behind him.
+mpsleep 8
+mpecho Through the windows you see the shuttle lift upward slowly, turn, and then
+mpecho roar off into the sky.~
+|
+S
+#10041
+Montreal International Airport Main Entrance~
+The sheer volume of traffic in this place is astounding.  People from all
+walks of life have converged here, traveling from one destination to
+another, crowding in lines and hauling baggage of every sort.  The noise
+of hundreds of people all talking at once makes hearing one specific
+person all but impossible.
+~
+0 8 0 0 0 0
+D3
+Exit description
+~
+~
+0 -1 10042 0
+> time_prog 2~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 3~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 4~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10042
+Airport Hallway (Montreal)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+
+~
+0 8 0 0 0 0
+D1
+Exit description
+~
+~
+0 -1 10041 0
+D3
+Exit description
+~
+~
+0 -1 10043 0
+E
+sign information~
+Northline
+Arrival    - 3am from New York
+Departure  - 5am to Boston
+~
+> time_prog 2~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 3~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 4~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10043
+Airport Hallway (Montreal)~
+This area is where passengers who have taken care of the business side of
+traveling wait for their flights to arrive and depart.  A large sign on
+the wall displays critical flight information.
+
+~
+0 8 0 0 0 0
+D0
+Exit description
+~
+~
+0 -1 10044 0
+D1
+Exit description
+~
+~
+0 -1 10042 0
+E
+sign information~
+Northline
+Arrival    - 3am from New York
+Departure  - 5am to Boston
+~
+> time_prog 2~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 3~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 4~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+|
+S
+#10044
+Terminal 1 (Northline - Montreal)~
+The noise from the hallways echos in the distance but this area is relatively 
+quiet in comparison.  This is where the Northline shuttle docks and a sign 
+with flight information has been posted.
+~
+0 8 0 0 0 0
+D2
+Exit description
+~
+~
+0 -1 10043 0
+E
+sign information~
+Northline
+Arrival    - 3am from New York
+Departure  - 5am to Boston
+~
+> time_prog 2~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be arriving momentarily, servicing Boston,
+mpecho Paris, Cairo, New York, and Montreal."~
+> time_prog 3~
+mpecho A shuttle has docked at this terminal and tickets are now being accepted.
+mpsleep 8
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle has docked at terminal 1."~
+> time_prog 4~
+mpecho Over the airport intercom system you hear a monotone female voice,
+mpecho "The Northline shuttle will be departing momentarily."~
+> time_prog 5~
+mpecho The security officer leaves north and seals the passage behind him.
+mpsleep 8
+mpecho Through the windows you see the shuttle lift upward slowly, turn, and then
+mpecho roar off into the sky.~
+|
+S
+#10099
+placeholder~
+You stumble into a newly created room.
+~
+0 4 0 0 0 0
+S
+#0
+
+#RESETS
+M 0 10003 5 10001  ; Mob: #10003 a ticket-selling android => #10001 Paris International Airport Main Entrance
+G 0 10000 5 ; -- Give:  #10000 a northline ticket
+M 0 10003 5 10041  ; Mob: #10003 a ticket-selling android => #10041 Montreal International Airport Main Entrance
+G 0 10000 5 ; -- Give:  #10000 a northline ticket
+M 0 10003 5 10021  ; Mob: #10003 a ticket-selling android => #10021 Cairo International Airport Main Entrance
+G 0 10000 5 ; -- Give:  #10000 a northline ticket
+M 0 10003 5 10011  ; Mob: #10003 a ticket-selling android => #10011 Boston International Airport Main Entrance
+G 0 10000 5 ; -- Give:  #10000 a northline ticket
+M 0 10001 1 10000  ; Mob: #10001 a Northline stewardess => #10000 The northline shuttle
+M 0 10000 1 10000  ; Mob: #10000 a Northline security officer => #10000 The northline shuttle
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10002 1 10004  ; Mob: #10002 Liza => #10004 Terminal 1 (Northline - Paris)
+M 0 10004 10 10013  ; Mob: #10004 a security guard => #10013 Airport Hallway (Boston)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10012  ; Mob: #10004 a security guard => #10012 Airport Hallway (Boston)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10003  ; Mob: #10004 a security guard => #10003 Airport Hallway (Paris)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10002  ; Mob: #10004 a security guard => #10002 Airport Hallway (Paris)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10022  ; Mob: #10004 a security guard => #10022 Airport Hallway (Cairo)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10023  ; Mob: #10004 a security guard => #10023 Airport Hallway (Cairo)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10032  ; Mob: #10004 a security guard => #10032 Airport Hallway (New York)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10033  ; Mob: #10004 a security guard => #10033 Airport Hallway (New York)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10042  ; Mob: #10004 a security guard => #10042 Airport Hallway (Montreal)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+M 0 10004 10 10043  ; Mob: #10004 a security guard => #10043 Airport Hallway (Montreal)
+E 1 10004 11 16  ; -- Equip: #10004 a sub-machinegun (wield)
+E 1 10003 11 5  ; -- Equip: #10003 some black body armor (body)
+O 0 10005 1 10002  ; Object: #10005 a bench => #10002 Airport Hallway (Paris)
+O 0 10005 1 10003  ; Object: #10005 a bench => #10003 Airport Hallway (Paris)
+O 0 10005 1 10012  ; Object: #10005 a bench => #10012 Airport Hallway (Boston)
+O 0 10005 1 10013  ; Object: #10005 a bench => #10013 Airport Hallway (Boston)
+O 0 10005 1 10022  ; Object: #10005 a bench => #10022 Airport Hallway (Cairo)
+O 0 10005 1 10023  ; Object: #10005 a bench => #10023 Airport Hallway (Cairo)
+O 0 10005 1 10032  ; Object: #10005 a bench => #10032 Airport Hallway (New York)
+O 0 10005 1 10033  ; Object: #10005 a bench => #10033 Airport Hallway (New York)
+O 0 10005 1 10042  ; Object: #10005 a bench => #10042 Airport Hallway (Montreal)
+O 0 10005 1 10043  ; Object: #10005 a bench => #10043 Airport Hallway (Montreal)
+M 1 10003 5 10031  ; Mob: #10003 a ticket-selling android => #10031 New York International Airport Main Entrance
+G 1 10000 1 ; -- Give:  #10000 a northline ticket
+D 0 10031 1 1  ; Door: #10031 New York International Airport Main Entrance/east => closed
+M 0 10005 10 10002  ; Mob: #10005 a man => #10002 Airport Hallway (Paris)
+M 0 10006 5 10003  ; Mob: #10006 a woman => #10003 Airport Hallway (Paris)
+M 0 10005 10 10004  ; Mob: #10005 a man => #10004 Terminal 1 (Northline - Paris)
+M 0 10005 10 10012  ; Mob: #10005 a man => #10012 Airport Hallway (Boston)
+M 0 10006 5 10013  ; Mob: #10006 a woman => #10013 Airport Hallway (Boston)
+M 0 10005 10 10014  ; Mob: #10005 a man => #10014 Terminal 1 (Northline - Boston)
+M 0 10005 10 10022  ; Mob: #10005 a man => #10022 Airport Hallway (Cairo)
+M 0 10006 5 10023  ; Mob: #10006 a woman => #10023 Airport Hallway (Cairo)
+M 0 10005 10 10024  ; Mob: #10005 a man => #10024 Terminal 1 (Northline - Cairo)
+M 0 10005 10 10032  ; Mob: #10005 a man => #10032 Airport Hallway (New York)
+M 0 10006 5 10033  ; Mob: #10006 a woman => #10033 Airport Hallway (New York)
+M 0 10005 10 10034  ; Mob: #10005 a man => #10034 Terminal 1 (Northline - New York)
+M 0 10005 10 10042  ; Mob: #10005 a man => #10042 Airport Hallway (Montreal)
+M 0 10006 5 10043  ; Mob: #10006 a woman => #10043 Airport Hallway (Montreal)
+M 0 10005 10 10044  ; Mob: #10005 a man => #10044 Terminal 1 (Northline - Montreal)
+S
+
+#SHOPS
+10003 0 0 0 0 0 120 100 0 23 ; a ticket-selling android
+0
+
+#SPECIALS
+S
+
+#$

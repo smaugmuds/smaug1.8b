@@ -1,0 +1,1862 @@
+======================================================================== 
+   AN AREA BUILDERS GUIDE FOR BARREN REALMS (AND OTHER MERC 2.2 MUDS) 
+======================================================================== 
+                            
+                             Revision 2.21 
+                              August 1995 
+                     {Argh * Grym * Lok * Rainman} 
+ 
+CONTENTS: 
+ 
+Section 1:  Area Basics - Getting Started 
+ 
+Section 2:  Area Format 
+ 
+Section 3:  Building Your Area 
+            * Area 
+            * Helps 
+            * Mobiles 
+            * Objects 
+            * Rooms 
+            * Resets 
+            * Shops 
+            * Specials 
+ 
+Section 4:  Submitting Completed Areas 
+ 
+Section 5:  Value Tables 
+ 
+Section 6:  Object Balance 
+ 
+Section 7:  Etceteras 
+            * Resources 
+            * Acknowledgments 
+            * Diku License 
+ 
+* This document is in plain text (fixed-width font) and prints best with 
+  .25 left and right margins. Add page breaks between the tables in 
+  Section 5. We encourage working from a printout of this text. 
+ 
+ 
+======================================================================== 
+                               Section 1:  
+                      AREA BASICS - GETTING STARTED 
+======================================================================== 
+This document is intended to be a comprehensive guide to building areas 
+for Barren Realms MUD. We have attempted to provide the technical and 
+creative direction needed to help you create a good area. You may also 
+wish to get the 'Area Builders Reference'. Intended for experienced 
+builders, it is a compact version of the guide containing only the 'bare 
+bones' information needed to build your area with very limited 
+additional comments. 
+ 
+An area is one piece of the world, and each area is defined in a 
+separate file. All area files have the extension '.are'. The file itself 
+is written in plain text following a very specific structure. Building 
+an area differs greatly from coding, as area building requires no 
+programming skills whatsoever. It does require creativity, imagination, 
+attention to detail, and a little bit of a time investment on your part. 
+It is the areas that make the game special. So sit back, relax with your 
+favorite beverage, and read on. It is our hope to make the building 
+process easily understandable. If you are new to area building, you 
+should read through this document prior to starting construction. 
+ 
+When you have a basic idea for your own area, the first thing you need 
+to do is to speak to Simba. You need to see if the mud is currently accepting 
+areas, and if there is any special info that you should be aware of. It is a 
+good idea to briefly explain your idea as well. It might not be something the 
+Imps feel would "fit" in the realms, or someone might be writing/have written 
+a very similar area already. It is better to learn this BEFORE you begin 
+writing than to be told when you have finished! 
+ 
+If your idea is approved then you will need a range of virtual numbers 
+(VNUMs). The VNUMs that you can use will be assigned to you. Be sure to 
+get a range of VNUMs to use BEFORE you start using VNUMs in your area. 
+If you don't, you may have to change ALL the numbers later which is time 
+consuming and boring. The VNUMs are used to uniquely identify every 
+room, mob and object on the MUD.  VNUMs for rooms, mobs and objects are 
+treated separately so a room can have the same vnum as a mob and an 
+object. Therefore, 100 VNUMs allow for 100 rooms, 100 objects, and 100 
+mobs in the area. VNUMs do not have to be in increasing order in your 
+area, only somewhere within your given range. To make things clearer, 
+this document will refer to an object VNUM as "onum", a mobile VNUM as 
+"mnum", and a room VNUM as "rnum". 
+ 
+Now you can begin to plan out the specifics of your area from your 
+original idea. Plan out your area on paper before trying to write it 
+out! Please keep your areas original and fitting within the general 
+theme of Barren Realms. Remember the world is a magical one, where 
+technology is not really developed. Build on the fantasy and keep the 
+machine guns, grenades, lasers, etc. out. Devise plots, think of 
+economies. How do the mobiles survive, what do they eat, where do they 
+sleep? Is there a regional product for sale here? Spin a tale within 
+the different elements of your area. Keeping these things in mind will 
+make for a better area. 
+ 
+Check the mud and talk to players to see what level brackets they feel 
+need more areas. Try to scale your area to fill these gaps. Also, look 
+at what players are wearing and try to create objects that would be 
+useful to fill those gaps as well. 
+ 
+Begin to map out your area on paper (graph paper is great for this), 
+then place the mobs and items. Mapping your area is really important. If 
+you can't, players can't, and the area becomes frustrating. (see sewers) 
+Think before you write. Try and have your area as close to 100 rooms as 
+you can. Barren Realms prefers 50-100 roomed areas. For large areas, try 
+to work in manageable blocks. Plan on being able to send it in after any 
+block is completed. This way you will be able to work in stages, and you 
+will have something to submit, even if you never complete it. 
+  
+Once you have things mapped out you can finally start writing your area. 
+The area file is a simple ASCII text file. We suggest making your area 
+in a text editor, a word-processor such as MS-Word or WordPerfect that 
+offers text-only output, or an area builder such as Make.Zones.Fast! 
+This document focuses on writing the actual area text file. An area 
+building program will let you write areas much more quickly and easily 
+(handling many complicated parts automatically), however, it is 
+important to know the text format that the area files are saved in. (See 
+section 7 for more information on MZF) 
+ 
+Make sure your areas are free from misspellings and grammatical errors. 
+Try to spell check your area before sending it in. In addition, do your 
+best to be standard in the use of punctuation, capitalization, and 
+spacing. Make sure that no line in your area exceeds column 79! A good 
+text editor will display this for you. 
+ 
+If you would like to have a sample area to work with as a guide to help 
+further understand this document, just note to Grym with your e-mail 
+address and a request for a sample area. You know the adage, a picture 
+is worth a 1000 words. Sometimes it helps to have a working copy of an 
+area to look at. 
+ 
+We have tried to make this document as complete as possible. It will be 
+under constant revision and scrutiny. Barren Realms is constantly 
+improving, and adding new features. This document will maintain as 
+current information as possible. If you have any suggestions for this 
+document, please send any recommend changes to Rainman, (rainman@cris.com). 
+ 
+ 
+======================================================================== 
+                               Section 2: 
+                              AREA FORMAT 
+======================================================================== 
+The following shows the framework of an .are file. The file is  
+constructed in this manner. The syntax follows these rules: 
+- an * after an item indicates a brief note below. 
+- numbers in () indicate a corresponding value table in section 4. 
+- NOTE: indicates a general note. 
+- The bars on the right side of each section indicate which parts are 
+    repeated. 
+- Terms in [] on the right are the standard Merc terms (and how imm 
+    commands refer to things). 
+- Other symbols like #,~,$,0,etc. must be typed in as they appear. 
+(Whew, a lot to remember... don't worry, it's clearer when ya see it!) 
+ 
+Be sure to read the introduction to section 5: value tables.  It explains the 
+preferred format to use for additive table values. 
+ 
+ 
+#AREA  {lowest_mob_level  highest_mob_level}  builder_name  area_name~ 
+ 
+ 
+#HELPS  
+level*                                                                -. 
+keywords~                                                              | 
+message                                                                | 
+~                                                                      | 
+0 $~                                                                  -' 
+ 
+  *level: level required to read this help message: -0=all, 
+          51=Hero & Immortal, 52=Immortal only 
+ 
+ 
+#MOBILES 
+#mnum                                                                 -. 
+keywords~                                                       [name] | 
+action_name~                                                   [short] | 
+look_name                                                       [long] | 
+~                                                                      | 
+examine_description                                          [descrip] | 
+~                                                                      | 
+act(1)  affected(2)  align*  S                                         | 
+level  0  0  0d0+0  0d0+0                                              | 
+0  0  0  0  sex*                                                      -' 
+#0 
+ 
+  *align: -1000 (satanic) to 1000 (angelic) 
+  *sex:   0=Neuter, 1=Male, 2=Female 
+  NOTE: The zeros above mean something in Diku muds but are now 
+        defunct placeholders that are needed in the area file but are 
+        never really looked at in Merc. This is true for the other 
+        sections as well. 
+ 
+ 
+#OBJECTS 
+#onum                                                                 -. 
+keywords~                                                       [name] | 
+look_name~                                                     [short] | 
+examine_description                                             [long] | 
+~                                                                      | 
+~ type(3)  extra(7)  wear(8)                                           | 
+v0*(3)  v1*(3)  v2*(3)  v3*(3)  weight  0  0                           | 
+E  keywords~                                                        -. | 
+message                                                              | | 
+~                                                                   -' | 
+A  affect(9)  degree*                                               ) -' 
+#0 
+ 
+  *v0-v3:  these are the value numbers in table 3 
+  *degree: how much "affect" affects the player 
+ 
+ 
+#ROOMS 
+#rnum                                                                 -. 
+room_title~                                                            | 
+long_description                                                       | 
+~                                                                      | 
+0 room_flags(10)  sector(11)                                           | 
+D direction*                                                        -. | 
+exit_description~                                                    | | 
+keywords~                                                            | | 
+locks*  key_onum*  destination_rnum*                                -' | 
+E  keywords~                                                        -. | 
+message                                                              | | 
+~                                                                   -' | 
+S                                                                     -' 
+#0 
+ 
+  *direction:   0=north, 1=east, 2=south, 3=west, 4=up, 5=down 
+  *locks:       0=no door, 1=door, 2=pickproof door 
+  *key_onum:    onum of key object, use -1 for no door 
+  *destination: the rnum of the room this door leads to 
+ 
+#RESETS 
+M   0   mnum            world_limit   rnum              comment        ) 
+O   0   onum            0             rnum              comment        ) 
+P   0   contents_onum   0             container_onum    comment        ) 
+G   0   onum            0                               comment        ) 
+E   0   onum            0             wear_location(12) comment        ) 
+D   0   rnum            direction*    door_state*       comment        ) 
+R   0   rnum            total_exits                     comment        ) 
+*                                                       comment        ) 
+* <- These asterisks are part of the syntax for comments. 
+* You can put a comment anywhere in this section as long as you start 
+* the line with an asterisk. The same applies for SHOPS and SPECIALS. 
+S 
+ 
+  NOTE: M loads mobile mnum into room rnum, up to the max world_limit 
+          of mobs. 
+        O puts object onum into room rnum. 
+        P puts contents_onum into container_onum. 
+        G puts onum into a mob's inventory. This MUST follow the M of 
+          the mob you wish to give the item to! 
+        E equips mob with onum on wear_location. This MUST follow the 
+          M of the mob you wish to give the item to! 
+        D sets the door facing "direction" in rnum to door_state 
+        R randomizes rnums exits. Put total number of exits into 
+          total_exits. 
+        S Denotes the end of the #RESETS section 
+  *direction:  0=north, 1=east, 2=south, 3=west, 4=up, 5=down   
+  *door_state: 0=unlocked, 1=closed, 2=locked  
+ 
+ 
+#SHOPS  
+mnum*  t0*(3)  t1*(3)  t2*(3)  t3*(3)  t4*(3)                         -. 
+>100%*  <100%*                                                         | 
+open_hour* close_hour*                                                -' 
+*  comment                                                             ) 
+0 
+ 
+  *mnum:       the mnum of the trader mobile 
+  *t0-t4:      the item types sold (table 3) 
+  *>100%:      how much he marks up what he sells by % (100=no profit) 
+  *<100%:      how much he pays for what he buys by % (100=full price) 
+  *open_hour:  based on 24 hour clock: 0 to 23 (ex: 5=5am, 19=7pm) 
+  *close_hour: same as open_hour 
+ 
+ 
+#SPECIALS 
+M  mnum*  special_function(13a)  comment                               ) 
+O  onum*  special_function(13b)  comment                               )
+*                                comment                               ) 
+S 
+ 
+  NOTE: M assigns a mobile "spec_fun".  Mnum is the mob number.
+        O assigns an object "speco_fun".  Onum is the object number.
+        * lets you add comment lines.
+        S denotes the end of the #SPECIALS section.
+
+ 
+#$ 
+ 
+  NOTE: "#$" is the symbol that ends the area file! 
+ 
+ 
+======================================================================== 
+                               Section 3: 
+                           BUILDING YOUR AREA 
+======================================================================== 
+Section 3 provides some detailed descriptions and examples for building 
+your areas. Each part gives helpful hints on creating a better area, 
+followed by an example, and finally by more technically-oriented advice. 
+ 
+ 
+The #AREA Section 
+----------------- 
+This section defines your area. 
+ 
+The lowest and highest mob levels refer to the mobiles that are 
+intended for player fighting. These might not necessarily be the 
+highest and lowest level mobs in an area. You probably wont go below 
+the lower limit, but it is quite possible that your upper limit will not 
+reflect the highest mob level. Shopkeepers for instance should be very 
+high level, but because they are normally not intended to be fought, 
+don't count them in the level range. 
+ 
+**Example** 
+ 
+#AREA {10 15} Lok     Faerie Ring~             * Don't forget the tilde! 
+ 
+ 
+The #HELPS Section 
+----------------- 
+This section allows you to create entries for the "help" command. 
+ 
+You can never underestimate the importance and significance of good 
+help. If your area contains something unique or unusual, the help 
+section is a great place to describe it. It is also an excellent place 
+to provide a background story on your area. (see 'help antharia') 
+ 
+**Example** 
+ 
+#HELPS                                        * always remember to start 
+-0                                              each section with the 
+Lok~                                            correct title, and end 
+Lok is a very strange guy.                      with the correct symbol! 
+~ 
+0 $~ 
+ 
+In this example, if a PC were to type 'help lok', the message that they 
+would get is 'Lok is a very strange guy.'. 
+ 
+ 
+The #MOBILES Section 
+-------------------- 
+This section is where you create all the characters for your area. 
+ 
+Put some careful thought into your mobiles. Think of them as the many 
+"actors" in your story. Each mob should have a reason for its existence.  It 
+should play some valid role in establishing the overall theme and story of the 
+area. This doesn't mean that using duplicate mobs is invalid, it's fine as long 
+as it makes sense. Try to strike that perfect balance between unique and 
+duplicate mobs. 
+ 
+Mob descriptions are important. Certain things should be avoided that 
+could make your mobs appear rather foolish. Avoid describing how 
+incredibly invincible a mob is, and especially comparing it to the 
+player. It's pretty silly to look at a mob in battle and see: "The giant 
+towers before you. You tremble with fear knowing you could never take 
+him on. The giant is a GONER." Also avoid describing mobs as doing 
+something, put that in the look_name. Again it's silly to look at a 
+mob in battle and be told "The old maid is quietly sewing a sweater in 
+the corner." 
+ 
+**Example** 
+ 
+#MOBILES 
+#29001                                    * Note the placement of tildes 
+pixie faerie~                               for the different items!! 
+A giggling pixie~ 
+A pixie pokes you in the butt with its sword and giggles! 
+~ 
+The pixie is about 6" tall, is human like, and has dragonfly wings. 
+~ 
+4|128 524288 0 S                           * scavenges/flees, flies 
+10 0 0 0d0+0 0d0+0                         * level 10, (next line) male 
+0 0 0 0 1                                *<- Last line of this mobile 
+#29002                                   *<- Start right in on the next 
+nixie faerie~ 
+A fluttering nixie~ 
+A fluttering nixie rummages through your possessions looking for wine! 
+~ 
+The nixie, like the pixie has dragonfly wings, but is taller (9"). 
+~ 
+4|128 524288 0 S                           * scavenges/flees, flies 
+11 0 0 0d0+0 0d0+0                         * level 11 
+0 0 0 0 1                                  * male 
+#29003 
+sprite faerie~ 
+A dancing sprite~ 
+A sprite casts a spell and you do a merry little dance! 
+~ 
+The sprite has dragonfly wings like the nixie and pixie, but she towers 
+over them at an amazing 12" height! 
+~ 
+128 2|32768|524288 0 S                     * flees, invis/sneak/flies 
+12 0 0 0d0+0 0d0+0                         * level 12 
+0 0 0 0 2                                  * female 
+#0                              * always finish #MOBILES section with #0 
+ 
+The 'act-flags' define how the mobile acts. This is the first example 
+of an additive value. The mob can be given multiple characteristics by 
+adding together several values from the appropriate table. Please read 
+the introduction to section 5 for an explanation of the '|' format, the 
+preferred format for adding values together (used in the examples 
+above). 
+ 
+Sentinels - If you make a mob stay room or sentinel you sometimes get  
+into trouble if you load in more than one of them. For instance: If you  
+set it up so that one loads in room A and another in room B, when the  
+one is killed in B it may reset in A. Eventually, many mobs may pile up 
+in the same room, and the area becomes unplayable. (If you want to 
+observe this effect, go kill some hobgoblins.) One fix is to make 
+multiple copies of the mob and give each a unique mnum. Then be sure to 
+load each mnum in resets only once. 
+ 
+ 
+The #OBJECTS Section: 
+-------------------- 
+These is where you create the items that players who journey through 
+your area will find and use. 
+ 
+Again, put careful thought into the different object descriptions. The 
+objects in your area should make sense, and should help establish the 
+story/theme. 
+ 
+Funny objects are great, but if the best item in your area is the 
+'banana in your ear', pretty soon most players in the game will have a 
+banana in their ear, and the fantasy theme is lost. 
+ 
+The object "extras" allow for an added dimension in your objects. 
+Looking at the "extra" keyword reveals the "extra" text description. We 
+suggest you put extra descriptions on your important objects that have 
+noteworthy elements. For instance in camelot.are, rune items give the 
+owner a vision when they looked at them. These little extras really can 
+make an area fun, and develop the story much better. 
+ 
+** Example ** 
+ 
+#29011 
+cloak dirty~ 
+a dirty cloak~                         * short descrip has NO period (.)  
+A dirty cloak lies here.               * long descrip DOES have a period 
+~                                             * again note the placement   
+~                                               of all tildes!! 
+9 4 1|4                                      * armor, dark, worn on neck 
+0 0 0 0 2 0 0 
+A 2 1                                   * Apply: applies 1 dex to wearer 
+A 1 1                                   * Apply: applies 1 str to wearer 
+#29012 
+blue diamond wand~ 
+a blue diamond wand~ 
+A wand with a huge blue diamond on it is just lying here! Pick it up! 
+~ 
+~                        
+3 64 1|16384 *                                       * wand, magic, held 
+14 12 12 12 2 0 0                     * level 14 spells of 'create food'  
+E wand diamond blue~               * duplicate extras keyword, see below 
+They're magically delicious! 
+~ 
+#29013 
+gold~ 
+whoooooopie! Gold!~ 
+A rainbow ends at this pot of gold! 
+~ 
+~ 
+20 1 1|16384                         * money, glowing, held (dummy value) 
+5000 0 0 0 0 0 0                                       * worth 5000 coins 
+#29014 
+food finger~ 
+delicious finger food~ 
+A delicious little plate of scrumptious finger foods lies beckons to you. 
+~ 
+~ 
+19 0 1|8192                                         * food, can wield :) 
+24 0 0 0 0 0 0                                        * 24 hours of food 
+#0                                    * End your objects SECTION with #0 
+ 
+Objects normally have 3 names. The first object name is not seen by a 
+player unless they use identify. These keywords are the names by which 
+a player can refer to that item. It can include every unique word used 
+in the long description, and is a good rule of thumb to follow. For 
+example, Bob's Orange Ring of Greater Magic probably could have the 
+words 'ring orange bob bob's greater magic' as its keyword handles. 
+ 
+The second set (action_name or "short") is what you see when you pick it 
+up or have it equipped, and the third (look_name or "long") is what you 
+see when it is on the ground or if you look at it. 
+ 
+It is important to note some things about Extras. If you have no extras, 
+it is a good idea to avoid saying certain things in the look_name. 
+Saying "There is a sword on the ground here" is fine when you walk into 
+the room, but when you pick it up and look at it, it's not cool to be 
+told it's still on the ground. It would be safer to use "You see a sword 
+here", which works much better if you are holding it. On the other hand, 
+extras can be used to creatively avoid this. If you write an extra that 
+uses all the same keywords that the object does, you will see a 
+different description when you look at the object. Thus, "There is a 
+sword on the ground here" might reveal "The sword is made of an unknown 
+metal" when looked at. If you don't want to have two separate 
+descriptions, do NOT use the same keywords for the object and its 
+extras. 
+  
+Weight: use existing objects as a guide for the weight of your new 
+objects. (See Table 15 which demonstrates max weapon weights as they 
+apply to the str of a PC) Keep in mind that weight is expressed in 
+kilograms (kg), and 1 kg=2.2 pounds. The maximum weight of any object is 
+32767. Keep in mind that weight can be used to determine the "apparent 
+usefulness" of an item. For example, the weight of rutabagas was 
+recently increased to reduce the number that a PC can carry at any one 
+time. This forces PCs to seek out other alternatives for healing 
+items. 
+ 
+Try to balance your items with those that already exist. By this we 
+mean, don't create items in your area that are much better than anyone 
+else's area. Try to fill gaps, not outdo other areas. We do check how 
+good your objects are, and if we think your stuff is too powerful, we 
+will make you go through it again  and reduce it. So it's best to think 
+ahead on this. (see section 6 on object balancing) 
+ 
+Remember, you can use previously defined items. So if you don't wish 
+to make a bunch of useless and repetitive swords, use some that have 
+been declared already. If you plan to do this, please inform Simba. For 
+one, you will need the VNUMs (onums) from other areas to use them, and 
+we need to know which areas you are using items from (so the mud won't 
+crash at load time). 
+ 
+ 
+The #ROOMS section: 
+------------------ 
+Your rooms are what really shape your area. This is where most of your 
+story will be told. It here that the players meet your mobs and fight 
+for their lives. 
+ 
+Remember these rooms really set the atmosphere of the area. Go beyond 
+just regular descriptive words, use far out language, have a thesaurus 
+handy when writing your rooms so you can use that one exact word that 
+expresses what you are trying to convey. We can't stress enough that 
+your descriptions even if short have to create the atmosphere. Even 
+your room titles can add to the effect. 4-5 lines is a good average 
+length for your room descriptions. 
+ 
+Take full advantage of the extras by putting supplementary descriptions 
+of objects, view, floor, walls, etc. in them. This leads to better play, 
+since inquisitive players will look at everything, and they may find a 
+clue which helps them get through the area. 
+ 
+Lengthy exit descriptions within the long look_description are 
+redundant, as BR has autoexit. You can also type 'exits' to see the 
+names of adjacent rooms (providing the door leading in that direction is 
+open). The individual exit descriptions (in the D sections) are more 
+useful to give information on hidden exits or adjoining rooms, 
+especially when the area is dark and a player can't 'scan' or use 
+'exits' to get info about the next room. 
+ 
+Try to make all of your rooms unique in some respect. Using the same 
+description over and over makes an area really boring. If you are 
+creating a maze keep the number of identical rooms down to something 
+manageable. You might want to vary the description slightly in certain 
+rooms to help players get their bearings. If you are just using 
+duplicate descriptions to establish a section as large, it is better 
+to use few rooms and just describe it as vast, than having a large 
+section with nothing in it. 
+ 
+** Example ** 
+ 
+#ROOMS 
+#29001 
+Forest Clearing~ 
+You stand in a grassy clearing in the forest. Moonlight causes the 
+shadows to move in an eerie dance. There is a strange circle of 
+mushrooms about 30' in diameter in the center of the clearing. 
+~                                          * always note tilde placement 
+0 4 3                                                   * no-mob, forest 
+D 5                                       * down exit 
+A small trap door~ 
+door trap~ 
+1 -1 29002                                * door, no key, leads to 29002 
+E                                                            * an Extra! 
+mushrooms circle~ 
+You look at the mushroom circle. You see tiny footprints and the faint 
+outline of a trap door in the center of the ring. 
+~ 
+S                                       * this ends each individual room 
+#29002 
+Entrance Hall~ 
+You are in a cramped, low ceiling tunnel. Roots dangle overhead and 
+caress you. There are tiny doors to the north, south and west, which you 
+think you could crawl your way into. A ladder fashioned of woven roots 
+leads up. You hear sounds of a raucous celebration to the east. 
+~ 
+0 8 0                                              * indoor flag, inside  
+D 0                                                         * North exit 
+A tiny door~                               
+door tiny~                                 
+1 -1 29003                                * door, no key, leads to 29003 
+D 1                                                          * East exit 
+A smoky hallway~                           
+~                                          
+0 -1 29004                             * open passageway, leads to 29004 
+D 2                                                         * South exit 
+A tiny door~ 
+door tiny~ 
+1 -1 29005                                * door, no key, leads to 29005 
+D 3                                                          * West exit 
+A tiny door~ 
+door tiny~ 
+1 -1 29006                                * door, no key, leads to 29006 
+D 4                                                            * Up exit 
+A small trap door~ 
+door trap~ 
+1 -1 29001                                * door, no key, leads to 29001 
+S 
+#29003 
+Puck's Room~ 
+You are hunched over in Puck's room. You know this by the sign that says  
+"Pucks stuff- keep your grubby hands off". There is a bed of forest 
+leaves, some rude hollowed out shelves, a tiny table with a half full 
+jack of ale, and a great pile of junk beneath the sign. 
+~ 
+0 8 0                                              * indoor flag, inside 
+D 2                                                         * South exit 
+A tiny door~ 
+door tiny~ 
+1 -1 29002                                * door, no key, leads to 29002 
+E                                                        * another extra 
+sign~ 
+The sign says: "Puck's stuff- keep your grubby hands off" 
+~ 
+S 
+#0                                          * End #ROOMS section with #0 
+ 
+Unlike mobiles and objects, rooms don't have keywords associated with 
+them (excluding doors and extras). One may not manipulate a room in the 
+same way one manipulates a mobile or object. 
+ 
+You may want to restrict mob movement between parts of your area, or 
+between your area and the connecting areas. You can use the "no-mob" 
+room flag in key rooms in order to keep mobs within certain sections. 
+It is a good idea to make your "connect-point" room a no-mob room to 
+keep mobs from wandering in and out of your area. 
+ 
+Set up your exits to logically travel along straight north-south, 
+east-west, and up-down paths. Remember you must write these exits into 
+both rooms if you want a two way passage. If your exits don't travel
+along straight paths, it will be recorded as a 'bug' by BR. It will
+still run correctly, but Cuervo will get very angry. (don't make him
+angry, you wont like him when he's angry...:)
+
+You also have the option to randomize the exits of a room, or a series
+of rooms every time the area upsets. You presently have an option of
+two types of random areas: a 2D (n,s,w,e) random area, and a 3D
+(n,s,w,e,u,d) random area. The basic recipe is as follows:
+
+(1) Lay out your rooms on a piece of paper and connect them such that 
+    all of the exit paths are straight (n-s, w-e, u-d) to avoid the
+    bug. Basically, the bug is this:
+      Say you have room "A" exiting south to room "B". If room "B" has
+      a north exit (IE the reverse exit), it MUST go back to room "A"
+      (IE it must reverse). If "B" exits north to another room, you
+      get the 'bug'. The room will load fine, will run fine, but there
+      will be a bug in the bug spool that makes the bug spool untidy
+      and unmanageable, and Cuervo goes through the roof.
+
+      For a complex random area, creating the grid is not as trivial as
+      it may seem. I found it best to work under a wrap-around principal.
+      Consider:     
+
+                           E----F
+      A----B    E----F     |\   |\                 U N
+      |    |    |    |     | \  | \                 \|
+      |    |    |    |     G----H  \              W--+--E
+      C----D    G----H      \  A-\--B                |\
+                             \ |  \ |                S D
+      Level1    Level2        \|   \|
+                               C----D
+
+    Where ABCD is lvl 1 and EFGH is level 2 in a 3D random area. To make
+    it more complex, I would have A exit west to B, and from B back east
+    to A. Then from A north to C, and from C back south to A. This is a
+    'wraparound' within the plane of the level. The same is done to the
+    second level:
+
+      ,---------.    ,--.
+      |         |    |  |                            N
+      `--A---B--'    |  A---B                        |
+         |   |       |  |   |                     W--+--E
+         C---D       |  C---D                        |
+                     |  |                            S
+                     `--'
+
+    Between levels, A goes up to E, and E goes down to A. The between
+    levels wraparound would be: E goes up to A, and A goes down to E:
+
+       _
+      / \
+      \  E--F                                      U
+       \  \  \                                      \
+        \  A--B                                   W--+--E
+         \  \                                         \
+          \_/                                          D
+
+    Now lets say you want to connect into the above zone. Lets say room
+    X is not random and you want it to connect to room C. If X
+    connected north to C, you would need C to go back south to X. Now
+    here is the hitch. Because A wraps north to C, stupid merc wants C
+    to reverse south to A, not X. So you would have to connect X to
+    another room, or eliminate the north-south wrap exit from A to C.
+    (boy all those diagrams for nothing?) So the point is, lay out your
+    exits carefully.
+
+(2) Declare your exits random with the random set for the room.
+    Remember a 2D maze will have a random 3 reset (since exits N,E,S,W
+    are numbers 0-3), and a 3D maze will have a random 5 reset (since
+    N,E,S,W,U,D are numbers 0-5)
+
+ 
+The #RESETS section 
+------------------- 
+This is where you place your mobs and equip them. Be very careful with 
+this section, it relies heavily on vnums and other cryptic numbers and 
+is the easiest to mess up. Take your time and try to learn it well. 
+ 
+Having 2 mobs in the same room is difficult. 3 mobs in same room 
+becomes unplayable. One mob per 2 rooms works nicely, if the mobs 
+are sentinel, you can even do one per room. Give your mobs room to breathe. 
+ 
+The world limit for a mob should be greater than or equal to the 
+number of places that it loads in.  In the following example the 
+pixies load in four different places, so the pixie world limit is 
+four. If the world limit is greater than the number of places that the 
+mob loads in, the mobs will continue to load each time the area resets 
+until the world limit is reached. 
+ 
+** Example ** 
+ 
+#RESETS 
+* Clearing, 29001, no mobs                 
+D 1 29001 5 1         Trapdoor resets closed, unlocked 
+* 
+* Entry hall, 29002 
+D 1 29002 4 1         Trapdoor resets closed, unlocked 
+D 1 29002 0 1         Pucks door resets closed, unlocked 
+D 1 29002 2 1         Snooze den resets closed, unlocked 
+D 1 29002 3 1         Guarded Barrow resets closed unlocked 
+M 1 29001 4 29002     Load pixie   
+G 1 29001 0 0           Give pixie faerie dust 
+* 
+* Puck's Room, 29003 
+D 1 29003 2 1         Puck's Room Close South 
+M 1 29005 1 29003     load puck 
+E 1 29009 0 7           dirty britches on puck legs 
+E 1 29011 0 4           dirty cloak on puck to neck 
+O 1 29008 0 29003       Faerie wine 
+* 
+* Bar & Grill, 29004 
+M 1 29002 3 29004     nixie 
+G 1 29005 0 0           bottled moonlight 
+M 1 29001 4 29004     pixie   
+G 4 29001 0 0           faerie dust 
+M 1 29003 3 29004       sprite 
+E 1 29003 0 13          sprite belt 
+M 1 29009 1 29004     Twinkletoes 
+G 1 29014 0 0           finger food 
+G 1 29008 0 0           faerie wine 
+M 1 29007 1 29004     Lucky 
+G 1 29012 0 0           wand 
+G 1 29013 0 0           gold 
+S                                      * end the #RESET section with 'S' 
+ 
+Here's another way to express your resets. For debugging purposes,  
+it's nice if the resets are organized in like groups and vnum order. 
+This example assumes that the most recent "M" loaded Pellinore into 
+the room. 
+ 
+* Puts and static objects are expressed in the following manner: 
+P 1 17322 0 17320     Puts rations in Pellinores pack 
+P 1 17323 0 17320     Puts wine in Pellinores pack 
+M 2 17316 1 17307     Load questing beast in lair 
+O 2 17324 1 17307     Put bones in lair 
+O 2 17325 1 17307     Put skull in lair 
+O 2 17326 1 17307     Put rock in lair 
+ 
+Note that on "P" resets you cannot put more than one of a certain 
+object in a container, or have two containers with the same vnum in 
+your area and expect the objects to go into more than one of them. 
+ 
+ 
+The #SHOPS section: 
+------------------ 
+This is where you set up any shops that you may want in your area. 
+ 
+Shopkeepers should sell and buy things for reasons. Think about who they 
+are and how their business works, and have the trades reflect that. Sell 
+things that make sense to sell in your area. 
+ 
+Remember, BUY HIGH - SELL LOW. If you don't, you can have players 
+profit from selling and buying the same item over and over. Typical buy 
+sell numbers are 150 50. If your keeper is in the boondocks, he would 
+probably sell and buy higher (200 85). Think of the old mining towns. 
+They paid a lot for incoming stuff, but charged you a bundle because you 
+were in the middle of nowhere. In large towns with lots of shopkeepers, 
+there should be competition, and plenty of sources for goods. So one 
+could buy something cheaply but probably not get a decent price for 
+selling an object (120 30). If you follow this, then you can expect 
+players to behave as merchants, buying stuff in large cities, and 
+selling it in the boonies. 
+ 
+Beware of the old "Jim effect", shopkeepers who are low enough level 
+to be killed and have all of their stuff grabbed. Keep your shopkeepers 
+very high level. 
+ 
+Remember, a shopkeeper will SELL anything you load in it's inventory, 
+and will only BUY what is expressed in t0 - t4. Barren Realms prefers 
+shopkeepers to buy only a few item types and the mob level to be high. 
+ 
+** Example ** 
+ 
+#SHOPS 
+29009 
+1 3 5 9 18                * buys lights, wands, weapons, armor, and keys 
+120 80                                 * buys at 120%/sells at 80% value 
+0 23                                                      * open all day 
+0        
+ 
+PET SHOPS are handled slightly differently then regular shops. They are 
+dependent on special rooms as well as the shopkeeper mob. To make a pet 
+shop, create your room and set the pet-shop flag (4096). Next you need a 
+special "pet storage" room. This MUST be 1 rnum greater than your pet 
+shop rnum. For example, if the shop is rnum #23401, then the pet storage  
+room MUST be rnum #23402. This room should not connect to any other 
+rooms. Next create your shopkeeper mob. This mob MUST be made sentinel. 
+Load this into the pet store room in #RESETS. Set it up like a 
+shopkeeper in #SHOPS: use 0s for what it buys, set buy and sell %s at 
+100, and set open and close hours as you wish. Finally create your pet 
+mobs. Load these into the storage room in #RESETS. 
+ 
+** Example ** 
+ 
+* Define your shopkeeper mobile and your pets in the #MOBILES section. 
+ 
+#17339  
+stirrup stablemaster~ 
+Stirrup~ 
+Stirrup, the stable master of Camelot is here. 
+~ 
+Stirrup is a short man, wearing a leather jerkin, and smells of the barn. 
+~ 
+2 0 400 S 
+25 0 0 1d1+1 1d1+1 
+0 0 
+0 0 1 
+#17340  
+horse riding~ 
+A riding horse~ 
+A riding horse is here. 
+~ 
+The riding horse is saddled with light tack, and has long slender limbs 
+for speed. 
+~ 
+256 0 0 S 
+18 0 0 1d1+1 1d1+1 
+0 0 
+0 0 2 
+ 
+* The room where the shop will be and the pet holding room are 
+  established in the #ROOMS section. 
+ 
+ 
+#17398 
+Stables~ 
+You stand in the vast stables of Camelot. Row upon row of stalls greet 
+your eye. Smells of horse sweat and fresh straw combine in a pleasant 
+mix. Stable hands are busy currying animals, shoeing horses, and feeding 
+the magnificent chargers of Camelot. Light filters in through the 
+rafters. To your west is Knight's Way. 
+~ 
+0 4096 0 
+D3 
+Knight's Way~ 
+~ 
+0 -1 17342 
+S 
+#17399 
+Pet Storage for Stables~ 
+This is actual stables where the horses are kept to be sold. 
+~ 
+0 4096 0 
+S 
+ 
+* Load keeper in shop and pets in storage room in #RESETS. 
+ 
+M 37 17339 1 17398 Stirrup in stables 
+M 38 17340 1 17399 load in riding horse 
+M 39 17341 1 17399 med warhorse 
+M 40 17342 1 17399 heavy warhorse 
+ 
+* Define the shopkeeper in #SHOPS. 
+ 
+#SHOPS 
+17339 
+0 0 0 
+0 0 
+100 100 
+0 23 
+0 
+ 
+* That's it...it's that easy! 
+ 
+ 
+The #SPECIALS section: 
+--------------------- 
+Spec_funs allow your mobs to have special abilities like the beastly 
+fidos and Khellis cityguards. They can really bring an area to life.
+However, Please think of specials as just that, special. If too many
+of your mobs are special, the area will lose it's meaning.
+
+Speco_funs are just like spec_funs, except they are attached to objects.
+
+** Example ** 
+ 
+#SPECIALS 
+M 29006 spec_cast_mage                * gives this mob some elf spells 
+M 29005 spec_thief                            * makes this mob rob PCs 
+O 17325 speco_drain_hp           * makes this skull attack holder's hp
+S 
+ 
+Specials are C code functions (BR is written in C) that are "attached"
+to mobs or objects.  They periodically (every few seconds) check their
+environment, and can respond accordingly.  They cannot directly
+respond to a character's commands or actions.  They very literally
+respond to CONDITIONS in it's vicinity at the moment it is "activated"
+by the game-clock.  A mob might check to see what room it's in, who's
+nearby, and what the weather is like.  An object might check if it's
+being carried or worn, by whom, if it contains anything, if its
+carrier is fighting (and who is being fought), etc.
+
+You can choose different functions from the current special function
+tables (13a and 13b) or possibly design new ones for your areas.
+Because these functions are written in C, and require a good
+understanding of the MUD code, writing new ones is best left to the
+coders.  If you would like new a special function or two in your area,
+you can send the details to BR and we will write the code for you.  Be
+sure to provide us with all of the necessary details so that we can
+program them correctly.
+
+Be creative, and tell us any ideas you come up with. (for your area or
+just in general)
+
+Speco functions are new and so the selection of functions is still
+small.  Here are some examples of what COULD be done with specos:
+
+ The Drunken Bastard Sword - at random moments, switches the wielder
+  between being drunk and sober. [Note: A plus is that it can be used
+  to sober up the wielder, then unwielded.]
+
+ The Guardian Idol - a container with a speco_fun. Whenever it finds
+  itself holding four gems of different colors, it unlocks the door it
+  guards.
+
+ DevilSlicer - A sword that does only moderate damage, EXCEPT against
+  one particular level-100 mob which it kills instantly.
+
+ The All-Seeing Ball - Emits a special glow whenever a hidden or
+  sneaking mob or PC is in the same room.
+
+ The Blob - Parasitically attaches itself to a body slot, yielding no
+  bonuses and destroying whatever item was in the slot before.
+  Noremove, and can move from one body slot to another. Removed only
+  by death (it kills you when all your other body slots are empty), or
+  by the ...
+
+ BlobRemover - <grin> Found elsewhere in your area.
+                          
+ The Transmogrifier - Insert several specific items, and transform
+  them into a single super-item.
+   
+ The Speaker of Legends - Recites useful information when in
+  particular rooms (like the self-guide radios/tape players in
+  museums).
+         
+ 
+The end: 
+------- 
+ 
+#$                                   * MUST end your .are file with this 
+ 
+
+======================================================================== 
+                               Section 4: 
+                       SUBMITTING A COMPLETED AREA 
+======================================================================== 
+Send the file by e-mail to mcmahan@cs.wcu.edu (Amadeus). The subject 
+line should contain the #AREA line of the file 
+ 
+  subject: #AREA  { 1  50 }  Amadeus  Realms of Gold~ 
+ 
+Also, please provide every bit of information that you think is needed 
+in order to implement your area.  This includes connection point 
+identification, area terrain, storyline, considerations, etc. 
+ 
+If you have pine-mail, this can be sent as one mail message, with the 
+instructions being the first part, and the file being an attachment. If 
+not, please send 2 mail messages: one being the file, the other being 
+this information.  You can also include the implementor information in a 
+help section.  
+ 
+Please include your everyday e-mail address IF it's not the one that you 
+sent your area from. In addition, please note the IP address of other 
+MUDs that you frequent, so that Amadeus can "find" you in a timely 
+manner if he needs to consult with you.  
+ 
+The submission address is subject to change. We recommend consulting an 
+IMM prior to sending in a completed area. It is your responsibility to 
+follow up with area implementors to ensure that your area was received 
+intact. It goes without saying that Internet mail is "send and pray".  
+ 
+ 
+======================================================================== 
+                               Section 5: 
+                              VALUE TABLES 
+======================================================================== 
+There are two different types of values, "unique" and "additive". If an 
+area item refers to a unique table, then a single value must be chosen 
+from the table. If an area item refers to an additive table, then any 
+desired values can be added together from the table. 
+ 
+* You are strongly encouraged to use the bar ("|") format for additive 
+values. Don't add the values up, just type in all of the individual 
+values separated by bars (ex: 1|8|16|1024). The program will 
+automatically add the values together for you. This makes it much easier 
+to understand the values by simply examining the area text file. 
+ 
+ 
+TABLE 1 - ACT bits (Mobiles)                             additive values 
+------------------------------------------------------------------------ 
+NPC                        1        * (Auto-set, denotes non-player|) 
+SENTINEL                   2        * Stays in one room 
+SCAVENGER                  4        * Picks up objects 
+AGGRESSIVE                32        * Attacks PC's on sight 
+STAY_AREA                 64        * Won't leave area 
+WIMPY                    128        * Flees when hurt 
+PET                      256        * (Auto set for pets) 
+TRAIN                    512        * Can train PC's (BR: enhance) 
+PRACTICE (BR:elf)       1024        * Can practice PCs (BR: elf skills) 
+HEALER                  2048        * Can buy heals from 
+UNDEAD                  4096        * ? (MZF explains as Mob can summon) 
+                                    (From here down are BR specific) 
+MEMORY                     8        * Remembers past 3 attackers and 
+                                       attacks on sight 
+PRACTICE (druid)        8192        * Can practice PC's druid skills 
+PRACTICE (kender)      16384        * Can practice PC's kender skills  
+PRACTICE (human)       32768        * Can practice PC's human skills 
+PRACTICE (dwarf)       65536        * Can practice PC's dwarf skills 
+ID                    131072        * Can identify objects 
+REPAIR                262144        * Can repair armor 
++10 lvls sell         524288        <-For shopskeepers -  
++20 lvls sell        1048576        <-raises the item levels 
++30 lvls sell        2097152        <-of the objects for sale 
+STAY_TERRAIN         8388608        * Mob stays in terrain type 
+ 
+ 
+TABLE 2 - Affected Bits (Mobiles)                        additive values 
+------------------------------------------------------------------------ 
+BLIND                      1     * These all act like permanent versions 
+INVISIBLE                  2       of the corresponding spells 
+DETECT_EVIL                4 
+DETECT_INVIS               8 
+DETECT_MAGIC              16 
+DETECT_HIDDEN             32 
+SANCTUARY                128 
+FAERIE_FIRE              256 
+INFRARED                 512 
+CURSE                   1024 
+POISON                  4096 
+PROTECT                 8192 
+SNEAK                  32768 
+HIDE                   65536 
+SLEEP                 131072 
+CHARM                 262144 
+FLYING                524288 
+PASS_DOOR            1048576 
+PLAGUE               2097152 
+ 
+ 
+TABLE 3 - Item Types (Objects)                              unique value 
+------------------------------------------------------------------------ 
+(numbers in () indicate the corresponding table) 
+Item           Type#   V0          V1          V2          V3 
+----           -----   ----------- ----------- ----------- ---------- 
+LIGHT            1     0           0           hours       0 
+SCROLL           2     level       spell1(14)  spell2(14)  spell3(14) 
+WAND             3     level       max_charge  cur_charge  spell(14)    
+STAFF            4     level       max_charge  cur_charge  spell(14) 
+WEAPON           5     0           0           0           hit_type(4) 
+TREASURE         8     0           0           0           0 
+ARMOR            9     0           0           0           0 
+POTION          10     level       spell1(14)  spell2(14)  spell3(14) 
+FURNITURE       12     0           0           0           0      
+TRASH           13     0           0           0           0 
+CONTAINER       15     max_weight  state(5)    key_onum    0   
+DRINK_CON       17     max_cap     cur_cap     liquid(6)   poison 
+KEY             18     0           0           0           0 
+FOOD            19     hours       0           0           poison 
+MONEY           20     amount      0           0           0 
+BOAT            22     0           0           0           0 
+FOUNTAIN        25     0           0           0           0 
+PILL            26     level       spell1(14)  spell2(14)  spell3(14) 
+BREATHE WATER   27     0           0           hours       0  (BR only*)         
+FLY             28     0           0           0           0  (BR only*) 
+QUIVER          29     max_weight  state(5)    key_onum    0  (BR only*) 
+THROW           30     0           0           0           0  (BR only*) 
+* terms: 
+   hours=LIGHT or BREATHE WATER: number of functioning hours 
+         FOOD: hours hunger is suppressed 
+   level=level of spells on magic items 
+   max/cur_charge=the max and current charges on magic items 
+   max/cur_cap=max and current capacity in drinks 
+   max_weight=maximum holding capacity in weight 
+   key_onum=onum of the key that unlocks this container (use -1 if none) 
+   poison=0 for fine, non-0 for poisoned 
+   amount=amount of coins object is worth 
+* BR only: 
+   BREATH WATER - allows PC to enter underwater rooms 
+   FLY          - makes PC fly if worn 
+   QUIVER       - holds THROW type objects, allows automatic wield-throw 
+                   in a single round 
+   THROW        - can be thrown at mobs in room, or in adjacent rooms 
+   
+ 
+TABLE 4 - Weapon Types (Objects)                            unique value 
+------------------------------------------------------------------------ 
+       0 hit            7 pound 
+       1 slice          8 crush 
+       2 stab           9 grep 
+       3 slash         10 bite 
+       4 whip          11 pierce   * permits backstab, use sparingly 
+       5 claw          12 suction 
+       6 blast  
+ 
+ 
+TABLE 5 - Container States (Objects)                     additive values 
+------------------------------------------------------------------------ 
+       1 closeable      4 closed 
+       2 pickproof      8 locked 
+ 
+ 
+TABLE 6 - Liquid Values                                     unique value 
+------------------------------------------------------------------------ 
+liquid# Name          Thirst Value   Food Value      Drunk Value 
+------- ----          ------------   ----------      ----------- 
+ 0      Water               10             1               0 
+ 1      Beer                 5             2               3 
+ 2      Wine                 5             2               5 
+ 3      Ale                  5             2               2 
+ 4      Dark Ale             5             2               1 
+ 5      Whiskey              4             1               6 
+ 6      Lemonade             8             1               0 
+ 7      FireBreather         0             0               1 
+ 8      Local Speciality     1             1               1 
+ 9      Slime Mold Juice    -2             1               0 
+10      Milk                 2             1               0 
+11      Tea                  6             1               0   
+12      Coffee               6             1              -1 
+13      Blood                0             1               0 
+14      Salt Water          -3             1               0 
+15      Cherry Cola          5             1               0 
+16      Tequila              4             1              10 
+17      Margaritta           4             1              10 
+18      Pepsi                3             1               0 
+19      Mountain Dew         4             1               1 
+20      Grape Slushee        3             1               0 
+21      Cherry Slushee       4             1               0 
+22      Cola Slushee         3             1               0 
+23      Screw Driver         3             1               3 
+24      Vodka                3             1               5 
+ 
+* The chart is in proportions!!! What this means is there is no way to 
+  predict EXACTLY how much of each will increase, only how they will 
+  increase in relation to each other. 
+  EXAMPLE:   
+    Dark Ale:   Thirst       Food          Drunk 
+                   5           2             1 
+                  10           4             2 
+                  15           6             3 
+ 
+ 
+TABLE 7 - Extras (Objects)                               additive values 
+------------------------------------------------------------------------ 
+GLOW                 1  * Item glows 
+HUM                  2  * Item hums 
+DARK                 4 
+LOCK                 8 
+EVIL                16  * PCs with 'detect evil' see red aura 
+INVIS               32  * PC needs 'detect invis' to see 
+MAGIC               64  * For weapon can't enchant, can enflame 
+NODROP             128  * Item cannot be dropped 
+BLESS              256 
+ANTI_GOOD          512  * Above 332 align get zapped and drop it if worn 
+ANTI_EVIL         1024  * Below -332 align get zapped and drop it if 
+                           worn 
+ANTI_NEUTRAL      2048  * From -332 to 332 align get zapped and drop it 
+                           if worn 
+NOREMOVE          4096  * Item cannot be removed if worn 
+INVENTORY         8192 
+HOVER            32768  * Object floats in the air, will float out of 
+                           room (BR only) 
+FLAMING          65536  * Enhanced damage for spells (BR only) 
+ 
+ 
+TABLE 8 - Wear Flags (Objects)                           additive values 
+------------------------------------------------------------------------ 
+TAKE                  1  * MUST have this in order to be picked up! 
+FINGER                2 
+NECK                  4 
+BODY                  8 
+HEAD                 16 
+LEGS                 32 
+FEET                 64 
+HANDS               128 
+ARMS                256 
+SHIELD              512 
+ABOUT              1024 
+WAIST              2048 
+WRIST              4096 
+WIELD              8192 
+HOLD              16384 
+TWO-HANDED        32768  * Requires both wield and offhand, but 
+                           causes 2.5x damage (BR only) 
+ 
+ 
+TABLE 9 - Apply Types  (Objects)                            unique value 
+------------------------------------------------------------------------ 
+NONE             0 
+STR              1 
+DEX              2 
+INT              3 
+WIS              4 
+CON              5 
+MANA            12 
+HIT             13 
+MOVE            14 
+AC              17 
+HITROLL         18 
+DAMROLL         19 
+SAVING_BREATH   23 
+SAVING_SPELL    24 
+ 
+ 
+TABLE 10 - Room flags (Rooms)                            additive values 
+------------------------------------------------------------------------ 
+DARK                      1  * PC requires a light/infravision 
+NO_MOB                    4  * Mobs can't enter (can use for mob-lock) 
+INDOORS                   8  * PC does not see weather 
+ARENA                    64  * Pkilling arena room (GET PERMISSION FOR) 
+ANTI_MAGIC              128  * Doesn't allow spellcasting 
+PRIVATE                 512  * Only 1 char in a room at a time 
+SAFE                   1024  * No killing allowed 
+SOLITARY               2048  * Only 2 characters at a time 
+PET_SHOP               4096  * Special for pet shop 
+NO_RECALL              8192  * PC cannot recall 
+BANK                  16384  * Room is bank 
+CURRENT_NORTH         32768  * Affects mv, pushes PC in appropriate 
+CURRENT_EAST          65536     direction (BR only: NOT IMPLEMENTED YET) 
+CURRENT_SOUTH        131072    
+CURRENT_WEST         262144    
+CURRENT_UP           524288    
+CURRENT_DOWN        1048576    
+ 
+ 
+TABLE 11 - Sector Types (Rooms)                             unique value 
+------------------------------------------------------------------------ 
+INSIDE             0 
+CITY               1 
+FIELD              2 
+FOREST             3 
+HILLS              4 
+MOUNTAIN           5 
+WATER_SWIM         6  * can be walked through 
+WATER_NOSWIM       7  * requires boat/fly 
+AIR                9  * requires fly 
+DESERT            10 
+UNDERWATER        11  * BR only: requires scuba & no fly 
+MAX               12  * maximum mvs cost to move through 
+ 
+* Mobs are able to enter any sector without spells or eq. Use no-mob 
+  or stay-area to prevent certain mobs from certain sectors. 
+ 
+ 
+TABLE 12 - Wear Locations (Resets)                          unique value 
+------------------------------------------------------------------------ 
+NONE              -1 
+LIGHT              0 
+FINGER_L           1 
+FINGER_R           2 
+NECK_1             3 
+NECK_2             4 
+BODY               5 
+HEAD               6 
+LEGS               7 
+FEET               8 
+HANDS              9 
+ARMS              10 
+SHIELD            11 
+ABOUT             12 
+WAIST             13 
+WRIST_L           14 
+WRIST_R           15 
+WIELD             16 
+HOLD              17 
+WEAR/OFFHAND      18  ?? 
+ 
+ 
+TABLE 13a - Special Mobile Functions (Specials)             unique value 
+------------------------------------------------------------------------
+spec_align_change         * Can change PC's align in battle (BR only) 
+spec_breath_any           * Casts: all breath spells 
+spec_breath_acid          * Casts: acid breath (causes PC harm; damages 
+                             armor; destroys containers) 
+spec_breath_fire          * Casts: fire breath (causes PC harm; destroys 
+                             containers, potions, scrolls, staves, food, 
+                             wands, and pills) 
+spec_breath_frost         * Casts: frost breath (causes PC harm; 
+                             destroys containers, drink containers, and 
+                             potions) 
+spec_breath_gas           * Casts: gas breath (causes all PCs in room 
+                             harm) 
+spec_breath_lightning     * Casts: lightning breath (causes PC harm) 
+spec_cast_adept           * Casts: armor, bless, cure blindness, cure 
+                             poison, cure light, cure poison, and 
+                             refresh (on BR: for players level 1-10 only) 
+spec_cast_cleric          * Casts: blindness(0), cause serious(3), 
+                             earthquake(7), cause critical(9), dispel 
+                             evil(10), curse(12), change sex(12), 
+                             flamestrike(13), harm(15), dispel magic(16) 
+                             (the numbers indicate the minimum mob level 
+                             to cast that spell) 
+spec_cast_judge           * Casts: high explosive (causes all PCs in room 
+                             harm) 
+spec_cast_mage            * Casts: blindness(0), chill touch(3), 
+                             weaken(7), teleport(8), color spray(11), 
+                             change sex(12), energy drain(13), 
+                             fireball(15), acid blast(20) 
+                             (the numbers indicate the minimum mob level 
+                             to cast that spell) 
+spec_cast_undead          * Casts: curse(0), weaken(3), chill touch(6), 
+                             blindness(9), poison(12), energy drain(15), 
+                             harm(18), teleport(21), gate(24) 
+                             (the numbers indicate the minimum mob level 
+                             to cast that spell) 
+spec_executioner          * Pushes KILLER/THIEF out of room, sucks up 
+                             blood (BR modified) 
+spec_fido                 * Eats corpses 
+spec_guard                * Attacks KILLER/THIEF, protects the innocent 
+spec_janitor              * Picks up trash, mops up bloodtrails 
+spec_mayor                * Constable's program (DO NOT USE) 
+spec_poison               * Poisonous bite 
+spec_thief                * Robs PC's gold 
+  
+
+TABLE 13b - Special Object Functions (Specials)             unique value 
+------------------------------------------------------------------------
+speco_airfill             * Insert scuba device & coins, and it refills
+                             air supply
+speco_attach              * Attaches to player, then bounces in and out
+                             of eq onto floor
+speco_blob                * Attaches to a wear-location, destroys any eq
+                             in spot, moves to new spot, when all eq is
+                             gone player dies
+speco_burper              * Forces player to randomly burp
+speco_drain_hp            * Drains hp slowly if in inventory, faster if
+                             worn
+speco_drunker             * Keeps switching player between drunk & sober
+speco_morph               * On a weapon, morphs into mob that looks like
+                             the player
+speco_recycler            * Insert trash and get money back
+speco_social              * Forces player to do random socials
+ 
+
+TABLE 14 - Spell Numbers (Objects)                          unique value 
+------------------------------------------------------------------------ 
+   0  NULL                 70  acid blast 
+   1  armor                 3  bless            
+   4  blindness             5  burning hands 
+   6  call lightning       63  cause critical 
+  62  cause light          64  cause serious 
+  82  change sex            7  charm person 
+   8  chill touch          10  colour spray 
+  57  continual light      11  control weather 
+  12  create food          80  create spring 
+  13  create water         14  cure blindness 
+  15  cure critical        16  cure light 
+  43  cure poison          61  cure serious 
+  17  curse                18  detect evil 
+  44  detect hidden        19  detect invis 
+  20  detect magic         21  detect poison 
+  22  dispel evil          59  dispel magic 
+  23  earthquake           24  enchant weapon 
+  25  energy drain         72  faerie fire 
+  73  faerie fog           26  fireball 
+  65  flamestrike          56  fly 
+  83  gate                 39  giant strength 
+  27  harm                 28  heal 
+  53  identify             77  infravision 
+  29  invis                58  know alignment 
+  30  lightning bolt       31  locate object 
+  32  magic missile        69  mass invis 
+  74  pass door            33  poison 
+  34  protection           81  refresh 
+  35  remove curse         36  sanctuary 
+  67  shield               37  shocking grasp 
+  38  sleep                66  stone skin 
+  40  summon                2  teleport 
+  41  ventriloquate        68  weaken 
+  42  word of recall      200  acid breath 
+ 201  fire breath         202  frost breath 
+ 203  gas breath          204  lightning breath 
+ 100  astral              300  bamf 
+ 600  Buddha finger       601  chin kang palm 
+ 602  concentrate         609  frenzy 
+  83  gate                603  iron monk 
+ 604  laughing Buddha     605  medicine 
+ 606  prayer              607  quivering palm 
+ 
+ 
+TABLE 15 - Maximum "Wieldable" Weight Per Strength (Objects-Weapons) 
+------------------------------------------------------------------------ 
+Strength       Max Wieldable Weight 
+--------       -------------------- 
+  13                  13 
+  14                  14 
+  15                  15 
+  16                  16 
+  17                  22 
+  18                  25 
+  19                  30 
+  20                  35 
+  21                  40 
+  22                  45 
+  23                  50  * Dwarves only 
+  24                  55  * Dwarves only 
+  25                  60  * Dwarves only 
+ 
+* Since only Dwarves are able to enhance str beyond 22, A weapon weight 
+  above 50 will constitute a Dwarf only weapon 
+ 
+ 
+======================================================================== 
+                               Section 6: 
+                             OBJECT BALANCE 
+======================================================================== 
+It is very important that the objects that you create in your area do 
+not blow the curve of already existing objects! It's better to attempt 
+to fill a niche than to try to one-up existing powerful objects. The 
+following section describes Lok's method of achieving balanced objects 
+in your area. 
+ 
+Some things to note before you start: 
+- The object level is the level of the mob that carries it. (actually 
+  it can vary slightly, but we'll assume it's always the same) 
+- If the object is not on a mob, then use the level of the closest 
+  intervening mob. In other words the level of the guard at a treasure 
+  room door determines the level of the treasure. 
+- Because the spell level on magic items is set separately from the 
+  object level, you should set the spell level to be equal to, or less 
+  than the object level. 
+ 
+1) If your object is a magic item (pill, potion, scroll, staff, wand) 
+   then you first need to determine the base-charges. This is the 
+   number of charges your item should hold. The actual charges can be 
+   raised at a cost to "advantages", or lowered at a cost to 
+   "limitations" (more about those later). Use this formula (round 
+   fractions up): 
+ 
+      BASE_CHARGES = LEVEL / 5 
+ 
+2) Next you need to compute the active value your object can have. This 
+   is (fractions are rounded up in players favor): 
+ 
+      ACTIVE = LEVEL * (1 + LIMITATIONS) / 2 
+ 
+   Limitations are expressed in quarters (0.25, 0.5, 0.75, etc.). This 
+   number cannot exceed 2. The chart below is a guide for limitations. 
+   You cannot use the same limitation twice for the same object. If you 
+   feel you have a significant new limitation, use the existing values 
+   in the chart to establish an appropriate new value. 
+ 
+   LIMITATION                                   value 
+   -------------------------------------------------- 
+   only works for two alignments                0.25 
+   only works for one alignment                 0.5 
+   object in tough to reach area*               0.25 
+   object in tough area*                        0.25 
+   object carried by tough mob*                 0.25 
+   object only useable by one or two races      0.5 
+   uses only 1/2 of base charges                0.25 
+   uses only 1/4 or fewer of base charges       0.5   
+   nodrop item                                  0.25   
+   noremove item                                0.25   
+   requires 18str to wield                      0.25   
+   invisible                                    0.25 
+   Imp likes this object                        0.25 
+ 
+   * A tough to reach area has at least one of the following: 
+      locked door with separated key, past a random section, no 
+      teleport zone, no astral zone, more than 50 moves from recall 
+      (not counting random zone) 
+   * A tough area has at least one of the following: 
+      no recall, no spell use, many assisting aggressive mobs. 
+   * A tough mob has at least one of the following: 
+      sanctuary, spell use. 
+ 
+2) Now determine the current 'cost' of your object with (fractions are 
+   rounded down in the players favor): 
+ 
+      COST = (1 + ADVANTAGES) * POINTS 
+ 
+   The following is the table for advantages. Like limitations, if 
+   you have a new advantage, use the current table to derive an 
+   appropriate value.  
+ 
+   ADVANTAGE                             value 
+   ------------------------------------------- 
+   spell is continuous                   1.0 
+   uses 2 * base charges                 0.25 
+   uses 3 * base charges                 0.5 
+   uses 4 * base charges                 0.75 
+   enchantable weapon                    0.25 
+   12 strength can wield it              0.25 
+ 
+   'Points' is the total of all the modifiers and/or spell points on 
+   the object. Below is the table of modifiers, and the power table for 
+   spells. Values are added for each instance of an element. Meaning, 
+   for an object with +3 damroll the value would be 6, and for a potion 
+   with 2 heal spells the value would be 20. 
+ 
+   APPLY MODIFIER           value 
+   ------------------------------ 
+   + 1 hitroll*              1 
+   + 1 damroll*              2 
+   + 1 attribute             3 
+   + 2 hp                    1 
+   + 2 mana                  1 
+   +10 moves                 1 
+   - 1 ac                    2 
+   - 1 savings throw         2 
+ 
+   * Hitroll and damroll additions should not exceed: LEVEL / 8 
+ 
+   SPELL        value       SPELL        value       SPELL        value 
+   -------------------------------------------------------------------- 
+   Bamf             7       Cause Critical   4       Chin Kang Palm   4 
+   Curse            4       Cure Critical    4       Enchant Weapon  20 
+   Endurance       20       Energy Drain     5       Frenzy           7 
+   Gate            10       Giant Strength   4       Harm             7 
+   Heal            10       Iron Monk       15       Locate Object    4 
+   Mass Heal       20       Mass Invis       4       Pass Door       20 
+   Plague           4       Prayer           7       Quivering Palm   7 
+   Sanctuary       15       Summon          10       Teleport         7 
+   Weaken           4 
+                  *** ALL other spells cost 3 points *** 
+ 
+  (Point cost for spells based on a mana/5 rule for a level 56 warrior) 
+ 
+ 
+3) Compare COST to ACTIVE. If COST < ACTIVE, you have a balanced 
+   object. Otherwise, it is a good idea to go back, and try to balance 
+   out some of the features. You should also try to avoid having many 
+   mobs with several objects with COST right at the ACTIVE limit. Its 
+   OK to have the kingpin mob of the area geared up, but if all your 
+   mobs are overloaded, it becomes excessive. And that's all there is 
+   to it! 
+ 
+ 
+** Examples ** 
+ 
+1. Blue Diamond wand. 
+(lvl 14 wand of create food, 12 charges) 
+ 
+The blue diamond wand is carried by Lucky, a 14th mob which is 
+invisible. Lucky is not in a particularly tough area, and does not use  
+spells or have sanctuary, so LIMITATIONS = 0. 
+ 
+   ACTIVE = 14*(1+0)/2= 7 points 
+ 
+Now we want 'create food' on the wand. Since create food is not 
+specifically listed it is a 3 point spell. The base number of charges 
+on the wand would be 14/5 = 3 charges. If I want to increase this to 
+12, I would need to have 4*base charges, a 0.75 advantage. So cost is: 
+ 
+   COST = (1.75)*3=5.25 = 5 points. 
+ 
+Since (COST=5) < (ACTIVE=7), the object is balanced. 
+ 
+2. Twinkling Ball of Light 
+(light, +1 int, wis, hr, dr) 
+ 
+The ball of light is carried by the 15th level Faerie queen, this 
+'kingpin' mob of the area is behind a guarded locked door in a room 
+with a brownie, pixie, sprite, and nixie reset, and she casts spells 
+and has sanctuary. 
+ 
+Her limitations are: 
+   tough mob (sanct, spelluse)          = 0.25  
+   tough area (many mobs assisting)     = 0.25  
+   * note that I don't consider her to be tough to reach 
+ 
+   So ACTIVE = 15*(1+.5)/2 = 11.25= 11 
+ 
+Now for cost. Total the modifiers: 
+   +1 hr  = 1 pt 
+   +1 dr  = 2 pts 
+   +1 int = 3 pts 
+   +1 wis = 3 pts 
+Note that 15/8=2, the limit for the hr, dr of an item. Since we are 
+only +1, it's OK. 
+ 
+   So COST = (1+0)*9= 9pts 
+ 
+Since (COST=9) < (ACTIVE=11), the object is not abusive 
+ 
+3. Moonbeam 
+(invis, +2hr, +2dr, enchantable) 
+ 
+Twinkletoes carries a moonbeam. Her ACTIVE is different for this 
+object, since this object is invis. 
+ 
+   LIMITATIONS = 0.75 (tough mob, tough area, invis object) 
+   ACTIVE = 15*(1.75)/2 = 13.125 = 13 
+ 
+Enchantable is a 0.25 advantage. Lets compute the cost: 
+  +2 hr = 2 pts 
+  +2 dr = 4 pts 
+The +2hr, +2 dr is right at the limit for a 15th weapon. 
+ 
+   COST = 6*(1+0.25) = 7.5 rounds to 7 in the players favor 
+ 
+Since (COST=7) < (ACTIVE=13), the object is in balance. 
+ 
+4. An Abusive object, Shieldbreaker 
+(+10hr, +10 dr, +50hp, -10vs spell, noremove, invis) 
+ 
+Shieldbreaker is carried by the 27th level lieutenant of the guard in  
+Solace, a mob with sanct, invis, and in the 20ish room complex of the 
+guard HQ. Only shopkeepers, Goldmoon, and the Captain are higher than 
+him in Solace, so you could say he is a kingpin. Lets also say that he 
+is in a hard to reach area, because you need to search and map the 
+guard complex with det invis to find him. The weapon is magic, so it 
+can not be enchanted. 
+ 
+   LIMITATIONS = 1 (tough mob=0.25, tough to reach=0.25, 
+                    noremove = 0.25, invis =0.25) 
+ 
+   ACTIVE = 27*(1+1)/2 = 27 points 
+ 
+Cost modifiers: 
+   +10hr   = 10pts  * WARNING, EXCEEDS 27/8 = +3 lmt 
+   +10dr   = 20pts  * WARNING, EXCEEDS 27/8 = +3 lmt 
+   +50hp   = 25pts 
+   -10save = 20pts 
+ 
+   COST = 75*(1+0) = 75 
+ 
+Since (COST=75) > (ACTIVE=27) the object is out of balance. Even with 
+the 'Imp likes it' limitation, it is out of balance. It also fails on 
+the hr, dr limitation. An object of this power should be carried by a 
+75th mob. Strahd who created this item says the mob for which it was 
+intended, was originally much higher level, and it and farslayer were 
+intended to be items so desirable that mortals would die over and over 
+in their futile attempts to obtain them. 
+ 
+* Lok's object point system is a guide, not a commandment, and under  
+  revision always from play testing. There are some objects in the game  
+  which are well off the curve. Probably the ultimate swords in the game  
+  are farslayer and shieldbreaker for spellcasters, and excalibur,  
+  scalpels, keyboards, vibroblades, ultima weapons, and other  
+  enchantables for fighter types. Look to these items as being the top  
+  end, and try not to blow the curve beyond them. For BR, if any of your 
+  objects blow the curve, it had better be a really good area! ;) 
+ 
+ 
+======================================================================== 
+                               Section 7: 
+                               ETCETERAS 
+======================================================================== 
+ 
+RESOURCES: 
+--------- 
+* Other docs 
+ 
+The Barren Realms area builder's reference. 
+This is the bare-bones version of this text, focusing on syntax and 
+table values, with few comments. It is intended for more experienced 
+builders. 
+ 
+ 
+* For MS-Windows 
+ 
+Make.Zones.Fast! (MZF) 
+An excellent Windows area editor. It allows you to set up many aspects 
+of your world automatically (like the values from section 6) and it has 
+the very useful ability to globally renumber all vnums in your area. The 
+help files included with this program are full of great hints and tips 
+for area builders. A BR specific version is due out soon, with future  
+versions allowing complete compatibility with ALL BR-specific features! 
+It's available at <ftp://ftp.indirect.com/pub/software/mud>. 
+The filename is mzf????.zip where ???? is the version number. 
+*The current version is: 0.94c 
+ 
+Merc 2.2 for Windows    
+Great for debugging areas. Requires Windows TCP/IP Sockets and Win32, 
+or a 32-bit Windows OS such as Windows NT or Windows 95. 
+See accompanying documentation for details. It's also available at  
+<ftp://ftp.indirect.com/pub/software/mud/>. The file names are 
+mercw32.zip and mercw32a.zip. 
+ 
+ 
+* Usenet 
+rec.games.mud 
+rec.games.mud.admin 
+rec.games.mud.announce 
+rec.games.mud.diku 
+rec.games.mud.misc 
+ 
+ 
+* Mailing lists 
+merc-l-request@netcom.com 
+ 
+ 
+* World Wide Web 
+ 
+Rainman's Barren Realms builder's Homepage! 
+<http://www.cris.com:80/~rainman/index.html> 
+ 
+Scavenger's Quasi-Official Barren Realms Homepage! 
+<http://www.wis.com/users/aberkvam/barren.html> 
+ 
+Make.Zones.Fast on WWW! 
+<http://www.goodnet.com/~esnible/mzf.html>
+ 
+ 
+DEBUGGING: 
+--------- 
+Rainman will gladly debug your area for you.  
+Send to: rwiley@cris.com 
+ 
+ 
+ACKNOWLEDGMENTS: 
+---------------- 
+The information contained herein was compiled from many sources. Thanks  
+to all who have had a part in it's development. 
+ 
+This document contains information from 'database.doc', 'dbsup.doc',  
+and 'values.doc', part of the original Diku mud release and copyrighted 
+by the Diku folks. See their accompanying license. 
+ 
+This document is also a conglomeration of building.txt and the other  
+area building files included in the MERC 2.2 package then expanded and  
+edited them to make it easier for first-time area builders. 
+  
+All thanks go out to the creators of MUD!!! 
+ 
+ 
+DIKUMUD LICENSE: 
+--------------- 
+Copyright (C) 1990, 1991 
+All Rights Reserved 
+ 
+ 
+                             DikuMud License 
+ 
+                      Program & Concept created by 
+ 
+ 
+Sebastian Hammer 
+Prss. Maries Alle 15, 1 
+1908 Frb. C. 
+DENMARK 
+(email quinn@freja.diku.dk) 
+ 
+Michael Seifert 
+Nr. Soeg. 37C, 1, doer 3 
+1370 Copenhagen K. 
+DENMARK 
+(email seifert@freja.diku.dk) 
+ 
+Hans Henrik St{rfeldt 
+Langs} 19 
+3500 V{rl|se 
+DENMARK 
+(email bombman@freja.diku.dk) 
+ 
+Tom Madsen 
+R|de Mellemvej 94B, 64 
+2300 Copenhagen S. 
+DENMARK 
+(email noop@freja.diku.dk) 
+ 
+Katja Nyboe 
+Kildeg}rdsvej 2 
+2900 Hellerup 
+31 62 82 84 
+DENMARK 
+(email katz@freja.diku.dk) 
+ 
+ 
+This document contains the rules by which you can use, alter or publish 
+parts of DikuMud. DikuMud has been created by the above five listed  
+persons in their spare time, at DIKU (Computer Science Institute at  
+Copenhagen University). You are legally bound to follow the rules  
+described in this document. 
+ 
+Rules: 
+ 
+!! DikuMud is NOT Public Domain, shareware, careware or the like !! 
+ 
+You may under no circumstances make profit on *ANY* part of DikuMud in 
+any possible way. You may under no circumstances charge money for 
+distributing any part of DikuMud - this includes the usual $5 charge 
+for "sending the disk" or "just for the disk" etc. 
+By breaking these rules you violate the agreement between us and the 
+University, and hence will be sued. 
+ 
+You may not remove any copyright notices from any of the documents or 
+sources given to you. 
+ 
+This license must *always* be included "as is" if you copy or give 
+away any part of DikuMud (which is to be done as described in this 
+document). 
+ 
+If you publish *any* part of DikuMud, we as creators must appear in the 
+article, and the article must be clearly copyrighted subject to this 
+license. Before publishing you must first send us a message, by 
+snail-mail or e-mail, and inform us what, where and when you are 
+publishing (remember to include your address, name etc.) 
+ 
+If you wish to setup a version of DikuMud on any computer system, you 
+must send us a message , by snail-mail or e-mail, and inform us where 
+and when you are running the game. (remember to include  
+your address, name etc.) 
+ 
+Any running version of DikuMud must include our names in the login 
+sequence. Furthermore the "credits" command shall always contain 
+our name, addresses, and a notice which states we have created DikuMud. 
+ 
+You are allowed to alter DikuMud, source and documentation as long as 
+you do not violate any of the above stated rules. 
+ 
+Regards, 
+ 
+The DikuMud Group 
+ 
+Note: 
+ 
+We hope you will enjoy DikuMud, and encourage you to send us any reports 
+on bugs (when you find 'it'). Remember that we are all using our spare 
+time to write and improve DikuMud, bugs, etc. - and changes will take  
+their time. We have so far put extremely many programming hours into  
+this project. If you make any major improvements on DikuMud we would be  
+happy to hear from you. As you will naturally honor the above rules, you  
+will receive new updates and improvements made to the game. 
+
+

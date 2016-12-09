@@ -1,0 +1,156 @@
+"Mpinform" command for Mobiles v 1.1
+====================================
+
+Coded by Ian Wright (AKA Halcyon) for Smaug 1.4a
+(Should be compatible with most Smaug derivatives,
+with a tiny bit of tweaking.)
+
+Comments
+========
+
+This mprog command was created as a compliment to my
+previous "inform" command, which allows Immortals to
+force players to read help files. Sure, you could have
+simply had a mobile use the regular inform, but I hadn't
+designed the original command for use with mobiles, so
+the mob would have to be level 51 or higher to use it or
+the output just ended up looking silly. :/ Plus this way
+you can see why your mprogs aren't working when there's a
+problem.
+
+The instructions direct you to alter an ifcheck in the
+get_help function so that it doesn't check levels on a
+mobile. This way, a mobile that isn't a high enough level
+to read a given help file can still inform a player to do
+so, although the player must still be a high enough level
+to read it for it to be displayed. You MAY choose to simply
+not do this. It's not all that important in the long run,
+it's simply a matter of convenience so you don't have to
+play with levels on mobs to get mpinform to function
+correctly.
+
+Incidentally, if you try to use this command in a roomprog
+or objectprog, you're going to notice that the command is
+executed twice. This isn't my fault! (Phew!) It's some
+kind of bug in the code. You'll have to look around for
+a fix.
+
+This snippet is free to use (Duh), but if you're going to
+use it, give me some credit in a help file somewhere, huh?
+(I'll regret not being more specific than that later.)
+
+Changes This Version
+====================
+
+Not a whole lot's changed, just tidied up a bit.
+
+Installation Instructions
+=========================
+
+1. Open up "act_info.c" and somewhere under the "do_help"
+   add the following:
+
+/*
+ * do_inform's compliment, do_mpinform. Allows
+ * progs to impose help files on players. -Hal
+ */
+void do_mpinform( CHAR_DATA *ch, char *argument )
+{
+	char arg[MAX_INPUT_LENGTH];
+	char arg2[MAX_INPUT_LENGTH];
+	HELP_DATA *pHelp;
+	CHAR_DATA *victim;
+
+	if( !IS_NPC(ch))
+	{
+		send_to_char( "Huh?\n\r", ch );
+		return;
+	}
+	
+	argument = one_argument( argument, arg );
+	argument = one_argument( argument, arg2 );
+
+	if( arg[0] == '\0' || arg2[0] == '\0')
+	{
+		progbug( "Mpinform - Missing argument(s)", ch );
+		return;
+	}
+
+	if(( victim = get_char_world( ch, arg )) == ch )
+	{
+		progbug( "Mpinform - Victim points to self", ch );
+		return;
+	}
+
+	if(( victim == NULL ) || IS_NPC(victim))
+	{
+		progbug( "Mpinform - Victim not in world", ch );
+		return;
+	}
+	
+	/*
+	 * As with inform, I want to make sure that
+	 * whoever uses the command knows EXACTLY
+	 * what help file they're forcing on hapless
+	 * players. There's just no excuse not to. -Hal
+	 */
+	if ( (pHelp = get_help( ch, arg2 )) == NULL )
+	{
+		progbug( "Mpinform - Specified help file mispelled or does not exist", ch );
+		return;
+	}
+
+	ch_printf( victim, "&w%s would like to inform you of the '%s' help topic.\n\r",
+		capitalize(ch->short_descr), arg2 );
+	do_help(victim, arg2);
+	return;
+}
+
+   *OPTIONAL*:
+
+   Next, find the get_help function. Within the function,
+   locate the following ifcheck:
+
+	if ( pHelp->level > get_trust( ch ))
+	    continue;
+
+   Change it to:
+
+	if ( pHelp->level > get_trust( ch ) && !IS_NPC(ch))
+	    continue;
+
+2. Add the appropriate DECLARE_DO_FUNs in mud.h and table
+   entries in tables.c. If you don't know how to do this,
+   you need to learn. There's likely a tutorial for that
+   somewhere.
+
+3. Ok, we're all set. Make clean and recompile.
+
+4. Add a command to your command table for mpinform. Set
+   the level to 0 and set the "possessed" flag for the
+   command. You may also choose to set it to log so you
+   can make sure it's not being toyed with.
+
+Syntax for usage:
+
+	mpinform <player> <helptopic>
+
+If you have any trouble with installation, you can email me at:
+
+rockmanxnxs*AT*yahoo.com
+
+Yeah, you know what to replace with what. :P
+
+Please feel free to include the name of your MUD and connect
+info, I'm always eager to see how my code's being used. :)
+
+But don't email me if you didn't follow instructions, and if
+you didn't credit me somewhere, probably shouldn't mention
+your MUD, cause I'll be lookin'. :D
+
+This snippet was designed for use with Smaug 1.4a. I currently
+run Smaug FUSS 1.6, a very well bugfixed version of Smaug.
+No guarantees are made or implied that this will work with your
+code. It should, however, need only minimal adjustments to be
+compatible with other codebases, particularly Diku derivatives.
+If not... Sorry, you're SOL. :(

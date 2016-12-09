@@ -1,0 +1,34 @@
+:Base AreaEditor.hlp
+1 Introduction
+2 Features=FEATURES
+2 Configuration=CONFIGURATION
+1 Make an area file
+2 Create an area from scratch=CREATE_NEW_AREA
+1 Edit an existing area
+2 Open an area file=HID_FILE_OPEN
+2 Open a batch of areas=HID_FILE_OPENAREALIST
+2 Area tree view=HIDR_AREAEDTYPE
+2 Add items to the area=ADDING_ITEMS
+2 Delete items from the area=DELETING_ITEMS
+2 Duplicate items=DUPLICATING_ITEMS
+2 Renumber an area=HID_AREA_RENUMBER
+2 Spell check=SPELL_CHECKER
+1 Check an area
+2 Check area for missing/unused items=HID_AREA_CHECK
+2 Walk through areas=HID_AREA_WALKTHROUGH
+2 Print the area=HID_FILE_PRINT
+2 Area summary=HID_FILE_AREA_SUMMARY
+1 Area header
+2 Edit area header=AREA
+1 Mobiles (mobs)
+2 Edit a mob=MOBILE
+2 Generate mob names=HID_EDIT_GENERATENAME
+1 Rooms
+2 Edit a room=ROOMS
+1 Objects
+2 Edit an object=OBJECTS
+1 Finding things
+2 Find an item=HIDD_FIND
+2 Go to vnum=HID_EDIT_GOTOVNUM
+1 Registration
+2 Registration process=HID_REGISTER_SMAUG_EDITOR

@@ -1,0 +1,248 @@
+			   GAMBLER SNIPPET (Smaug 1.4)
+
+Look in these files for similar statementes and add:                
+
+MUD.H:  DECLARE_DO_FUN( do_bet          );
+mud.h:  DECLARE_DO_FUN( do_uncover     );
+mud.h:  in ' typedef enum { ...PLR_AUTOGOLD, PLR_AUTOMAP, PLR_AFK, PLR_INVISPROMPT, PLR_GAMBLER } player_flags '  
+
+SPECIAL.C:  DECLARE_SPEC_FUN(       spec_gambler            );
+special.c:    if ( !str_cmp( name, "spec_gambler"  ) ) return spec_gambler;
+special.c:    if ( special == spec_gambler        )    return "spec_gambler";
+special.c:
+bool spec_gambler( CHAR_DATA *ch) /*You can add here special characteristics*/
+{
+      if (!IS_NPC(ch))
+	return FALSE;
+      else
+	return TRUE;
+}
+
+
+BUILD.C:  look for char * const plr_flags[] , and add:
+a field called "gambler", at the same position like in the mud.h
+
+ACT_COMM.C: in 'do_quit'  (if you quit the game, removes gambler bit*/           
+
+  if(xIS_SET(ch->act, PLR_GAMBLER))                                   
+  xREMOVE_BIT( ch->act, PLR_GAMBLER);
+
+TABLES.C:       if ( !str_cmp( name, "do_bet"     ))    return do_bet;    
+tables.c:    if ( skill == do_bet     )         return "do_bet";    
+tables.c:       if ( !str_cmp( name, "do_uncover"     ))    return do_uncover;
+tables.c:    if ( skill == do_uncover )         return "do_uncover";
+
+ACT_INFO.C:   if you don't want these commands appearing in commands list add
+ in 'do_commands' (it appears 2 times)
+
+		if ( command->level <  LEVEL_HERO
+		&&   command->level <= get_trust( ch )
+		&&  (command->name[0] != 'm'
+		||   command->name[1] != 'p') /* Note in original code appears '&&', but it's wrong */
+		&& (strcmp(command->name,"uncover"))    /* Add this */
+		&& (strcmp(command->name,"bet")))     /* Add this */
+
+/SYSTEM/COMMANDS.DAT:
+
+#COMMAND
+Name        bet~     
+Code        do_bet    
+Position    100
+Level       1         /* You can change level command */
+Log         0
+End
+
+#COMMAND
+Name        uncover~
+Code        do_uncover   
+Position    100
+Level       1
+Log         0
+End
+
+MAKEFILE:
+Add chance.o and chance.c in respective sections
+
+CHANCE.C :   (New file you must add) I don't speak English very well, so you
+maybe want to change messages to_char and to_room. Of course, you can do it ;)
+
+
+/************************************************************************                         GAME OF CHANCE                               *
+* Codigo para la implementación de juegos de azar en SMAUG (version 1.4)  *
+*  Desden, el Chaman Tibetano( José Luis Sogorb)  - Octubre de 1998       *
+*                  Email: jose@luisso.net                       *
+**********************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>           /* Random functions */
+#include <string.h>
+#include <ctype.h>
+#include "mud.h"
+			       /* You can set here max and min bet */
+#define MAX_BET 10000      /* Maxim bet */                        
+#define MIN_BET 1000       /* Minimum bet */                     
+#define REWARD  2*gold_bet      /* Reward for the winner */
+
+int gold_bet;    
+
+void do_bet( CHAR_DATA *ch, char *argument)
+{
+  CHAR_DATA *gambler;
+  CHAR_DATA *compet;
+  char buf[MAX_STRING_LENGTH];
+  char arg[MAX_INPUT_LENGTH];
+  
+ argument=one_argument(argument,arg);
+ gold_bet = atoi(arg);
+
+ 
+/* Checks there is a spec_gambler in your room */                    
+  for (gambler = ch->in_room->first_person; gambler != NULL; gambler = gambler->next_in_room)
+  {
+   if (!IS_NPC(gambler))continue;
+   if(gambler->spec_fun == spec_lookup( "spec_gambler")) break;
+  }
+
+ if (gambler == NULL || gambler->spec_fun != spec_lookup("spec_gambler"))
+ {
+   send_to_char ("You can't do that here!.\n\r",ch);
+   return;
+ }
+
+if ( arg[0] == '\0')             /* You must bet something */
+ {
+send_to_char("You must bet something.\n\r",ch);
+return;
+ } 
+
+if (gold_bet <MIN_BET || gold_bet > MAX_BET)
+ {
+sprintf(buf,"You must bet a reasonable amount. Min: %d, max: %d \n\r",MIN_BET, MAX_BET);
+send_to_char(buf,ch);
+return;
+ }
+
+ /* Checks mob is not fighting */
+ if (gambler->position == POS_FIGHTING)
+  {
+   send_to_char ("You must wait he stops fighting.\n\r",ch);
+   return;
+  }
+
+  /* Cheks there is not another player doing a bet */
+  for (compet = ch->in_room->first_person; compet != NULL; compet = compet->next_in_room)
+  {
+    if( xIS_SET(compet->act, PLR_GAMBLER))
+     {  
+      act(AT_PLAIN,"You must wait $N finishes a pending bet.",ch,NULL,gambler,TO_CHAR);
+      return;
+     }
+   }
+
+ /* Checks player has enough money */
+  if (ch->gold < gold_bet)
+  {
+   sprintf(buf,"You must have %d gold coins, at least, to do bets.\n\r",gold_bet );
+  send_to_char(buf,ch);
+  return;
+  }
+   else
+  {
+   xSET_BIT(ch->act, PLR_GAMBLER); /* Set gambler bit in player */
+  ch->gold -= gold_bet;         /* He takes away bet amount from your gold*/
+
+   sprintf(buf," %s puts a small piece of amber into a cup and begin to interchange them.\n\rHe does so quickly than you can't follow his movements. When he finishes, it\n\rseems cups are in the same place. But, where is now the amber??. %s try\n\rto UNCOVER one of the cups.!",gambler->name,ch->name);
+
+act(AT_PLAIN,buf,ch,NULL,NULL,TO_CHAR);
+act(AT_PLAIN,buf,ch,NULL,NULL,TO_ROOM);
+  return;
+ }
+}
+
+void do_uncover(CHAR_DATA *ch, char *argument)
+{
+  CHAR_DATA *gambler;
+  int result;
+  char arg[MAX_INPUT_LENGTH];
+  char buf[MAX_STRING_LENGTH]; 
+  
+  argument=one_argument(argument,arg);
+  result = number_range(1,3);           /* Chooses a random cup */           
+  
+/* Checks there is a spec_gambler in your room */                       
+for (gambler = ch->in_room->first_person; gambler != NULL; gambler = gambler->next_in_room)
+  {
+   if (!IS_NPC(gambler))continue;
+   if(gambler->spec_fun == spec_lookup( "spec_gambler")) break;
+  }
+
+ if (gambler == NULL || gambler->spec_fun != spec_lookup("spec_gambler"))
+  {
+   send_to_char ("You can't do that here!.\n\r",ch);
+   return;
+  }
+
+/* Checks bet has been done */                 
+if (!xIS_SET(ch->act, PLR_GAMBLER))
+  {
+   send_to_char("You must bet first if you want to play.\n\r",ch);
+  return;
+  }
+
+ /* Checks mob is not fighting*/              
+ if (gambler->position == POS_FIGHTING)
+  {
+   send_to_char ("You must wait he stops fighting.\n\r",ch);
+   return;
+  }
+
+if(!strcmp(arg,"red") || !strcmp(arg,"green") || !strcmp(arg,"blue"))
+  {
+     sprintf(buf," Well, %s bets %d gold coins and says amber is into %s cup.\n\r", ch->name, gold_bet, arg);
+
+ act(AT_PLAIN, buf, ch, NULL, NULL, TO_CHAR);
+ act(AT_PLAIN, buf, ch, NULL, NULL, TO_ROOM);
+
+ /* Compare choosen cup with random choice */                 
+   if((!strcmp(arg,"red") && result==1) || (!strcmp(arg,"green") && result==2) || (!strcmp(arg,"blue") && result==3))
+     {
+      sprintf(buf," %s uncovers the indicated cup and shouts: PRICE for the %s.!!\n\r%s has just won %d gold coins. Anybody else wants to try it?.", gambler->name,ch->sex==SEX_FEMALE?"lady" : "gentleman", ch->name, REWARD);
+  
+  act(AT_YELLOW,buf,ch,NULL,NULL,TO_CHAR);
+  act(AT_YELLOW,buf,ch,NULL,NULL,TO_ROOM); 
+
+ch->gold += REWARD;      /* Pay winner bet */                   
+     }
+else              
+     {
+   sprintf(buf," With a smile %s uncovers the indicated cup and says: Oh, what a bad luck.\n\rI'm sorry, %s, it wasn't there, precisely. Anybody else wants to try it?",gambler->name,ch->name);
+
+   act(AT_YELLOW,buf,ch,NULL,NULL,TO_CHAR);
+   act(AT_YELLOW,buf,ch,NULL,NULL,TO_ROOM);
+    }
+
+xREMOVE_BIT(ch->act, PLR_GAMBLER);   /* Removes gambler bit in player */                 
+
+  }
+else          
+  { 
+ act(AT_PLAIN,"$n, you must uncover one of the cups.",ch,NULL,gambler,TO_CHAR);
+return;
+  }
+}
+/***************************************************************************
+*                           End of the code                                 *
+*                                                                           *
+***************************************************************************/
+
+
+- At last do a 'make clean' and a 'make'.    
+-It works doing first "bet 'amount'" (where amount is the gold you bet) and "uncover 'color'" (where color is : red, blue or green):
+- Assign spec_gambler to your chosen mob.         
+- You must indicate in room description some reference to the cups and their colors.
+
+Please if you try it send me a mail telling me if you like it, errors, or any
+comments you want. I'll greet you if mail me telling you are using this code. Thanks ;)
+Desden el Chaman Tibetano - Nov 1998
+Email: jose@luisso.net  
+

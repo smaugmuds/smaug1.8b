@@ -1,0 +1,73 @@
+Ok this is my first snippet for low4 to be released and it's fairly simple, it's just an aura type thing for stock highlanders since they dont get much at all. i'll be releasing a couple more highlander snippets, just look for them on www.kyndig.com. i just got tired of seeing so many muds with highlanders that only have katana and hightalk. that just makes them slightly more powerful than mortals and highlanders are such an awesome class if they are built up. anyway, i'm gonna try and make this simple for newbie coders to just cut and paste.
+
+/* low_wiz.c somewhere close to the bottom. i have mine under the do_katana function*/
+
+void do_embracedeath( CHAR_DATA *ch, char *argument )
+{
+    if (IS_NPC(ch)) return;
+    
+    if (!IS_HIGHLANDER(ch) )
+    {
+        send_to_char("Huh?\n\r",ch);
+        return;
+    }
+    
+    if (IS_ITEMAFF(ch,ITEMA_DEATHEMBRACE) )
+    {
+        send_to_char("You stop embracing death.\n\r",ch);
+        act("$n stops embracing death", ch, NULL, NULL, TO_ROOM);
+        REMOVE_BIT(ch->itemaffect, ITEMA_DEATHEMBRACE);
+        return;
+    }
+    send_to_char("Your contempt for life shows through.\n\r",ch);
+    act("$n's contempt for life shows through.", ch, NULL, NULL, TO_ROOM);
+    SET_BIT(ch->itemaffect, ITEMA_DEATHEMBRACE);
+    return;
+}
+
+/* act_info.c */
+/* under               if ( IS_ITEMAFF(victim, ITEMA_SUNSHIELD) )
+                act( "#y...$N is surrounded by a glowing halo of sunlight.#n", ch,NULL,victim,TO_CHAR );
+*/
+add:
+
+              if ( IS_ITEMAFF(victim, ITEMA_DEATHEMBRACE) )
+                act( "#e...$N is filed with contempt for life.#n", ch,NULL,victim,TO_CHAR );
+
+/* fight.c */
+/* under this in the void update_damcap function.
+
+         if ( IS_CLASS(ch, CLASS_HIGHLANDER) )
+        {
+            if ( get_eq_char(ch, WEAR_WIELD) != NULL )
+            {
+                max_dam += (ch->wpn[1]);
+                max_dam += (ch->race * 10);
+            }
+*/
+
+add:
+
+if (IS_ITEMAFF(ch, ITEMA_DEATHEMBRACE)) max_dam += 1000;
+        }
+
+/* merc.h */
+/*under
+#define ITEMA_SUNSHIELD         2097152
+*/
+add:
+
+#define ITEMA_DEATHEMBRACE      4194304
+
+/* this wont work if you have other itema's defined below sunshield, if this is the case then multiply the number of the bottom defined itema by 2 and you'll have your new number.*/
+/* also in merc.h somewhere under vamp commands add this*/
+DECLARE_DO_FUN( do_embracedeath );
+
+/* interp.c in highlander commands below do_katana */
+
+    { "embracedeath",   do_embracedeath, POS_FIGHTING,   0,  LOG_NORMAL },
+
+
+now just go into src and rm -rf *.o and type make and you shouldn't run into any problems. dont forget to copyover on the mud. if you do have any problems then you can contact me by email at mystery@messiah.ath.cx or on aim at MysteryOfTPW and i'll attempt to help ya out.
+
+quick update, if you have problems with the damcap not being increased and you have added a statement that increases max_dam to 10000 or whatever if the player's damcap is below 10000 at max legend then just increase the line in fight.c that says if (IS_ITEMAFF(ch, ITEMA_DEATHEMBRACE)) max_dam += 1000; till you see a damcap difference.

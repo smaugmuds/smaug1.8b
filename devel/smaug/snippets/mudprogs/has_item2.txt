@@ -1,0 +1,47 @@
+This snippet can be added for checking if a player has an item with a
+particular item type in their inventory. The second version only checks for a single item type but is much easier to use.
+
+<<<MUD.H>>>
+UNDER: void    obj_fall  	args( ( OBJ_DATA *obj, bool through ) );
+
+ADD:
+
+bool    has_itemtype    args( ( CHAR_DATA *ch, char *itemtype ) );
+
+<<<ACT_OBJ.C>>>
+
+AT THE BOTTOM ADD:
+
+/* 
+ * Checks a player's inventory for an item of a particular type.
+ * Written by David Reichard(Terell) 2004.
+ */
+bool has_itemtype(CHAR_DATA *ch, char *itemtype)
+{
+        OBJ_DATA *obj;
+        int value = get_otype(itemtype);
+
+	/* Does the itemtype exist? */
+        if (value < 1)
+                return FALSE;
+
+        for(obj = ch->last_carrying; obj; obj = obj->prev_content)
+        {
+		/* Does the player have an item with the specified item type? */
+                if(obj->item_type == value)
+                        return TRUE;
+        }
+
+        return FALSE;
+}
+
+
+Then all you have to do to use it is look at your o_types in build.c
+and choose a particular one to look for, here is an example:
+
+if (has_itemtype(ch, "furniture"))
+
+MAKE SURE YOU INCLUDE THE QUOTES OR IT WILL THINK YOUR ITEMTYPE IS UNDECLARED.
+
+Any suggestions or questions you can reach me at dmreichard@earthlink.net.
+If you find this useful then tell me! =)

@@ -1,0 +1,54 @@
+This was something I cooked up to have multiple ANSI screens. When a player
+logs onto your mud, they won't see the "same ole" ansi screen.
+
+In mud.h
+--------
+Where the #define is for #define ANSITITLE_FILE  SYSTEM_DIR "mudtitle.ans"
+replace that with .....
+#define ANSITITLE_FILE  SYSTEM_DIR "mudtitle1.ans"
+#define ANSITITLE1_FILE  SYSTEM_DIR "mudtitle2.ans"
+#define ANSITITLE2_FILE  SYSTEM_DIR "mudtitle3.ans"
+#define ANSITITLE3_FILE  SYSTEM_DIR "mudtitle4.ans"
+#define ANSITITLE4_FILE  SYSTEM_DIR "mudtitle5.ans"
+#define ANSITITLE5_FILE  SYSTEM_DIR "mudtitle6.ans"
+
+In act_comm.c
+-------------
+Right below the line that reads ....
+    char BUFF[MAX_STRING_LENGTH*2];
+add ...
+    int random;
+    char pbuf[MAX_INPUT_LENGTH];
+
+    random = number_range(0, 5);
+    switch(random)
+    {
+    case 0:
+      strcpy(pbuf,ANSITITLE_FILE);
+      break;
+    case 1:
+      strcpy(pbuf,ANSITITLE1_FILE);
+      break;
+    case 2:
+      strcpy(pbuf,ANSITITLE2_FILE);
+      break;
+    case 3:
+      strcpy(pbuf,ANSITITLE3_FILE);
+      break;
+    case 4:
+      strcpy(pbuf,ANSITITLE4_FILE);
+      break;
+     case 5:
+     default:
+      strcpy(pbuf,ANSITITLE5_FILE);
+      break;
+    }
+ and replace the line that reads ....
+    if ((rpfile = fopen(ANSITITLE_FILE,"r")) !=NULL) {
+with ....
+    if ((rpfile = fopen(pbuf,"r")) !=NULL) {
+
+The last thing to do is create your ansi files in the /dist/system
+directory, they should be ....
+mudtitle1.ans mudtitle2.ans mudtitle3.ans
+mudtitle4.ans mudtitle5.ans mudtitle6.ans

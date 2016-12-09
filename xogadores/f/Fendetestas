@@ -1,0 +1,56 @@
+#PLAYER
+Version      3
+Name         Fendetestas~
+Sex          1
+Class        6
+Race         9
+Languages    1 1
+Level        2
+Played       6043
+Room         10304
+HpManaMove   35 35 106 106 110 110
+Stance       0
+Stances      0 0 0 0 0 0 0 0 0 0 0 0
+Gold         0
+Exp          2000
+Height          69
+Weight          140
+Act          704644680
+AffectedBy   512
+Position     104
+Style     2
+Practice     2
+Alignment    0
+SavingThrows 0 0 0 0 0
+Favor	       0
+Glory        0
+MGlory       0
+Honour       0
+Hitroll      0
+Damroll      0
+Armor        100
+Resistant    2
+Mentalstate  -100
+Password     2aa33b11d6ce3fb29054e563a7916bd8f6fe0f3d3b665613eac4222f79427fe4~
+Title         the Strider~
+Flags        8519688
+PKills       0
+PDeaths      0
+MKills       0
+MDeaths      0
+IllegalPK    0
+AttrPerm     15 15 11 13 13 11 17
+AttrMod      0 0 0 0 0 0 0
+Condition    0 0 0 10
+Site         206.pool213-143-49.static.orange.es
+Tongue       100 'common'
+Tongue       100 'elvish'
+End
+
+#OBJECT
+Vnum         10333
+WearLoc      17
+Values       5 5 0 0 0 0
+End
+
+#END

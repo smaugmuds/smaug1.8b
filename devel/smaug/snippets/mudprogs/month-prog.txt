@@ -1,0 +1,214 @@
+                     MONTH_PROG  SNIPPET (Smaug 1.4)
+
+ With this prog and ifcheck you can make similar things like in time_prog, but checking the month you are, for instance you could load seasonal objects, etc.
+
+ 1.- The 'ifcheck' is really easy to do, just open MUD_PROG.C  and look for
+
+if ( !str_cmp(chck, "time") )
+  {
+      return mprog_veval(time_info.time, opr, atoi(rval), mob );  
+  }
+
+and add below:
+if ( !str_cmp(chck, "month") )
+  {
+      return mprog_veval(time_info.month, opr, atoi(rval), mob );
+  }
+
+
+Now  do a 'make' and you can use it like 'if time($n) ..'
+Remember, in Smaug there are 17 months (and progs uses 0 to 16, not 1 to 17).
+An easy example:
+ >greet_prog 100~
+if month($n)==3
+mpecho Happy Christmas
+~
+|
+
+Of course you can use ' >', '< ', ' or ', etc.
+
+
+
+2.- To add MONTH_PROG is a little harder, but just follow my indications:
+
+
+In  DB.C:   
+look for        if ( !str_cmp( name, "time_prog"     ) )   return TIME_PROG;
+and add below   if ( !str_cmp( name, "month_prog"    ) )  return MONTH_PROG;
+
+In MUD_COMM.C :	
+look for           case TIME_PROG:		return "time_prog";
+and add below      case MONTH_PROG:		return "month_prog";
+
+
+In MUD.H: 
+
+look for          typedef enum{ . . . . . . }prog_types
+and add into            ,MONTH_PROG 
+
+add also this functions after the other _trigger ... similar functions
+void    mprog_month_trigger     args ( ( CHAR_DATA *mob ) );
+void    rprog_month_trigger   ( CHAR_DATA *ch );
+void    oprog_month_trigger   ( OBJ_DATA *obj );  
+
+
+In MUD_PROG.C:
+
+add this (look the similar functions of time and put them near, for easy understanding) Look than time has not oprogs.
+
+/**************************************************************************
+*       Month_prog coded by Desden, el Chaman Tibetano (J.L.Sogorb)       *
+*                            October 1998                                 *
+*                   Email: jose@luisso.net                      *
+*                                                                         *
+**************************************************************************/
+ void mprog_month_check( CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj,
+                         void *vo, int type)
+{
+ MPROG_DATA * mprg;
+
+ for ( mprg = mob->pIndexData->mudprogs; mprg; mprg = mprg->next )
+   {
+
+     if (  mprg->type == type && time_info.month == atoi(mprg->arglist)) 
+       mprog_driver( mprg->comlist, mob, actor, obj, vo, FALSE );
+   }
+ return;
+}
+
+
+
+void rprog_month_check( CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj,
+			void *vo, int type )
+{
+  ROOM_INDEX_DATA * room = (ROOM_INDEX_DATA *) vo;
+  MPROG_DATA * mprg;
+
+  for ( mprg = room->mudprogs; mprg; mprg = mprg->next )
+  {
+    if ( mprg->type == type && time_info.month == atoi(mprg->arglist))
+      mprog_driver( mprg->comlist, mob, actor, obj, vo, FALSE );
+  }
+  return;
+}
+
+
+
+void oprog_month_check( CHAR_DATA *mob, CHAR_DATA *actor, OBJ_DATA *obj,
+			 void *vo, int type)
+{
+    MPROG_DATA * mprg;
+
+    for ( mprg = obj->pIndexData->mudprogs; mprg; mprg = mprg->next )
+     {
+	if ( mprg->type == type
+	&&  time_info.month == atoi( mprg->arglist ) )
+	    mprog_driver( mprg->comlist, mob, actor, obj, vo, FALSE );
+     }
+   return;
+}
+
+
+
+void mprog_month_trigger( CHAR_DATA *mob )
+{
+    if ( HAS_PROG(mob->pIndexData,MONTH_PROG) )
+	mprog_month_check(mob,NULL,NULL,NULL,MONTH_PROG); 
+}
+
+
+
+void rprog_month_trigger( CHAR_DATA *ch )
+{
+   if ( HAS_PROG(ch->in_room,MONTH_PROG))
+   {
+	rset_supermob( ch->in_room );
+	rprog_month_check( supermob, NULL, NULL, ch->in_room,MONTH_PROG );
+	release_supermob();
+   }
+}
+
+
+void oprog_month_trigger( OBJ_DATA *obj )
+{
+    if ( HAS_PROG(obj->pIndexData, MONTH_PROG) )
+    {
+	set_supermob( obj );
+	oprog_month_check(supermob,NULL,obj,NULL,MONTH_PROG);
+	release_supermob();
+    }
+}
+
+ 
+In UPDATE.C:
+
+Add at the beggining of the file:
+static bool update_month_trigger;
+
+look for        time_info.month++;       into void time_update()
+and add upon                update_month_trigger = 1;
+
+
+into char_update(void)
+look for similar time checkings and add:
+
+if (IS_NPC(ch)&& update_month_trigger==1) mprog_month_trigger(ch);
+if (char_died(ch))
+    continue;
+
+if (IS_NPC(ch)&& update_month_trigger==1) rprog_month_trigger(ch);
+if (char_died(ch))
+    continue;
+
+
+Also look for clear_vrooms (); and add just below :
+
+if(time_info.hour == 1) 
+ update_month_trigger = 0;              
+
+
+and the last thing :)
+in obj_update(void) look for
+      
+       set_cur_obj( obj );
+	if ( obj->carried_by )
+	  oprog_random_trigger( obj ); 
+	else
+	if( obj->in_room && obj->in_room->area->nplayer > 0 )
+	  oprog_random_trigger( obj ); 
+
+
+and change it to:
+  
+	set_cur_obj( obj );
+	if ( obj->carried_by )
+	  {
+           oprog_random_trigger( obj ); 
+           if(update_month_trigger==1) oprog_month_trigger(obj);
+          }
+	else
+	if( obj->in_room && obj->in_room->area->nplayer > 0 )
+	 { 
+          oprog_random_trigger( obj ); 
+          if(update_month_trigger==1) oprog_month_trigger(obj);
+         }
+
+3.- Now do a 'make clean' and a 'make'.
+
+Now you can use MONTH_PROG like TIME_PROG, it works just in the moment the
+mud reaches the month. It can be used with mobs, rooms and objects.
+ Note than in these progs there is not a player making the trigger, so you can't
+use $n, you must use $i (the mob or supermob). 
+An example:
+>month_prog 5~
+shout Well, spring has come.
+~
+|
+
+***************************************************************************
+I hope you enjoy it. If you have any question or problem, please mail me:
+I'll greet you also if you mail me telling you are using this code and if
+you like it. Thank you.
+                          jose@luisso.net
+
+**************** Desden, el Chaman Tibetano ---- Oct 1998 *****************

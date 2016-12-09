@@ -1,0 +1,58 @@
+Creating a new Area file.
+
+Check that the vnums you want to assign to the area are free to be used.
+checkvums all [lo_vnum] [hi_vnum]
+Assign the vnums to the builder (rooms, objects, mobs) This will create a temporary [builder].are file.
+rassign [builder] lo_vnum hi_vnum
+oassign [builder] lo_vnum hi_vnum
+massign [builder] lo_vnum hi_vnum
+Goto the lo_vnum and hi_vnum rooms numbers to create.
+goto [lo_vnum]
+goto [hi_vnum]
+Create the lo_vnum and hi_vnum object prototypes.
+ocreate [lo_vnum] 100 lo_object
+ocreate [hi_vnum] 100 hi_object
+Create the lo_vnum and hi_vnum mob prototypes.
+mcreate [lo_vnum] 100 lo_object
+mcreate [ho_vnum] 100 ho_object
+Create at least one reset.
+reset add obj [lo_vnum] [lo_vnum] 1
+Save the area (as builder).
+savearea
+Installing a new Area File.
+
+Check that the area has all its resets set.
+aassign [builder].are
+reset list
+aassign none
+Make sure the linking room vnums are known (from->to).
+Install the area (lev 65).
+installarea [builder].are
+Rename the area file to something more suitable.
+aset [builder].are filename [areaname].are
+Set the softrange for an indication that the players should be to survive.
+aset [areaname].are softrange 11 20
+Set the hardrange to make sure players inside the range can't enter.
+aset [areaname].are hardrange 0 10
+Set the reset message seen when the area re-populates mobs and objects.
+aset [areaname].are resetmsg The tide slowly creeps in.
+Set the area reset frequency.
+aset [areaname].are resetfrq 20
+Fold the area.
+foldarea [areaname].are
+Link the area in to the the known room vnums and directions.
+goto [from_link_room_vnum]
+redit exit(1 way)/bexit(2 way) [dir] [to_link_room_vnum]
+Un-installing and/or Deleting and Un-installing an Area. (Requires filesystem access.)
+
+Shut the mud down.
+shutdown [portnumber] now
+Shell in or open a terminal window on the server (depending on access type).
+Change to the area directory.
+cd [smaug_directory]/area
+Edit the area.lst file and remove the area filenames from the list, to un-install the area, before saving.
+vim area.lst
+Remove the area file completely after un-installing (if need be).
+rm [areaname].are
+Restart the mud.
+[smaug_directory]/src/startup [portnumber] &

@@ -1,0 +1,49 @@
+/*
+ * Add this to merc.h and use it to check the first character of anything you
+ * want to have a/an for proper English.                        -- Midboss
+ */
+#define VOWEL_CHECK(c) (   (c) == 'a' || (c) == 'A'  \
+                        || (c) == 'e' || (c) == 'E'  \
+                        || (c) == 'i' || (c) == 'I'  \
+                        || (c) == 'o' || (c) == 'O'  \
+                        || (c) == 'u' || (c) == 'U')
+
+/*
+ * This simple little function will return a display for num that includes
+ * leading zeros.  I used it for score, and figured someone else might want
+ * it.  It also colors the zeros and the number itself independently.
+ *                                                              -- Midboss
+ */
+char * meter (long num, int digits, char col1, char col2)
+{
+	static char buf[16];
+
+	//Initialize the buffer.
+	sprintf (buf, "{%c", col1);
+
+	//Repetitive, but it works.
+	if (digits >= 10 && num < 100000000)
+		strcat (buf, "0");
+	if (digits >= 9 && num < 100000000)
+		strcat (buf, "0");
+	if (digits >= 8 && num < 10000000)
+		strcat (buf, "0");
+	if (digits >= 7 && num < 1000000)
+		strcat (buf, "0");
+	if (digits >= 6 && num < 100000)
+		strcat (buf, "0");
+	if (digits >= 5 && num < 10000)
+		strcat (buf, "0");
+	if (digits >= 4 && num < 1000)
+		strcat (buf, "0");
+	if (digits >= 3 && num < 100)
+		strcat (buf, "0");
+	if (digits >= 2 && num < 10)
+		strcat (buf, "0");
+
+	//Finish it off...
+	sprintf (strlen(buf) + buf, "{%c%ld", col2, num);
+
+	//Done.
+	return buf;
+}
