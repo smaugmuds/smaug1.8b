@@ -4698,36 +4698,36 @@ DECLARE_SPELL_FUN(	spell_sacral_divinity	);
  *   but some systems have incomplete or non-ansi header files.
  */
 #if	defined(_AIX)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 #if	defined(apollo)
 int	atoi		args( ( const char *string ) );
 void *	calloc		args( ( unsigned nelem, size_t size ) );
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 #if	defined(hpux)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 #if	defined(interactive)
 #endif
 
 #if	defined(linux)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 #if	defined(MIPS_OS)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 #if	defined(NeXT)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 #if	defined(sequent)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 int	fclose		args( ( FILE *stream ) );
 int	fprintf		args( ( FILE *stream, const char *format, ... ) );
 int	fread		args( ( void *ptr, int size, int n, FILE *stream ) );
@@ -4737,7 +4737,7 @@ int	ungetc		args( ( int c, FILE *stream ) );
 #endif
 
 #if	defined(sun)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 int	fclose		args( ( FILE *stream ) );
 int	fprintf		args( ( FILE *stream, const char *format, ... ) );
 #if 	defined(SYSV)
@@ -4752,7 +4752,7 @@ int	ungetc		args( ( int c, FILE *stream ) );
 #endif
 
 #if	defined(ultrix)
-char *	sha256_crypt		args( ( const char *key, const char *salt ) );
+char *	crypt		args( ( const char *key, const char *salt ) );
 #endif
 
 /*
@@ -4763,7 +4763,7 @@ char *	sha256_crypt		args( ( const char *key, const char *salt ) );
  * Turn on NOCRYPT to keep passwords in plain text.
  */
 #if	defined(NOCRYPT)
-#define sha256_crypt(s1, s2)	(s1)
+#define crypt(s1, s2)	(s1)
 #endif
 
 
@@ -4822,31 +4822,31 @@ char *	sha256_crypt		args( ( const char *key, const char *salt ) );
 
 
 #define MORPH_FILE      "morph.dat"     /* For morph data */
-#define BOARD_FILE	"boards.dat"		/* For bulletin boards	 */
-#define SHUTDOWN_FILE	"shutdown.log"		/* For 'shutdown'	 */
+#define BOARD_FILE	"boards.txt"		/* For bulletin boards	 */
+#define SHUTDOWN_FILE	"shutdown.txt"		/* For 'shutdown'	 */
 #define IMM_HOST_FILE   SYSTEM_DIR "immortal.host" /* For stoping hackers */
 
 #define RIPSCREEN_FILE	SYSTEM_DIR "mudrip.rip"
 #define RIPTITLE_FILE	SYSTEM_DIR "mudtitle.rip"
 #define ANSITITLE_FILE	SYSTEM_DIR "mudtitle.ans"
 #define ASCTITLE_FILE	SYSTEM_DIR "mudtitle.asc"
-#define BOOTLOG_FILE	SYSTEM_DIR "boot.log"	  /* Boot up error file	 */
-#define BUG_FILE	SYSTEM_DIR "bugs.dat"	  /* For bug( )          */
-#define PBUG_FILE	SYSTEM_DIR "pbugs.dat"	  /* For 'bug' command   */
-#define IDEA_FILE	SYSTEM_DIR "ideas.dat"	  /* For 'idea'		 */
-#define TYPO_FILE	SYSTEM_DIR "typos.dat"	  /* For 'typo'		 */
-#define FIXED_FILE	SYSTEM_DIR "fixed.dat"	  /* For 'fixed' command */
-#define HINTSUB_FILE	SYSTEM_DIR "hintsub.dat"  /* For hint suggestions */
-#define CHANGE_FILE	SYSTEM_DIR "changes.dat"  /* For add_change      */
-#define IMMNEWS_FILE	SYSTEM_DIR "immnews.dat"  /* For add_imm_news    */
-#define LOG_FILE	SYSTEM_DIR "roomchat.log"	  /* For talking in logged rooms */
-#define NOHELP_FILE	SYSTEM_DIR "nohelp.dat"   /* For tracking help
+#define BOOTLOG_FILE	SYSTEM_DIR "boot.txt"	  /* Boot up error file	 */
+#define BUG_FILE	SYSTEM_DIR "bugs.txt"	  /* For bug( )          */
+#define PBUG_FILE	SYSTEM_DIR "pbugs.txt"	  /* For 'bug' command   */
+#define IDEA_FILE	SYSTEM_DIR "ideas.txt"	  /* For 'idea'		 */
+#define TYPO_FILE	SYSTEM_DIR "typos.txt"	  /* For 'typo'		 */
+#define FIXED_FILE	SYSTEM_DIR "fixed.txt"	  /* For 'fixed' command */
+#define HINTSUB_FILE	SYSTEM_DIR "hintsub.txt"  /* For hint suggestions */
+#define CHANGE_FILE	SYSTEM_DIR "changes.txt"  /* For add_change      */
+#define IMMNEWS_FILE	SYSTEM_DIR "immnews.txt"  /* For add_imm_news    */
+#define LOG_FILE	SYSTEM_DIR "log.txt"	  /* For talking in logged rooms */
+#define NOHELP_FILE	SYSTEM_DIR "nohelp.txt"   /* For tracking help
 						     files that don't exist */
-#define MOBLOG_FILE	SYSTEM_DIR "mob.log"   /* For mplog messages  */
-#define PLEVEL_FILE	SYSTEM_DIR "plevel.dat"   /* Char level info */
-#define CHARCOUNT_FILE	SYSTEM_DIR "ccount.dat"	  /* Counting, temp */
-#define OINVOKE_FILE	SYSTEM_DIR "oinvoke.dat"  /* Obvious */
-#define CUTLINK_FILE	SYSTEM_DIR "cutlink.dat"  /* Info on cut/dropped links while in combat */
+#define MOBLOG_FILE	SYSTEM_DIR "moblog.txt"   /* For mplog messages  */
+#define PLEVEL_FILE	SYSTEM_DIR "plevel.txt"   /* Char level info */
+#define CHARCOUNT_FILE	SYSTEM_DIR "ccount.txt"	  /* Counting, temp */
+#define OINVOKE_FILE	SYSTEM_DIR "oinvoke.txt"  /* Obvious */
+#define CUTLINK_FILE	SYSTEM_DIR "cutlink.txt"  /* Info on cut/dropped links while in combat */
 #define RETIREDLIST_FILE SYSTEM_DIR "RETIREDLIST" /* Retiredlist	 */
 #define WIZLIST_FILE	SYSTEM_DIR "WIZLIST"	  /* Wizlist		 */
 #define WHO_FILE	SYSTEM_DIR "WHO"	  /* Who output file	 */
@@ -4858,12 +4858,12 @@ char *	sha256_crypt		args( ( const char *key, const char *salt ) );
 #define TONGUE_FILE	SYSTEM_DIR "tongues.dat"  /* Tongue tables	 */
 #define SOCIAL_FILE	SYSTEM_DIR "socials.dat"  /* Socials		 */
 #define COMMAND_FILE	SYSTEM_DIR "commands.dat" /* Commands		 */
-#define USAGE_FILE	SYSTEM_DIR "usage.dat"    /* How many people are on 
+#define USAGE_FILE	SYSTEM_DIR "usage.txt"    /* How many people are on 
  						     every half hour - trying to
 						     determine best reboot time */
-#define ECONOMY_FILE	SYSTEM_DIR "economy.dat"  /* Gold looted, value of
+#define ECONOMY_FILE	SYSTEM_DIR "economy.txt"  /* Gold looted, value of
 						     used potions/pills  */
-#define PROJECTS_FILE	SYSTEM_DIR "projects.dat" /* For projects	 */
+#define PROJECTS_FILE	SYSTEM_DIR "projects.txt" /* For projects	 */
 #define PLANE_FILE	SYSTEM_DIR "planes.dat"	  /* For planes		 */
 #define COLOR_FILE	SYSTEM_DIR "colors.dat"	  /* User-definable color*/
 #define TEMP_FILE	PLAYER_DIR "charsave.tmp" /* More char save protect */
