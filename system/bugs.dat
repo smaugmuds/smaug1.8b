@@ -1,0 +1,23 @@
+[*****] BUG: load_news(): # not found
+[*****] BUG: Fread_stance: fopen
+[*****] BUG: add_help: duplicate: IMC.  Deleting.
+[*****] BUG: add_help: duplicate: RCHAT RIMM RCODE.  Deleting.
+[*****] BUG: add_help: duplicate: RTELL RREPLY.  Deleting.
+[*****] BUG: add_help: duplicate: RBEEP.  Deleting.
+[*****] BUG: add_help: duplicate: RCHANNELS RCHAN RINVIS.  Deleting.
+[*****] BUG: add_help: duplicate: 'IMC NOTES'.  Deleting.
+[*****] BUG: add_help: duplicate: 'IMC IMMORTAL COMMANDS' RINFO.  Deleting.
+[*****] BUG: add_help: duplicate: RSOCKETS.  Deleting.
+[*****] BUG: add_help: duplicate: RIGNORE.  Deleting.
+[*****] BUG: add_help: duplicate: MAILQUEUE.  Deleting.
+[*****] BUG: add_help: duplicate: ICE.  Deleting.
+[*****] BUG: add_help: duplicate: ICE-INTRO.  Deleting.
+[*****] BUG: add_help: duplicate: ICHAN.  Deleting.
+[*****] BUG: add_help: duplicate: ICOMMAND.  Deleting.
+[*****] BUG: add_help: duplicate: ICE-POLICY.  Deleting.
+[*****] BUG: fread_word: EOF encountered on read.
+
+[*****] BUG: Cannot open members.dat for reading
+[*****] BUG: fread_word: EOF encountered on read.
+
+[*****] BUG: Cannot load house file: ~ÿ
